@@ -1,7 +1,6 @@
 package test;
 
 public class TestClass {
-
 	/**
 	 * @param args
 	 */
@@ -10,5 +9,4 @@ public class TestClass {
 		System.out.println("SysTEST");
 		// TETETETETETE
 	}
-
 }

@@ -39,6 +39,7 @@ public class ZoneExtracter {
 	 */
 	public List<String> subZone(int m){
 		List<String> maxzone = new ArrayList<String>();
+		
 		// 重み最大m区間をもとめるアルゴリズムを実装して下さい。
 		return maxzone;
 	}
