@@ -16,13 +16,14 @@ public class ZoneExtracter {
 	
 	
 	/**
-	 * 重み最大のm区間をもとめる主要関数。これを外から呼び出してください。
+	 * 重み最大のm区間をもとめる
+	 * 
+	 * 主要関数。これを外から呼び出してください。
 	 * @return
 	 */
-	public List<String> subZone(int m){
-		List<String> maxzone = new ArrayList<String>();
+	public List<int[]> subZone(int m){
+		List<int[]> maxzone = new ArrayList<String>();
 		
-		// 重み最大m区間をもとめるアルゴリズムを実装して下さい。
 		return maxzone;
 	}
 }
