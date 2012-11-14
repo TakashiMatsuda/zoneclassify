@@ -11,9 +11,9 @@ public class InputWigTest {
 
 	@Test
 	public void testgetWIG() {
-		ArrayList<Double[]> exa = InputWig.getWIG("blastula_coverage.wig");
+		ArrayList<List<Double>> exa = InputWig.getWIG("blastula_coverage.wig");
 		
-		assertEquals(0.0, exa.get(0)[3], 0.01);
+		assertEquals(0.0, exa.get(1).get(1), 0.01);
 	}
 
 }
