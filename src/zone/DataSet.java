@@ -50,7 +50,7 @@ public class DataSet {
 	}
 	
 	
-	public class Classfier{
+	public class Classifier{
 		public int prediction(){
 			return 0;
 		}

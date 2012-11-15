@@ -12,6 +12,7 @@ import org.junit.Test;
 
 /**
  * JUnitも同期しなければいけないようです。
+ * 応急的にJUnit 4のビルドパスを通しています。
  * @author takashi
  *
  */
