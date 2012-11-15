@@ -11,22 +11,25 @@ import java.util.List;
 public class ZoneExtracter {
 	String genome;
 	int[] sitepos;
-	List<List<Double>> methyllevel;
+	List<double[]> methyllevel;
 	
-	private List<List<Double>> mezo(){
-		List<List<Double>> tmp = InputWig.getWIG("blastula_coverage.wig");
-		List<List<Double>> harvest = new ArrayList<List<Double>>();
+	private List<double[]> mezo(){
+		List<double[]> tmp = InputWig.getWIG("blastula_coverage.wig");
+		List<double[]> harvest = new ArrayList<double[]>();
 		double p = 0;
 		for (int i = 0; i < tmp.size(); i++){
-			ArrayList<Double> part = new ArrayList<Double>();
-			for (int j = 0; j < tmp.get(i).size(); j++){
-				p = (tmp.get(i).get(j) - 0.5) * (-1);// setを用いて書きなおしたほうがstandard?
-				part.add(p);
+			double[] bunch = new double[tmp.get(i).length];
+			for (int j = 0; j < tmp.get(i).length; j++){
+				p = (tmp.get(i)[j] - 0.5) * (-1);
+				bunch[i] = p;
 			}
-			harvest.add(part);
+			tmp.set(i, bunch);
 		}
 		return harvest;
 	}
+	
+	
+	
 	
 	
 	/**
@@ -39,14 +42,29 @@ public class ZoneExtracter {
 		List<int[]> maxzones = new ArrayList<int[]>();
 		methyllevel = mezo();
 		int i = 0;
-		List<Double> target = null;
+		double[] target = null;
 		while(methyllevel.get(i) != null){
 			target = methyllevel.get(i);
 			// この下、推定アルゴリズムを記述してください
 			
+			
+			/*
+			 * 正区間と負区間への分割
+			 */
+			int l = target.length;
+			int k = 1;
+			int s = 0;
+			int[] tmp = new int[2];
+			tmp[0] = 0;
+			for (int j = 1; j < l; j++){
+				if (target[j - 1] * target[j] >= 0)
+					k++;
+				else{
+					
+				}
+			}
 			i++;
 		}
-		
 		return maxzones;
 	}
 }

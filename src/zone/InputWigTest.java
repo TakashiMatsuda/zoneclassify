@@ -18,26 +18,14 @@ import org.junit.Test;
  */
 public class InputWigTest {
 
+	@SuppressWarnings("unused")
 	@Test
 	public void testgetWIG() {
-		try{
-			// ArrayListで読み取るのが早いか、それとも
-			// 配列で読むために一度回して行数を取得したほうが早いか
-			String line = null;
-			BufferedReader br = new BufferedReader(new FileReader("blastula_coverage.wig"));
-			int i = 0;
-			while((line = br.readLine()) != null){
-				i++;
-			}
-			System.out.println(i);
-			br.close();
-		} catch(Exception e){
-			e.printStackTrace();
+		final boolean DEBUG = false;
+		
+		ArrayList<double[]> exa = InputWig.getWIG("blastula_CpGMethylationLevel.wig");
+		for(int i = 0; i < 1000; i++){
+			System.out.println(exa.get(0)[i]);
 		}
-		
-		
-		ArrayList<List<Double>> exa = InputWig.getWIG("blastula_coverage.wig");
-		assertEquals(0.0, exa.get(1).get(1), 0.01);
 	}
-
 }

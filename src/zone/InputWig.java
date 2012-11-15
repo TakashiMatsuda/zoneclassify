@@ -13,35 +13,37 @@ import java.util.regex.Pattern;
  *
  */
 public class InputWig {
-	public static ArrayList<List<Double>> getWIG(String filename){
-		ArrayList<List<Double>> harvest = new ArrayList<List<Double>>();
+	public static ArrayList<double[]> getWIG(String filename){
+		ArrayList<double[]> harvest = new ArrayList<double[]>();
 		try{
-			// ArrayListで読み取るのが早いか、それとも
-			// 配列で読むために一度回して行数を取得したほうが早いか
 			String line = null;
 			BufferedReader br = new BufferedReader(new FileReader(filename));
 			Pattern chromtag = Pattern.compile("^fixed");
-			ArrayList<Double> gallon = new ArrayList<Double>();
 			int i = 0;
+			while((line = br.readLine()) != null){
+				if (i > 1000000)
+					break;
+				i++;
+			}
+			double[] gallon = new double[i / 100];
+			i = 0;
 			int j = 0;
 			while((line = br.readLine()) != null){
-				if (i % 100000 == 0)
-					System.out.println(i);
-				else if(i > 1000000)// 安全ピン
+				if (i > 1000000)
 					break;
-				if (j % 10000 == 0)
-					System.out.println(j);
+				if (i % 100000000 == 0)
+					System.out.println(i);
 				if (chromtag.matcher(line).find())
 				{
 					harvest.add(gallon);
-					gallon.clear();
+					gallon = new double[i / 100];
 					j = 0;
 				}
 				else{
-					gallon.add(Double.parseDouble(line));
+					gallon[j] = Double.parseDouble(line);
+					j++;
 				}
 				i++;
-				j++;
 			}
 			br.close();
 		} catch(Exception e){
