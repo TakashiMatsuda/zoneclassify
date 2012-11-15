@@ -23,20 +23,25 @@ public class InputWig {
 			Pattern chromtag = Pattern.compile("^fixed");
 			ArrayList<Double> gallon = new ArrayList<Double>();
 			int i = 0;
+			int j = 0;
 			while((line = br.readLine()) != null){
-				if (i % 10000 == 0)
+				if (i % 100000 == 0)
 					System.out.println(i);
-				else if(i > 100000)
+				else if(i > 1000000)// 安全ピン
 					break;
+				if (j % 10000 == 0)
+					System.out.println(j);
 				if (chromtag.matcher(line).find())
 				{
 					harvest.add(gallon);
 					gallon.clear();
+					j = 0;
 				}
 				else{
 					gallon.add(Double.parseDouble(line));
 				}
 				i++;
+				j++;
 			}
 			br.close();
 		} catch(Exception e){
