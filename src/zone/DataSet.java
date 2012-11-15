@@ -6,6 +6,8 @@ package zone;
  *
  */
 public class DataSet {
+	
+	MyPoint a;
 	// 各列の名前
 	
 	/**
@@ -13,7 +15,7 @@ public class DataSet {
 	 * @param filename
 	 * @return
 	 */
-	private String load(String filename){
+	public String load(MyPoint a){
 		
 		
 		return null;
@@ -22,7 +24,7 @@ public class DataSet {
 	/**
 	 * Initialize weight
 	 */
-	private void initWeight(){
+	public void initWeight(){
 		
 	}
 	
@@ -30,7 +32,7 @@ public class DataSet {
 	 * classifierによるpredictionのエラー率を計算
 	 * @return
 	 */
-	private double[] errorRation(){
+	public double[] errorRatio(){
 		return null;
 	}
 	
@@ -38,14 +40,14 @@ public class DataSet {
 	 * 最もeeroro率の低いclassifierを計算
 	 * @return
 	 */
-	private Classifier weakLearn(){
+	public Classifier weakLearn(){
 		return null;
 	}
 	
 	/**
 	 * AdaBoostのアルゴリズムにしたがってweightを更新
 	 */
-	private void reviseWeight(){
+	public void reviseWeight(){
 		
 	}
 	

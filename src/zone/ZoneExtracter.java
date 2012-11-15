@@ -14,7 +14,7 @@ public class ZoneExtracter {
 	List<double[]> methyllevel;
 	
 	private List<double[]> mezo(){
-		List<double[]> tmp = InputWig.getWIG("blastula_coverage.wig");
+		List<double[]> tmp = InputWig.getWIG("blastula_CpGMethylationLevel.wig");
 		List<double[]> harvest = new ArrayList<double[]>();
 		double p = 0;
 		for (int i = 0; i < tmp.size(); i++){

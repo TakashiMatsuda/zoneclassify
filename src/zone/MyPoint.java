@@ -1,5 +1,7 @@
 package zone;
 
+import java.util.HashMap;
+
 /**
  * 
  * @author tks
@@ -8,5 +10,11 @@ package zone;
 public class MyPoint {
 	int PATTERN = 1020;//why?
 	char[] weight;
-	// 各column+目標属性 の値を保存するVector
+	
+	HashMap<String, Integer> superviser = new HashMap<String, Integer>();
+	
+	
+	
+	
+	
 }
