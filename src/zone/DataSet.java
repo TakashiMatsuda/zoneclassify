@@ -16,12 +16,20 @@ public class DataSet {
 	 */
 	List<MyPoint> knowledges;
 	
+	
+	/**
+	 * あるn-merがsequenceに含まれる回数が、期待値よりも大きいかを判定します。
+	 * @param factor
+	 * @param sequence
+	 * @return
+	 */
 	private int judgeEXP(String factor, String sequence){
 		int l = factor.length();
 		double ne = (sequence.length() - l) * (1.0 / Math.pow(4.0, (double)l));
 		
 		
 		// 出現回数を数えるライブラリが用意されていると聞いたことがあります。
+		// 重複を許すかどうか微妙なところ
 		// dosu(kari)
 		double dosu = 0;
 		if (dosu >= ne)
@@ -41,7 +49,7 @@ public class DataSet {
 		
 	}
 	
-	/**
+	/**a
 	 * Initialize weight
 	 */
 	public void initWeight(){
