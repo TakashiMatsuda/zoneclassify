@@ -16,6 +16,19 @@ public class DataSet {
 	 */
 	List<MyPoint> knowledges;
 	
+	private int judgeEXP(String factor, String sequence){
+		int l = factor.length();
+		double ne = (sequence.length() - l) * (1.0 / Math.pow(4.0, (double)l));
+		
+		
+		// 出現回数を数えるライブラリが用意されていると聞いたことがあります。
+		// dosu(kari)
+		double dosu = 0;
+		if (dosu >= ne)
+			return 1;
+		else
+			return 0;
+	}
 	
 	/**
 	 * 入力ファイルからrecordをloadしてknowledgesに格納
