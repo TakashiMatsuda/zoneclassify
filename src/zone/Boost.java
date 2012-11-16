@@ -6,6 +6,8 @@ package zone;
  *
  */
 public class Boost {
+	static int M = 10;// あとで仕様変更を受けます.
+	
 	
 	/**
 	 * 訓練データを読み込む
@@ -17,12 +19,19 @@ public class Boost {
 	 */
 	public static void main(char[] args){
 		
+		ZoneExtracter farmer = new ZoneExtracter();
+		
 		/*
 		 * 読み込み(IO処理)
 		 * : DataSetをコンストラクトする
 		 */
-		DataSet prince = new DataSet();
 		
+		DataSet prince = new DataSet();
+		/*
+		 * パースしてDataSetが扱える形にしたい
+		 * それはDataSetがやること？
+		 */
+		prince.load(farmer.subZone(M), "coverage.wig");
 		
 		/*
 		 * 引数を与えられる設計にする。

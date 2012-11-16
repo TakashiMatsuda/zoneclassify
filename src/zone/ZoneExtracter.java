@@ -13,6 +13,11 @@ public class ZoneExtracter {
 	int[] sitepos;
 	List<double[]> methyllevel;
 	
+	
+	/**
+	 * 
+	 * @return
+	 */
 	private List<double[]> mezo(){
 		List<double[]> tmp = InputWig.getWIG("blastula_CpGMethylationLevel.wig");
 		List<double[]> harvest = new ArrayList<double[]>();
@@ -35,11 +40,16 @@ public class ZoneExtracter {
 	/**
 	 * 重み最大のm区間をもとめる
 	 * 
+	 * 
 	 * 主要関数。これを外から呼び出してください。
-	 * @return
+	 * @param 	m
+	 * @return  maxzones
 	 */
 	public List<int[]> subZone(int m){
 		List<int[]> maxzones = new ArrayList<int[]>();
+		/*
+		 * 使いやすくなったメチル化度列を得る
+		 */
 		methyllevel = mezo();
 		int i = 0;
 		double[] target = null;
@@ -60,11 +70,28 @@ public class ZoneExtracter {
 				if (target[j - 1] * target[j] >= 0)
 					k++;
 				else{
-					
+					if (target[j - 1] > 0){
+						
+					}
+					else
+					{
+						
+						tmp[1] = j;
+						maxzones.add(tmp.clone());
+						if (j < j - 1)
+							tmp[0] = j + 1;
+					}
 				}
 			}
+			
+			
+			
 			i++;
 		}
 		return maxzones;
+	}
+	
+	ZoneExtracter(){
+		
 	}
 }

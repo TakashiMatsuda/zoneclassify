@@ -13,6 +13,13 @@ import java.util.regex.Pattern;
  *
  */
 public class InputWig {
+	
+	
+	/**
+	 * 
+	 * @param filename
+	 * @return
+	 */
 	public static ArrayList<double[]> getWIG(String filename){
 		ArrayList<double[]> harvest = new ArrayList<double[]>();
 		try{

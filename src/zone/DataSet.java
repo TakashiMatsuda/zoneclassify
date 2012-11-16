@@ -1,5 +1,8 @@
 package zone;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 
  * @author tks
@@ -7,25 +10,32 @@ package zone;
  */
 public class DataSet {
 	
-	MyPoint a;
-	// 各列の名前
+	
+	/*
+	 * 教師データ集合
+	 */
+	List<MyPoint> knowledges;
+	
 	
 	/**
-	 * 入力ファイルからrecordをload
-	 * @param filename
+	 * 入力ファイルからrecordをloadしてknowledgesに格納
+	 * @param zones, filename
 	 * @return
 	 */
-	public String load(MyPoint a){
+	public void load(List<int[]> zones, String filename){
 		
 		
-		return null;
+		
 	}
 	
 	/**
 	 * Initialize weight
 	 */
 	public void initWeight(){
-		
+		int l = knowledges.size();
+		for (int i = 0; i < l; i++){
+			knowledges.set(i, knowledges.get(i).setW(1.0 / (double)l));
+		}
 	}
 	
 	/**
@@ -37,7 +47,7 @@ public class DataSet {
 	}
 	
 	/**
-	 * 最もeeroro率の低いclassifierを計算
+	 * 最もerror率の低いclassifierを計算
 	 * @return
 	 */
 	public Classifier weakLearn(){
@@ -51,10 +61,12 @@ public class DataSet {
 		
 	}
 	
-	
-	public class Classifier{
-		public int prediction(){
-			return 0;
-		}
+	/**
+	 * Constructer
+	 * open to change
+	 */
+	DataSet(){
+		this.knowledges = new ArrayList<MyPoint>();
 	}
+	
 }
