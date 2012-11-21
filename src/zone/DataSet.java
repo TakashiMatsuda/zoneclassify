@@ -31,6 +31,10 @@ public class DataSet {
 	 * @param sequence
 	 * @return
 	 */
+	private int countStringInString(String target, String searchWord){
+		return (target.length() - target.replaceAll(searchWord, "").length()) / searchWord.length();
+	}
+	
 	private int judgeEXP(String factor, String sequence){
 		int l = factor.length();
 		double ne = (sequence.length() - l) * (1.0 / Math.pow(4.0, (double)l));
@@ -79,7 +83,7 @@ public class DataSet {
 		 */
 		int right = 0;
 		int sum = 0;
-		int q = x.law[0];
+		int q = x.start;
 		int p = x.prediction();
 		for (int i = 0; i < M; i++){
 			if (knowledges[i][q] == 1){
@@ -119,7 +123,7 @@ public class DataSet {
 		double e = errorRatio(h);
 		beta = e /(1 - e);
 		for(int i = 0; i < M; i++){
-			knowledges[i][PATTERN + 1] = (byte) (knowledges[i][PATTERN + 1] * Math.pow(beta, (1 - (h.prediction() - knowledges[i][PATTERN]))));
+			knowledges[i][PATTERN + 1] = (byte) (knowledges[i][PATTERN + 1] * Math.pow(beta, (1 - Math.abs(h.prediction() - knowledges[i][PATTERN]))));
 			// 絶対値の実装とは
 		}
 	}
