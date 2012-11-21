@@ -2,12 +2,12 @@ package zone;
 
 /**
  * メインクラス
- * @author tks
+ * @author takashi
  *
  */
 public class Boost {
 	static int M = 10;// あとで仕様変更を受けます.
-	
+	static int T = 50;// 最終的に用いる分類器の数
 	
 	/**
 	 * 訓練データを読み込む
@@ -39,8 +39,13 @@ public class Boost {
 		 */
 		prince.initWeight();
 		prince.weakLearn();
-		prince.errorRatio();
 		prince.reviseWeight();
+		
+		/*
+		 * 最終的なクラス分類器を作成する
+		 */
+		
+		
 		
 	}
 	
