@@ -17,6 +17,7 @@ public class DataSet {
 	 */
 	int M;
 	
+	int PATTERN = (4 ^ 2) * (5 ^ 3);
 	/*
 	 * 教師データ集合
 	 */
@@ -34,7 +35,6 @@ public class DataSet {
 		int l = factor.length();
 		double ne = (sequence.length() - l) * (1.0 / Math.pow(4.0, (double)l));
 		
-		
 		// 出現回数を数えるライブラリが用意されていると聞いたことがあります。
 		// 重複を許すかどうか微妙なところ
 		// とりあえず許して計算する。動いたら後で改良すること。
@@ -48,6 +48,8 @@ public class DataSet {
 	
 	/**
 	 * 入力ファイルからrecordをloadしてknowledgesに格納
+	 * 
+	 * 仕様変更があります、型を配列に変えたので変更をうけます　
 	 * @param zones, filename
 	 * @return
 	 */
@@ -91,14 +93,22 @@ public class DataSet {
 	
 	/**
 	 * classifierを作成
+	 * 一から順番にラベルごとに分類器をつくり、エラー率が0.5より大きければその分類器を返します。
 	 * @return
 	 */
 	public Classifier weakLearn(){
-		// 乱数発生させると遅いので、いちから順番に作成する方針で。
-		
-		
-		LS++;
-		return null;
+		Classifier tmp = new Classifier(LS, (byte) 0);
+		while(LS < PATTERN){
+			if (errorRatio(tmp) < (1.0 / 2.0))
+				break;
+			else{
+				tmp = new Classifier(LS, (byte) 1);
+				if (errorRatio(tmp) < (1.0 / 2.0))
+					break;
+			}
+			LS++;
+		}
+		return tmp;
 	}
 	
 	/**
@@ -109,7 +119,8 @@ public class DataSet {
 		double e = errorRatio(h);
 		beta = e /(1 - e);
 		for(int i = 0; i < M; i++){
-			knowledges[i][PATTERN + 1] = knowledges[i][PATTERN + 1] * Math.pow(beta, (1 - (h.prediction() - knowledges[i])
+			knowledges[i][PATTERN + 1] = (byte) (knowledges[i][PATTERN + 1] * Math.pow(beta, (1 - (h.prediction() - knowledges[i][PATTERN]))));
+			// 絶対値の実装とは
 		}
 	}
 	
@@ -117,8 +128,9 @@ public class DataSet {
 	 * Constructer
 	 * open to change
 	 */
-	DataSet(){
-		this.knowledges = new ArrayList<MyPoint>();
+	DataSet(){// 訓練データの入力我必要
+		// その形式はBoostくらすが決めること、ここで考える必要はない
+		
 		LS = 0;
 	}
 	
