@@ -12,13 +12,16 @@ public class Classifier {
 	 * law[0]: ラベルの番号
 	 * law[1]: 目標属性
 	 */
-	byte[] law;
+	int start;
+	byte target;
 	
 	public byte prediction(){
-		return law[1];
+		return target;
 	}
 	
-	Classifier(){
-		this.law = new byte[2];
+	Classifier(int ls, byte t){
+		
+		this.start = ls;
+		this.target = t;
 	}
 }

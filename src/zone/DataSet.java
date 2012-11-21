@@ -22,6 +22,7 @@ public class DataSet {
 	 */
 	byte[][] knowledges;
 	
+	int LS;
 	
 	/**
 	 * あるn-merがsequenceに含まれる回数が、期待値よりも大きいかを判定します。
@@ -95,6 +96,8 @@ public class DataSet {
 	public Classifier weakLearn(){
 		// 乱数発生させると遅いので、いちから順番に作成する方針で。
 		
+		
+		LS++;
 		return null;
 	}
 	
@@ -116,6 +119,7 @@ public class DataSet {
 	 */
 	DataSet(){
 		this.knowledges = new ArrayList<MyPoint>();
+		LS = 0;
 	}
 	
 }
