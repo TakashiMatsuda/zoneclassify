@@ -9,6 +9,15 @@ import java.util.List;
  *
  */
 public class DataSet {
+	// とりあえずかたちは整いました、
+	// あとはIOを整備して
+	// 細かい調整、これはIOが整ったら上流から順番に行います
+	// そしてデバッグ
+	// テスト
+	// 完成
+	// という手順を通りましょう。
+	
+	
 	ArrayList<Classifier> boxes;// 要素数Tこまで。それ以上はいらない
 	// エラー率を計算して、優秀なもののみここに登録
 	
@@ -26,24 +35,35 @@ public class DataSet {
 	int LS;
 	
 	/**
-	 * あるn-merがsequenceに含まれる回数が、期待値よりも大きいかを判定します。
-	 * @param factor
-	 * @param sequence
+	 * targetにsearchwordが現れる関数を返します。ただし重複し数えない場合の度数です。
+	 * @param target
+	 * @param searchWord
 	 * @return
 	 */
 	private int countStringInString(String target, String searchWord){
 		return (target.length() - target.replaceAll(searchWord, "").length()) / searchWord.length();
 	}
-	
-	private int judgeEXP(String factor, String sequence){
+
+	/**
+	 * あるn-merがsequenceに含まれる回数が、期待値よりも大きいかを判定します。
+	 * @param factor
+	 * @param sequence
+	 * @return
+	 */
+	private int judgeEXP(String factor, String sequence	/**
+			 * あるn-merがsequenceに含まれる回数が、期待値よりも大きいかを判定します。
+			 * @param factor
+			 * @param sequence
+			 * @return
+			 */){
 		int l = factor.length();
-		double ne = (sequence.length() - l) * (1.0 / Math.pow(4.0, (double)l));
+		double ne = ((sequence.length() - l) * (1.0 / Math.pow(4.0, (double)l))) * sequence.length();
 		
 		// 出現回数を数えるライブラリが用意されていると聞いたことがあります。
 		// 重複を許すかどうか微妙なところ
 		// とりあえず許して計算する。動いたら後で改良すること。
 		// dosu(kari)
-		double dosu = 0;
+		int dosu = countStringInString(sequence, factor);
 		if (dosu >= ne)
 			return 1;
 		else
@@ -69,12 +89,13 @@ public class DataSet {
 	public void initWeight(){
 		int l = knowledges.length;
 		for (int i = 0; i < l; i++){
-			knowledges.set(i, knowledges.get(i).setW(1.0 / (double)l));
+			knowledges.set(i, knowledges.get(i).setW(1.0 / (double)l));// ここあとで
 		}
 	}
 	
 	/**
 	 * classifierによるpredictionのエラー率を計算
+	 * 完成しています
 	 * @return
 	 */
 	public double errorRatio(Classifier x){
@@ -98,6 +119,7 @@ public class DataSet {
 	/**
 	 * classifierを作成
 	 * 一から順番にラベルごとに分類器をつくり、エラー率が0.5より大きければその分類器を返します。
+	 * 完成しています
 	 * @return
 	 */
 	public Classifier weakLearn(){
@@ -105,7 +127,12 @@ public class DataSet {
 		while(LS < PATTERN){
 			if (errorRatio(tmp) < (1.0 / 2.0))
 				break;
-			else{
+			else{	/**
+				 * あるn-merがsequenceに含まれる回数が、期待値よりも大きいかを判定します。
+				 * @param factor
+				 * @param sequence
+				 * @return
+				 */
 				tmp = new Classifier(LS, (byte) 1);
 				if (errorRatio(tmp) < (1.0 / 2.0))
 					break;
@@ -117,6 +144,7 @@ public class DataSet {
 	
 	/**
 	 * AdaBoostのアルゴリズムにしたがってweightを更新
+	 * 完成しています
 	 */
 	public void reviseWeight(Classifier h){
 		double beta;
@@ -124,7 +152,6 @@ public class DataSet {
 		beta = e /(1 - e);
 		for(int i = 0; i < M; i++){
 			knowledges[i][PATTERN + 1] = (byte) (knowledges[i][PATTERN + 1] * Math.pow(beta, (1 - Math.abs(h.prediction() - knowledges[i][PATTERN]))));
-			// 絶対値の実装とは
 		}
 	}
 	
