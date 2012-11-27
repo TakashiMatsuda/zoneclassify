@@ -17,9 +17,10 @@ public class DataSet {
 	// 完成
 	// という手順を通りましょう。
 	
-	
-	ArrayList<Classifier> boxes;// 要素数Tこまで。それ以上はいらない
-	// エラー率を計算して、優秀なもののみここに登録
+	/*
+	 * 判定器リスト
+	 */
+	ArrayList<Classifier> boxes;
 	
 	/*
 	 * MyPointの数
@@ -31,8 +32,19 @@ public class DataSet {
 	 * 教師データ集合
 	 */
 	byte[][] knowledges;
-	
 	int LS;
+	
+	/**
+	 * 入力ファイルからrecordをloadしてknowledgesに格納
+	 * 
+	 * 仕様変更があります、型を配列に変えたので変更をうけます　
+	 * @param zones, filename
+	 * @return
+	 */
+	public void load(List<int[]> zones, String filename){
+		
+		
+	}
 	
 	/**
 	 * targetにsearchwordが現れる関数を返します。ただし重複し数えない場合の度数です。
@@ -50,19 +62,12 @@ public class DataSet {
 	 * @param sequence
 	 * @return
 	 */
-	private int judgeEXP(String factor, String sequence	/**
-			 * あるn-merがsequenceに含まれる回数が、期待値よりも大きいかを判定します。
-			 * @param factor
-			 * @param sequence
-			 * @return
-			 */){
+	private int judgeEXP(String factor, String sequence){
 		int l = factor.length();
 		double ne = ((sequence.length() - l) * (1.0 / Math.pow(4.0, (double)l))) * sequence.length();
-		
-		// 出現回数を数えるライブラリが用意されていると聞いたことがあります。
-		// 重複を許すかどうか微妙なところ
-		// とりあえず許して計算する。動いたら後で改良すること。
-		// dosu(kari)
+		/*
+		 * faactorがsequenceに含まれる回数
+		 */
 		int dosu = countStringInString(sequence, factor);
 		if (dosu >= ne)
 			return 1;
@@ -70,20 +75,8 @@ public class DataSet {
 			return 0;
 	}
 	
-	/**
-	 * 入力ファイルからrecordをloadしてknowledgesに格納
-	 * 
-	 * 仕様変更があります、型を配列に変えたので変更をうけます　
-	 * @param zones, filename
-	 * @return
-	 */
-	public void load(List<int[]> zones, String filename){
-		
-		
-		
-	}
 	
-	/**a
+	/**
 	 * Initialize weight
 	 */
 	public void initWeight(){

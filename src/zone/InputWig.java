@@ -16,6 +16,7 @@ public class InputWig {
 	
 	
 	/**
+	 * 途中で何も書かなかったせいで、なにがかいてあるのかわからない
 	 * 
 	 * @param filename
 	 * @return
@@ -27,8 +28,15 @@ public class InputWig {
 			BufferedReader br = new BufferedReader(new FileReader(filename));
 			Pattern chromtag = Pattern.compile("^fixed");
 			int i = 0;
+			/*
+			 * empty read
+			 */
+			br.readLine();
+			/*
+			 * core, Read and change the wig format to List<double[]>.
+			 */
 			while((line = br.readLine()) != null){
-				if (i > 1000000)
+				if (i > 1000000)//
 					break;
 				i++;
 			}
@@ -36,8 +44,11 @@ public class InputWig {
 			i = 0;
 			int j = 0;
 			while((line = br.readLine()) != null){
-				if (i > 1000000)
+				if (i > 1000000)// Test, now should be delete.
 					break;
+				/*
+				 * Print the status
+				 */
 				if (i % 100000000 == 0)
 					System.out.println(i);
 				if (chromtag.matcher(line).find())

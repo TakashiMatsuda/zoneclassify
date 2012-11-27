@@ -15,7 +15,7 @@ public class ZoneExtracter {
 	
 	
 	/**
-	 * 
+	 * harvest ArrayList<double[]>
 	 * @return
 	 */
 	private List<double[]> mezo(){
@@ -55,7 +55,10 @@ public class ZoneExtracter {
 		double[] target = null;
 		while(methyllevel.get(i) != null){
 			target = methyllevel.get(i);
-			// この下、推定アルゴリズムを記述してください
+			
+			/*
+			 *  この下、区間推定アルゴリズム
+			 */
 			
 			
 			/*
@@ -71,11 +74,10 @@ public class ZoneExtracter {
 					k++;
 				else{
 					if (target[j - 1] > 0){
-						
+						// ここ空白
 					}
 					else
 					{
-						
 						tmp[1] = j;
 						maxzones.add(tmp.clone());
 						if (j < j - 1)
@@ -84,6 +86,9 @@ public class ZoneExtracter {
 				}
 			}
 			
+			/*
+			 * 最短区間長制限区間推定アルゴリズムを実装してください。
+			 */
 			
 			
 			i++;
