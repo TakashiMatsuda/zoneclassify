@@ -117,22 +117,54 @@ public class ZoneExtracter {
 				 * 定理2により、重み最大のm区間の集合を適用
 				 */
 				
-				double sugmin = 0;
+				double sug1 = 1 / 0;
 				double summin = 0;
-				int sugminnum = 0;
-				double sug2 = 0;
+				int sugminnum1 = 0;
+				double sug2 = 1 / 0;
+				int sugminnum2 = 0;
 				for(int o = M; o > m; o--){
-					// 1つめの手法から導かれる候補
+					/*
+					 * 1つめの手法から導かれる候補
+					 */
 					int mm = maxzones.size();
-					for(int r = 0; r < mm; r++){
-						for(int rr = maxzones.get(r)[0]; rr < maxzones.get(r)[1]; rr++){
+					for(int u = 0; u < mm; u++){
+						summin = 0;
+						for(int rr = maxzones.get(u)[0]; rr < maxzones.get(u)[1]; rr++){
 							summin += target[rr];
 						}
-						if (sugmin > summin){
-							sugminnum = r;
-							sugmin = summin;
+						if (sug1 > summin){
+							sugminnum1 = u;
+							sug1 = summin;
 						}
 					}
+					
+					/*
+					 * 2つめの手法から導かれる候補
+					 */
+					for(int u = 0; u < mm - 1; u++){
+						summin = 0;
+						for(int rr = maxzones.get(u)[1]; rr < maxzones.get(u + 1)[0]; rr++){// 端数のカウントが不安
+							summin += target[rr];
+						}
+						if (sug2 > summin){
+							sugminnum2 = u;
+							sug2 = summin;
+						}
+					}
+					
+					
+					/*
+					 * どちらの手法が小さい損失であるか
+					 */
+					if (sug1 > sug2){
+						maxzones.remove(sugminnum1);// あってるかどうか確認がひつようです
+					}
+					else{
+						
+						// 区間族がソートされている必要があることに気づきました。
+						// データの型を変更する必要があると思います。
+					}
+					
 				}
 				
 				
