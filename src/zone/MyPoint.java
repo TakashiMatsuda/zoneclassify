@@ -26,7 +26,5 @@ public class MyPoint {
 	
 	MyPoint(){
 		this.column = new byte[PATTERN];
-	}
-	
-	
+	}	
 }

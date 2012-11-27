@@ -45,12 +45,14 @@ public class ZoneExtracter {
 	 * @param 	m
 	 * @return  maxzones
 	 */
-	public List<int[]> subZone(int m){
+	public List<List<int[]>> subZone(int m){
+		List<List<int[]>> alldata = new ArrayList<List<int[]>>();
 		List<int[]> maxzones = new ArrayList<int[]>();
 		/*
 		 * 使いやすくなったメチル化度列を得る
 		 */
-		methyllevel = mezo();
+		this.methyllevel = mezo();
+		int al = methyllevel.size();
 		int i = 0;
 		double[] target = null;
 		while(methyllevel.get(i) != null){
@@ -59,41 +61,86 @@ public class ZoneExtracter {
 			/*
 			 *  この下、区間推定アルゴリズム
 			 */
-			
-			
 			/*
-			 * 正区間と負区間への分割
+			 * methyllevelの各要素(double[])について下の作業を行います
 			 */
-			int l = target.length;
-			int k = 1;
-			int s = 0;
-			int[] tmp = new int[2];
-			tmp[0] = 0;
-			for (int j = 1; j < l; j++){
-				if (target[j - 1] * target[j] >= 0)
-					k++;
-				else{
-					if (target[j - 1] > 0){
-						// ここ空白
+			for(int r = 0; r < al; r++){
+			
+				/*
+				 * 正区間と負区間への分割
+				 * 
+				 * とりあえず正区間だけ抽出します。（反転しているので）
+				 */
+				int l = target.length;
+				int k = 1;
+				int s = 0;
+				int[] tmp = new int[2];
+				tmp[0] = 0;
+				
+				
+				for (int j = 1; j < l; j++){
+					/**
+					 * tmpの登録が始まっていない場合
+					 */
+					if (tmp[0] < -3){
+						if (target[j] < 0)
+							tmp[0] = target[j];// ここわからない
 					}
-					else
-					{
-						tmp[1] = j;
-						maxzones.add(tmp.clone());
-						if (j < j - 1)
-							tmp[0] = j + 1;
+					
+					/**
+					 * 条件：正区間・負区間が継続
+					 */
+					if (target[j - 1] * target[j] >= 0)
+						k++;
+					else{
+						/**
+						 * 条件: 正・負区間
+						 */
+						if (target[j] > 0){
+							// ここ空白
+						}
+						else
+						{
+							tmp[1] = j;
+							maxzones.add(tmp);
+							tmp = new int[2];
+							tmp[0] = (-1 / 0);
+						}
 					}
 				}
+				
+				/*
+				 * 最短区間長制限区間推定アルゴリズムを実装してください。
+				 */
+				/*
+				 * 変更。m区間の抽出アルゴリズムを実装します。
+				 * 定理2により、重み最大のm区間の集合を適用
+				 */
+				
+				double sugmin = 0;
+				double summin = 0;
+				int sugminnum = 0;
+				double sug2 = 0;
+				for(int o = M; o > m; o--){
+					// 1つめの手法から導かれる候補
+					int mm = maxzones.size();
+					for(int r = 0; r < mm; r++){
+						for(int rr = maxzones.get(r)[0]; rr < maxzones.get(r)[1]; rr++){
+							summin += target[rr];
+						}
+						if (sugmin > summin){
+							sugminnum = r;
+							sugmin = summin;
+						}
+					}
+				}
+				
+				
+				
+				
 			}
-			
-			/*
-			 * 最短区間長制限区間推定アルゴリズムを実装してください。
-			 */
-			
-			
-			i++;
 		}
-		return maxzones;
+		return null;
 	}
 	
 	ZoneExtracter(){

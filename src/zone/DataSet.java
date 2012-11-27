@@ -1,7 +1,10 @@
 package zone;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * 
@@ -17,33 +20,54 @@ public class DataSet {
 	// 完成
 	// という手順を通りましょう。
 	
+	// 先生のクラス構成微妙なんじゃないかな...
+	
 	/*
 	 * 判定器リスト
 	 */
-	ArrayList<Classifier> boxes;
+	private ArrayList<Classifier> boxes;
+	private ArrayList<MyPoint> teachers;
 	
 	/*
 	 * MyPointの数
 	 */
-	int M;
+	private int M;
 	
-	int PATTERN = (4 ^ 2) * (5 ^ 3);
+	private int PATTERN = (4 ^ 2) * (5 ^ 3);
 	/*
 	 * 教師データ集合
 	 */
-	byte[][] knowledges;
-	int LS;
+	private byte[][] knowledges;
+	private int LS;
 	
 	/**
 	 * 入力ファイルからrecordをloadしてknowledgesに格納
+	 * filename: fastaファイルの名前
+	 * fastaファイルから該当区間のList<String>と各Stringが低メチル化領域か高メチルか領域かをはきだします。
+	 * 
+	 * 
 	 * 
 	 * 仕様変更があります、型を配列に変えたので変更をうけます　
 	 * @param zones, filename
 	 * @return
 	 */
-	public void load(List<int[]> zones, String filename){
+	public void load(List<List<int[]>> zones, String filename){
+		// 下流につなげることを考えよう
+		// this.teachersに記録するところまで。
+		
+		try{
+			String line = null;
+			BufferedReader br = new BufferedReader(new FileReader(filename));
+			// wigとfastaでタグが一致しているかどうか。同じ遺伝子部位についてやらないと意味なし
+			// 一致確認。なので各int[]について
+			
+			br.close();
+		} catch(Exception e){
+			e.printStackTrace();
+		}
 		
 		
+		this.teachers = null;// ここが終点
 	}
 	
 	/**
@@ -66,7 +90,7 @@ public class DataSet {
 		int l = factor.length();
 		double ne = ((sequence.length() - l) * (1.0 / Math.pow(4.0, (double)l))) * sequence.length();
 		/*
-		 * faactorがsequenceに含まれる回数
+		 * factorがsequenceに含まれる回数
 		 */
 		int dosu = countStringInString(sequence, factor);
 		if (dosu >= ne)

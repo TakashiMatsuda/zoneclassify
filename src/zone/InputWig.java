@@ -3,7 +3,6 @@ package zone;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -13,8 +12,6 @@ import java.util.regex.Pattern;
  *
  */
 public class InputWig {
-	
-	
 	/**
 	 * 途中で何も書かなかったせいで、なにがかいてあるのかわからない
 	 * 
@@ -41,16 +38,8 @@ public class InputWig {
 				i++;
 			}
 			double[] gallon = new double[i / 100];
-			i = 0;
 			int j = 0;
 			while((line = br.readLine()) != null){
-				if (i > 1000000)// Test, now should be delete.
-					break;
-				/*
-				 * Print the status
-				 */
-				if (i % 100000000 == 0)
-					System.out.println(i);
 				if (chromtag.matcher(line).find())
 				{
 					harvest.add(gallon);
@@ -61,7 +50,6 @@ public class InputWig {
 					gallon[j] = Double.parseDouble(line);
 					j++;
 				}
-				i++;
 			}
 			br.close();
 		} catch(Exception e){

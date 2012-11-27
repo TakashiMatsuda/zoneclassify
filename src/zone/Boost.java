@@ -17,7 +17,12 @@ public class Boost {
 	 * 
 	 * これが全体のメインクラス
 	 */
+	
+	/*
+	 * 最初は低メチル化領域だけを実装します。
+	 */
 	public static void main(char[] args){
+		
 		
 		ZoneExtracter farmer = new ZoneExtracter();
 		
@@ -26,12 +31,15 @@ public class Boost {
 		 * : DataSetをコンストラクトする
 		 */
 		
+		/*
+		 * DataSet
+		 */
 		DataSet prince = new DataSet();
 		/*
 		 * パースしてDataSetが扱える形にしたい
 		 * それはDataSetがやること？
 		 */
-		prince.load(farmer.subZone(M), "coverage.wig");
+		prince.load(farmer.subZone(M), "coverage.wig");// Mは区間数、ゆくゆくは区間長の制限に変えたいですね
 		
 		/*
 		 * 引数を与えられる設計にする。
