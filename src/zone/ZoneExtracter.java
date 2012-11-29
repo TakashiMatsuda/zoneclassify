@@ -9,6 +9,7 @@ import java.util.List;
  *
  */
 public class ZoneExtracter {
+	static boolean DEBUG = false;
 	String genome;
 	int[] sitepos;
 	List<double[]> methyllevel;
@@ -32,10 +33,6 @@ public class ZoneExtracter {
 		}
 		return harvest;
 	}
-	
-	
-	
-	
 	
 	/**
 	 * 重み最大のm区間をもとめる
@@ -108,6 +105,7 @@ public class ZoneExtracter {
 						}
 					}
 				}
+				int M = maxzones.size();
 				
 				/*
 				 * 最短区間長制限区間推定アルゴリズムを実装してください。
@@ -117,12 +115,15 @@ public class ZoneExtracter {
 				 * 定理2により、重み最大のm区間の集合を適用
 				 */
 				
+				
+				if (DEBUG)
+				{
 				double sug1 = 1 / 0;
 				double summin = 0;
 				int sugminnum1 = 0;
 				double sug2 = 1 / 0;
 				int sugminnum2 = 0;
-				for(int o = M; o > m; o--){
+				for(int o = M; o > m; o--){// Mはまだ未記入
 					/*
 					 * 1つめの手法から導かれる候補
 					 */
@@ -146,12 +147,11 @@ public class ZoneExtracter {
 						for(int rr = maxzones.get(u)[1]; rr < maxzones.get(u + 1)[0]; rr++){// 端数のカウントが不安
 							summin += target[rr];
 						}
-						if (sug2 > summin){
+						if (sug2 > Math.abs(summin)){
 							sugminnum2 = u;
 							sug2 = summin;
 						}
 					}
-					
 					
 					/*
 					 * どちらの手法が小さい損失であるか
@@ -161,21 +161,52 @@ public class ZoneExtracter {
 					}
 					else{
 						
+						
+						
 						// 区間族がソートされている必要があることに気づきました。
 						// データの型を変更する必要があると思います。
 					}
-					
 				}
+				}// ここまでデバッグ
 				
 				
-				
-				
+				// 何回か手直し、もとのコードは使い回しなので
+				// バグが混入している可能性が
+				double summin2 = 1 / 0;
+				double sug3 = 1 / 0;
+				int sugnum1 = 0;
+				int sugnum2 = 0;
+				int d0 = 0;
+				int d1 = 0;
+				for(int u = M - 1; u >= m; u--){
+					summin2 = 0;
+					for(int kk = 0; kk < u; kk++){// 要素数がぴったり一致しているならば動作する、管理についてのあそびがない設計部分です
+						for(int rr = maxzones.get(kk)[0]; rr < maxzones.get(kk)[1]; rr++){
+							summin2 += target[rr];
+						}
+						if (sug3 > summin2){
+							sug3 = summin2;
+							sugnum1 = kk;
+						}
+					}
+					
+					
+					/*
+					 * Deletion step
+					 */
+					// sugnum1: この番目の区間を中心として前後3つを削除
+					// sugnum1 - 1: ここに再び投入する
+					d0 = maxzones.get(sugnum1 - 1)[0];
+					d1 = maxzones.get(sugnum1 + 1)[1];
+					for(int kkk = 0; kkk < 3; kkk++){
+						maxzones.remove(sugnum1 - 1);
+					}
+				}// 完成では？
 			}
 		}
 		return null;
 	}
 	
 	ZoneExtracter(){
-		
 	}
 }
