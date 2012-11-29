@@ -81,7 +81,7 @@ public class ZoneExtracter {
 					 */
 					if (tmp[0] < -3){
 						if (target[j] < 0)
-							tmp[0] = target[j];// ここわからない
+							tmp[0] = target[j];// ここわからない<- それだけじゃ後で困るよ、、、今度からなるべく詳しくコメントを書きましょう
 					}
 					
 					/**
@@ -115,7 +115,7 @@ public class ZoneExtracter {
 				 * 定理2により、重み最大のm区間の集合を適用
 				 */
 				
-				
+				// 不要になった部分
 				if (DEBUG)
 				{
 				double sug1 = 1 / 0;
@@ -189,8 +189,6 @@ public class ZoneExtracter {
 							sugnum1 = kk;
 						}
 					}
-					
-					
 					/*
 					 * Deletion step
 					 */
