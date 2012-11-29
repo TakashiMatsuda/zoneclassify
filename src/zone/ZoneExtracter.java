@@ -199,6 +199,8 @@ public class ZoneExtracter {
 					for(int kkk = 0; kkk < 3; kkk++){
 						maxzones.remove(sugnum1 - 1);
 					}
+					int[] newtmp = {d0, d1};
+					maxzones.add(sugnum1 - 1, newtmp);
 				}// 完成では？
 			}
 		}
