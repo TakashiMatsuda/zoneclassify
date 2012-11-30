@@ -51,6 +51,9 @@ public class ZoneExtracter {
 		this.methyllevel = mezo();
 		int al = methyllevel.size();
 		int i = 0;
+		/*
+		 * targetの意味書け
+		 */
 		double[] target = null;
 		while(methyllevel.get(i) != null){
 			target = methyllevel.get(i);
@@ -62,50 +65,54 @@ public class ZoneExtracter {
 			 * methyllevelの各要素(double[])について下の作業を行います
 			 */
 			for(int r = 0; r < al; r++){
-			
 				/*
 				 * 正区間と負区間への分割
 				 * 
 				 * とりあえず正区間だけ抽出します。（反転しているので）
 				 */
 				int l = target.length;
+				/*
+				 * k: 抽出区間の長さ<-必要？
+				 */
 				int k = 1;
 				int s = 0;
 				int[] tmp = new int[2];
-				tmp[0] = 0;
-				
-				
-				for (int j = 1; j < l; j++){
+				tmp[0] = -1;
+				// tmp[0]が正区間のはじまり
+				// tmp[1]が正区間のおわり
+				// target[j]が正なら登録開始
+				for (int j = 0; j < l; j++){
 					/**
 					 * tmpの登録が始まっていない場合
 					 */
-					if (tmp[0] < -3){
-						if (target[j] < 0)
-							tmp[0] = target[j];// ここわからない<- それだけじゃ後で困るよ、、、今度からなるべく詳しくコメントを書きましょう
-						
-						// ここ書くよ!
+					if (tmp[0] == -1){
+						if (target[j] > 0){
+							tmp[0] = j;
+						}
+					}
+					else{
+						if (target[j - 1] * target[j] >= 0)
+							k++;
+						else{
+							/**
+							 * 条件: 正・負区間
+							 */
+							if (target[j] > 0)
+							{
+								tmp[1] = j;
+								maxzones.add(tmp);
+								tmp = new int[2];
+								tmp[0] = (-1 / 0);
+							}
+							else{
+								// 負区間抽出のための空間
+							}
+						}
 					}
 					
 					/**
 					 * 条件：正区間・負区間が継続
 					 */
-					if (target[j - 1] * target[j] >= 0)
-						k++;
-					else{
-						/**
-						 * 条件: 正・負区間
-						 */
-						if (target[j] > 0){
-							// ここ空白
-						}
-						else
-						{
-							tmp[1] = j;
-							maxzones.add(tmp);
-							tmp = new int[2];
-							tmp[0] = (-1 / 0);
-						}
-					}
 				}
 				int M = maxzones.size();
 				
