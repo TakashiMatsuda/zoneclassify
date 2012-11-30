@@ -10,7 +10,7 @@ public class ZoneExtracterTest {
 	public void testSubZone() {
 		
 		ZoneExtracter exa = new ZoneExtracter();
-		exa.subZone(10);
+		exa.subZone(100);
 		
 	}
 

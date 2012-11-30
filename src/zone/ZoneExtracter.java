@@ -61,7 +61,7 @@ public class ZoneExtracter {
 		 * 遺伝子断片の中身、wigファイルの成れの果て
 		 */
 		double[] target = null;
-		while(methyllevel.get(i) != null){// iについて並列化したいですね
+		while(methyllevel.get(i) != null){// iについて並列化したいですね--エラー
 			target = methyllevel.get(i);
 			maxzones.clear();
 			
@@ -184,39 +184,47 @@ public class ZoneExtracter {
 				
 				// 何回か手直し、もとのコードは使い回しなので
 				// バグが混入している可能性が
+				/*
+				 * 区関数を減らしていく
+				 */
 				double summin2 = 1 / 0;
 				double sug3 = 1 / 0;
 				int sugnum1 = 0;
 				// int sugnum2 = 0;使わない、たぶん
 				int d0 = 0;
 				int d1 = 0;
-				for(int u = M - 1; u >= m; u--){
-					summin2 = 0;
-					for(int kk = 0; kk < u; kk++){// 要素数がぴったり一致しているならば動作する、管理についてのあそびがない設計部分です
-						for(int rr = maxzones.get(kk)[0]; rr < maxzones.get(kk)[1]; rr++){
-							summin2 += target[rr];
+				if (m > M){
+				
+				}
+				else{
+					for(int u = M - 1; u >= m; u--){
+						summin2 = 0;
+						for(int kk = 0; kk < u; kk++){// 要素数がぴったり一致しているならば動作する、管理についてのあそびがない設計部分です
+							for(int rr = maxzones.get(kk)[0]; rr < maxzones.get(kk)[1]; rr++){
+								summin2 += target[rr];
+							}
+							if (sug3 > summin2){
+								sug3 = summin2;
+								sugnum1 = kk;
+							}
 						}
-						if (sug3 > summin2){
-							sug3 = summin2;
-							sugnum1 = kk;
+						/*
+						 * Deletion step
+						 */
+						// 	sugnum1: この番目の区間を中心として前後3つを削除
+						// sugnum1 - 1: ここに再び投入する
+						d0 = maxzones.get(sugnum1 - 1)[0];
+						d1 = maxzones.get(sugnum1 + 1)[1];
+						for(int kkk = 0; kkk < 3; kkk++){
+							maxzones.remove(sugnum1 - 1);
 						}
-					}
-					/*
-					 * Deletion step
-					 */
-					// sugnum1: この番目の区間を中心として前後3つを削除
-					// sugnum1 - 1: ここに再び投入する
-					d0 = maxzones.get(sugnum1 - 1)[0];
-					d1 = maxzones.get(sugnum1 + 1)[1];
-					for(int kkk = 0; kkk < 3; kkk++){
-						maxzones.remove(sugnum1 - 1);
-					}
-					int[] newtmp = {d0, d1};
-					maxzones.add(sugnum1 - 1, newtmp);
-				}// 完成では？
+						int[] newtmp = {d0, d1};
+						maxzones.add(sugnum1 - 1, newtmp);
+					}// 完成では？
+				alldata.add(maxzones);
+				i++;
+				}
 			}
-			alldata.add(maxzones);
-			i++;
 		}
 		return alldata;
 	}

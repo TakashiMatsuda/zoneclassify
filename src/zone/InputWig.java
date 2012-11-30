@@ -33,17 +33,17 @@ public class InputWig {
 			 * core, Read and change the wig format to List<double[]>.
 			 */
 			while((line = br.readLine()) != null){
-				if (i > 1000000)//
-					break;
 				i++;
 			}
-			double[] gallon = new double[i / 20];
+			double[] gallon = new double[i / 100];
 			int j = 0;
 			while((line = br.readLine()) != null){
+				if (j > 1000000)
+					break;// デバッグ中
 				if (chromtag.matcher(line).find())
 				{
 					harvest.add(gallon);
-					gallon = new double[i / 20];
+					gallon = new double[i / 100];
 					j = 0;
 				}
 				else{
