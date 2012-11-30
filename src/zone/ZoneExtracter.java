@@ -43,6 +43,7 @@ public class ZoneExtracter {
 	 * @return  maxzones
 	 */
 	public List<List<int[]>> subZone(int m){
+		// データ型が異なる恐れ
 		List<List<int[]>> alldata = new ArrayList<List<int[]>>();
 		List<int[]> maxzones = new ArrayList<int[]>();
 		/*
@@ -62,6 +63,7 @@ public class ZoneExtracter {
 		double[] target = null;
 		while(methyllevel.get(i) != null){// iについて並列化したいですね
 			target = methyllevel.get(i);
+			maxzones.clear();
 			
 			/*
 			 *  この下、区間推定アルゴリズム
@@ -132,7 +134,7 @@ public class ZoneExtracter {
 				double summin = 0;
 				int sugminnum1 = 0;
 				double sug2 = 1 / 0;
-				int sugminnum2 = 0;
+				//int sugminnum2 = 0;
 				for(int o = M; o > m; o--){// Mはまだ未記入
 					/*
 					 * 1つめの手法から導かれる候補
@@ -158,7 +160,7 @@ public class ZoneExtracter {
 							summin += target[rr];
 						}
 						if (sug2 > Math.abs(summin)){
-							sugminnum2 = u;
+							//sugminnum2 = u;
 							sug2 = summin;
 						}
 					}
@@ -213,9 +215,10 @@ public class ZoneExtracter {
 					maxzones.add(sugnum1 - 1, newtmp);
 				}// 完成では？
 			}
+			alldata.add(maxzones);
 			i++;
 		}
-		return null;
+		return alldata;
 	}
 	
 	ZoneExtracter(){

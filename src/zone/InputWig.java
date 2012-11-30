@@ -37,13 +37,13 @@ public class InputWig {
 					break;
 				i++;
 			}
-			double[] gallon = new double[i / 100];
+			double[] gallon = new double[i / 20];
 			int j = 0;
 			while((line = br.readLine()) != null){
 				if (chromtag.matcher(line).find())
 				{
 					harvest.add(gallon);
-					gallon = new double[i / 100];
+					gallon = new double[i / 20];
 					j = 0;
 				}
 				else{
