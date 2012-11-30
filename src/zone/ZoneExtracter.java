@@ -50,12 +50,17 @@ public class ZoneExtracter {
 		 */
 		this.methyllevel = mezo();
 		int al = methyllevel.size();
+		/*
+		 * iの意味がわかりませｎ
+		 * iは遺伝子断片の序数
+		 */
 		int i = 0;
 		/*
 		 * targetの意味書け
+		 * 遺伝子断片の中身、wigファイルの成れの果て
 		 */
 		double[] target = null;
-		while(methyllevel.get(i) != null){
+		while(methyllevel.get(i) != null){// iについて並列化したいですね
 			target = methyllevel.get(i);
 			
 			/*
@@ -95,30 +100,26 @@ public class ZoneExtracter {
 							k++;
 						else{
 							/**
-							 * 条件: 正・負区間
+							 * 条件: 正・負区間<.今はこっちではない
+							 */
+							/**
+							 * 条件：正区間・負区間が継続
 							 */
 							if (target[j] > 0)
 							{
-								tmp[1] = j;
-								maxzones.add(tmp);
-								tmp = new int[2];
-								tmp[0] = (-1 / 0);
+								// 区間継続
 							}
 							else{
-								// 負区間抽出のための空間
+								// 負区間抽出のための区間は消してしまったけどここだった
+								tmp[1] = j - 1;//j - 1でエラー含みだがちゃんと動いていればj == 0となることはないはず
+								maxzones.add(tmp);
+								tmp = new int[2];
+								tmp[0] = -1;
 							}
 						}
 					}
-					
-					/**
-					 * 条件：正区間・負区間が継続
-					 */
 				}
 				int M = maxzones.size();
-				
-				/*
-				 * 最短区間長制限区間推定アルゴリズムを実装してください。
-				 */
 				/*
 				 * 変更。m区間の抽出アルゴリズムを実装します。
 				 * 定理2により、重み最大のm区間の集合を適用
@@ -212,6 +213,7 @@ public class ZoneExtracter {
 					maxzones.add(sugnum1 - 1, newtmp);
 				}// 完成では？
 			}
+			i++;
 		}
 		return null;
 	}
