@@ -185,7 +185,7 @@ public class ZoneExtracter {
 				double summin2 = 1 / 0;
 				double sug3 = 1 / 0;
 				int sugnum1 = 0;
-				int sugnum2 = 0;
+				// int sugnum2 = 0;
 				int d0 = 0;
 				int d1 = 0;
 				for(int u = M - 1; u >= m; u--){
