@@ -63,17 +63,24 @@ public class DataSet {
 			// 0, Nをどうするのかの方針を固めておこう
 			StringBuilder onePlace = new StringBuilder();
 			Pattern nametag = Pattern.compile("^>");
+			List<String> tmpRecords = new ArrayList<String>();
+			/*
+			 * Count the tag on the fasta file.
+			 */
+			int tagCount = 0;
 			while((line = br.readLine()) != null){
 				if (nametag.matcher(line).find() != true){// 綺麗な否定の方法を勉強したい
 					onePlace.append(line);
 				}
 				else{
-					
+					List<int[]> tmpZones = zones.get(tagCount);// これって速度とスコープ的にどうなんだろうか、
+					// 今まで避けてきた書き方ですけど・・・
 					
 					// ここ変更かな。
 					// この場でもう対象区間の切り出しをおこなってしまう設計にしましょう
 					this.records.add(String.valueOf(onePlace));
 					onePlace.delete(0, onePlace.length());// チューニングの成果？
+					tagCount++;
 				}
 			}
 				// 指定位置を読むにはどうするか
