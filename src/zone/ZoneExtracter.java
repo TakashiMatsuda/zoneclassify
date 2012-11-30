@@ -82,6 +82,8 @@ public class ZoneExtracter {
 					if (tmp[0] < -3){
 						if (target[j] < 0)
 							tmp[0] = target[j];// ここわからない<- それだけじゃ後で困るよ、、、今度からなるべく詳しくコメントを書きましょう
+						
+						// ここ書くよ!
 					}
 					
 					/**
