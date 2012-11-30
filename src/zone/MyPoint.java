@@ -7,7 +7,7 @@ package zone;
  * PATTERN	columnの次元数
  */
 public class MyPoint {
-	int PATTERN = 1020;// 2-5merのパターン数
+	int PATTERN = 1020;// 2-5merのパターン数<- 違う可能性ある
 	double weight;
 	byte[] column;
 	

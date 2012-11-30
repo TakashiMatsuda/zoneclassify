@@ -27,6 +27,7 @@ public class DataSet {
 	 */
 	private ArrayList<Classifier> boxes;
 	private ArrayList<MyPoint> teachers;
+	private ArrayList<String> records;
 	
 	/*
 	 * MyPointの数
@@ -45,29 +46,40 @@ public class DataSet {
 	 * filename: fastaファイルの名前
 	 * fastaファイルから該当区間のList<String>と各Stringが低メチル化領域か高メチルか領域かをはきだします。
 	 * 
-	 * 
-	 * 
 	 * 仕様変更があります、型を配列に変えたので変更をうけます　
 	 * @param zones, filename
 	 * @return
+	 * recordsに格納する作業です。
 	 */
-	public void load(List<List<int[]>> zones, String filename){
+	public boolean load(List<List<int[]>> zones, String filename){
 		// 下流につなげることを考えよう
-		// this.teachersに記録するところまで。
-		
+		// this.recordsに記録するところまで。
 		try{
-			String line = null;
+			String line;
 			BufferedReader br = new BufferedReader(new FileReader(filename));
 			// wigとfastaでタグが一致しているかどうか。同じ遺伝子部位についてやらないと意味なし
 			// 一致確認。なので各int[]について
-			
+			// 0, Nの関係でちゃんと一致しているのか自信がもてません
+			// 0, Nをどうするのかの方針を固めておこう
+			StringBuilder onePlace = new StringBuilder();
+			Pattern nametag = Pattern.compile("^>");
+			while((line = br.readLine()) != null){
+				if (nametag.matcher(line).find() != true){// 綺麗な否定の方法を勉強したい
+					onePlace.append(line);
+				}
+				else{
+					this.records.add(String.valueOf(onePlace));
+					onePlace.delete(0, onePlace.length());// チューニングの成果？
+				}
+			}
+				// 指定位置を読むにはどうするか
+				//まずはじめに断片ごとに読んで記録
 			br.close();
+			return true;
 		} catch(Exception e){
 			e.printStackTrace();
+			return false;
 		}
-		
-		
-		this.teachers = null;// ここが終点
 	}
 	
 	/**
