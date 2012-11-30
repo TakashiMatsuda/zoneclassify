@@ -68,6 +68,10 @@ public class DataSet {
 					onePlace.append(line);
 				}
 				else{
+					
+					
+					// ここ変更かな。
+					// この場でもう対象区間の切り出しをおこなってしまう設計にしましょう
 					this.records.add(String.valueOf(onePlace));
 					onePlace.delete(0, onePlace.length());// チューニングの成果？
 				}
