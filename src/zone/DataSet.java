@@ -46,10 +46,11 @@ public class DataSet {
 	 * filename: fastaファイルの名前
 	 * fastaファイルから該当区間のList<String>と各Stringが低メチル化領域か高メチルか領域かをはきだします。
 	 * 
-	 * 仕様変更があります、型を配列に変えたので変更をうけます　
+	 * 仕様変更があります、型を配列に変えたので変更をうけます　<- なんのことだかわかっていない(12/2)
 	 * @param zones, filename
 	 * @return
 	 * recordsに格納する作業です。
+	 * coding finished.
 	 */
 	public boolean load(List<List<int[]>> zones, String filename){
 		// 下流につなげることを考えよう
@@ -87,17 +88,15 @@ public class DataSet {
 					while(tmpZones.size() == 0){// ここはどう書くのがイディオム的に正しいのかわからない
 						// for文を使っても綺麗にかける、メモリ使用量がどっちが多いのかで決めよう
 						// コンパイル後は一緒かな？
-						int[] mold = tmpZones.get(0);
+						int[] mold = tmpZones.get(tmpZones.size());//末端から消去。ArrayListなのでこれが速いはず。 
 						String cast = onePlace.substring(mold[0], mold[1]);// 植木算があってる確証をとっていません
 						this.records.add(cast);
+						tmpZones.remove(tmpZones.size());
 					}
-					
 					onePlace.delete(0, onePlace.length());// クリアの方法、早い方法が何かわからなかったので自分なりに工夫した部分
 					tagCount++;
 				}
 			}
-				// 指定位置を読むにはどうするか
-				//まずはじめに断片ごとに読んで記録
 			br.close();
 			return true;
 		} catch(Exception e){
