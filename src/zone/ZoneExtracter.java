@@ -53,17 +53,17 @@ public class ZoneExtracter {
 		this.methyllevel = mezo();
 		int al = methyllevel.size();
 		/*
-		 * iの意味がわかりませｎ
-		 * iは遺伝子断片の序数
+		 * tagcountは遺伝子断片の序数
 		 */
-		int i = 0;
+		int tagcount = 0;
 		/*
 		 * targetの意味書け
 		 * 遺伝子断片の中身、wigファイルの成れの果て
 		 */
 		double[] target = null;
-		while(methyllevel.get(i) != null){// iについて並列化したいですね--エラー
-			target = methyllevel.get(i);
+		while(methyllevel.size() < tagcount){// iについて並列化したいですね--エラー
+			// methyllevel.get(tagcount) != null
+			target = methyllevel.get(tagcount);
 			maxzones.clear();
 			
 			/*
@@ -123,10 +123,14 @@ public class ZoneExtracter {
 					}
 				}
 				int M = maxzones.size();
+				
+				
 				/*
-				 * 変更。m区間の抽出アルゴリズムを実装します。
-				 * 定理2により、重み最大のm区間の集合を適用
+				 * m区間の抽出アルゴリズム
 				 */
+				
+				
+				
 				
 				// 不要になった部分
 				if (DEBUG)
@@ -186,7 +190,7 @@ public class ZoneExtracter {
 				// 何回か手直し、もとのコードは使い回しなので
 				// バグが混入している可能性が
 				/*
-				 * 区関数を減らしていく
+				 * 区間数を減らしていく
 				 */
 				double summin2 = 1 / 0;
 				double sug3 = 1 / 0;
@@ -198,6 +202,9 @@ public class ZoneExtracter {
 				
 				}
 				else{
+					/*
+			i		 * 
+					 */
 					for(int u = M - 1; u >= m; u--){
 						summin2 = 0;
 						for(int kk = 0; kk < u; kk++){// 要素数がぴったり一致しているならば動作する、管理についてのあそびがない設計部分です
@@ -223,9 +230,10 @@ public class ZoneExtracter {
 						maxzones.add(sugnum1 - 1, newtmp);
 					}// 完成では？
 				alldata.add(maxzones);
-				i++;// iの場所が違う気がする
+				// tagcount++; tagcountの場所が違う気がする
 				}
 			}
+			tagcount++;
 		}
 		return alldata;
 	}

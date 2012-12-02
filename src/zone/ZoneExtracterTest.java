@@ -8,7 +8,7 @@ public class ZoneExtracterTest {
 
 	@Test
 	public void testSubZone() {
-		
+		// テスト成功
 		ZoneExtracter exa = new ZoneExtracter();
 		exa.subZone(100);
 		
