@@ -8,8 +8,11 @@ public class DataSetTest {
 
 	@Test
 	public void testLoad() {
+
+		ZoneExtracter farmer = new ZoneExtracter();
 		DataSet exa = new DataSet();
-		exa.load(zones, filename);// これから
+		exa.load(farmer.subZone(100), "coverage.wig");
+		
 	}
 
 	@Test
