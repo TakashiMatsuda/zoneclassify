@@ -2,15 +2,18 @@ package zone;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 
 public class ZoneExtracterTest {
 
 	@Test
 	public void testSubZone() {
-		// テスト成功
+		// デバッグ成功、テスト失敗
 		ZoneExtracter exa = new ZoneExtracter();
-		exa.subZone(100);
+		List<List<int[]>> t = exa.subZone(100);
+		System.out.print(t.size());// サイズが0
 		
 	}
 

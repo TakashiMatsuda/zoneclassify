@@ -179,12 +179,8 @@ public class DataSet {
 		while(LS < PATTERN){
 			if (errorRatio(tmp) < (1.0 / 2.0))
 				break;
-			else{	/**
-				 * あるn-merがsequenceに含まれる回数が、期待値よりも大きいかを判定します。
-				 * @param factor
-				 * @param sequence
-				 * @return
-				 */
+			else{
+				// judgeEXPを使える
 				tmp = new Classifier(LS, (byte) 1);
 				if (errorRatio(tmp) < (1.0 / 2.0))
 					break;
