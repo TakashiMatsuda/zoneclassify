@@ -69,6 +69,10 @@ public class DataSet {
 			 */
 			int tagCount = 0;
 			while((line = br.readLine()) != null){
+				/*
+				 * nametagごとに対象区間族の切り出しを行います
+				 * tagcountで管理します
+				 */
 				if (nametag.matcher(line).find() != true){// 綺麗な否定の方法を勉強したい
 					onePlace.append(line);
 				}
@@ -76,21 +80,19 @@ public class DataSet {
 					List<int[]> tmpZones = zones.get(tagCount);// これって速度とスコープ的にどうなんだろうか、
 					// 今まで避けてきた書き方ですけど・・・
 					// 毎回初期化される!
+					
 					/*
 					 * tmpZonesの各要素に対応するものを全部切り出す
 					 */
 					while(tmpZones.size() == 0){// ここはどう書くのがイディオム的に正しいのかわからない
 						// for文を使っても綺麗にかける、メモリ使用量がどっちが多いのかで決めよう
 						// コンパイル後は一緒かな？
-						
-						
-						
+						int[] mold = tmpZones.get(0);
+						String cast = onePlace.substring(mold[0], mold[1]);// 植木算があってる確証をとっていません
+						this.records.add(cast);
 					}
 					
-					// ここ変更かな。
-					// この場でもう対象区間の切り出しをおこなってしまう設計にしましょう
-					this.records.add(String.valueOf(onePlace));
-					onePlace.delete(0, onePlace.length());// チューニングの成果？
+					onePlace.delete(0, onePlace.length());// クリアの方法、早い方法が何かわからなかったので自分なりに工夫した部分
 					tagCount++;
 				}
 			}
