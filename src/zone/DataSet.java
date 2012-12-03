@@ -98,11 +98,24 @@ public class DataSet {
 				}
 			}
 			br.close();
-			
+			/*
+			 * recordsできあがり
+			 */
 			
 			/*
+			 * 一つの低メチル化領域について全2-5merについてのカラムを作成します。
 			 * 全部使いつくすまでjudgeEXPを実行します
 			 */
+			int recordsize = records.size();
+			for(int i = 0; i < recordsize; i++){
+				String lowMethylZone = records.get(i);
+				/*
+				 * 各2-5merについてjudgeExpを実行
+				 */
+				MyPoint newColumn = new MyPoint();// MyPointであってたか？
+				// 2-5merのパターンを収めたリストがほしい
+				
+			}
 			
 			
 			
