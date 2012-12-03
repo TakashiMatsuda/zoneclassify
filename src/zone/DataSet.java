@@ -243,14 +243,17 @@ public class DataSet {
 		/*
 		 * nucleotide : ヌクレオチド4文字のインデックス
 		 * two, ...five digits: 各桁数のmersのパターン数、for文を回すために用意
+		 * 各パターンをfruitに格納して返します
 		 */
 		char[] nucleotide = {'A', 'T', 'C', 'G'};
 		int twodigits = (int) Math.pow(4, 2);
 		int threedigits = (int) Math.pow(4, 3);// 4であってる？
 		int fourdigits = (int) Math.pow(4, 4);
 		int fivedigits = (int) Math.pow(4, 5);
+		ArrayList<String> fruit = new ArrayList<String>();
 		
 		
+		return fruit;
 	}
 	
 	/**
