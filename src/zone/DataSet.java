@@ -28,9 +28,10 @@ public class DataSet {
 	private ArrayList<Classifier> boxes;
 	private ArrayList<MyPoint> teachers;
 	private ArrayList<String> records;
+	private ArrayList<String> mers;
 	
 	/*
-	 * MyPointの数
+	 * MyPointの数 <- 意味がわからなくなってしまいました。
 	 */
 	private int M;
 	
@@ -113,7 +114,10 @@ public class DataSet {
 				 * 各2-5merについてjudgeExpを実行
 				 */
 				MyPoint newColumn = new MyPoint();// MyPointであってたか？
-				// 2-5merのパターンを収めたリストがほしい
+				// 2-5merのパターンを収めたリストがほしい<- つくりましょう！あとで遅くなったらチューニングするということで。
+				// コンストラクタの中に内蔵します。
+				
+				
 				
 			}
 			
@@ -127,7 +131,7 @@ public class DataSet {
 		
 		// これではまだknowledgesに格納できていない
 		// recordsからknowledgesへ格納する作業を書き込む必要がある
-		
+		// 低メチル化領域しかピックあぷしていないから、学習データの目標属性は全部1です。。後で修復。ZoneExtracterのほう。
 		
 		
 		
@@ -232,12 +236,36 @@ public class DataSet {
 	}
 	
 	/**
+	 * Create and store all 2-5mer Patterns
+	 * @return
+	 */
+	private List<String> createMers(){
+		/*
+		 * nucleotide : ヌクレオチド4文字のインデックス
+		 * two, ...five digits: 各桁数のmersのパターン数、for文を回すために用意
+		 */
+		char[] nucleotide = {'A', 'T', 'C', 'G'};
+		int twodigits = (int) Math.pow(4, 2);
+		int threedigits = (int) Math.pow(4, 3);// 4であってる？
+		
+	}
+	
+	/**
 	 * Constructer
 	 * open to change
 	 */
 	DataSet(){// 訓練データの入力我必要
-		// その形式はBoostくらすが決めること、ここで考える必要はない
+		// その形式はBoostくらすが決めること、ここで考える必要はない<- その方針は変更したほうがよいのでは？
 		
+		/*
+		 * 各2-5merの作成
+		 */
+		this.mers = new ArrayList<String>();
+		// AA ==> GGGGGまでのながれを考えよう
+		// 桁数ずつに順番に愚直にやりましょう
+		// 場合によってはprivateメソッドを作成したほうがいいかもしれませんね
+		
+		this.mers = createMers();
 		LS = 0;
 	}
 	
