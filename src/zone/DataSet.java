@@ -251,7 +251,26 @@ public class DataSet {
 		int fourdigits = (int) Math.pow(4, 4);
 		int fivedigits = (int) Math.pow(4, 5);
 		ArrayList<String> fruit = new ArrayList<String>();
-		
+		for(int i = 0; i < twodigits; i++){
+			/*
+			 * 10進数iから4進数への変換
+			 */
+			
+			char[] twomer = {nucleotide[i / 4], nucleotide[i % 4]};// 頭の中で暗算して書いた行です
+			fruit.add(String.valueOf(twomer));
+		}
+		int d3 = twodigits + threedigits;// 脳内暗算記述行
+		for(int i = twodigits; i < d3; i++){
+			
+		}
+		int d4 = d3 + fourdigits;
+		for(int i = d3; i < d4; i++){
+			
+		}
+		int d5 = d4 + fivedigits;
+		for(int i = d4; i < d5; i++){
+			
+		}
 		
 		return fruit;
 	}
