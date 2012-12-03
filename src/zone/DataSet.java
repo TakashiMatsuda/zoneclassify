@@ -177,6 +177,8 @@ public class DataSet {
 		}
 	}
 	
+	//次なにやるか考えておこう
+	
 	/**
 	 * classifierによるpredictionのエラー率を計算
 	 * 完成しています
@@ -258,6 +260,7 @@ public class DataSet {
 		 * 2merの処理
 		 */
 		// 以下ぴったりの設計です。植木算法を間違えているとArrayOutOfExceptionです。
+		// ^^^^^^^実際に起きました。^^^^^^^^^
 		for(int i = 0; i < twodigits; i++){
 			/*
 			 * 10進数iから4進数への変換

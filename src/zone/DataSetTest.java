@@ -5,14 +5,15 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class DataSetTest {
-
+	static boolean DEBUG = false;
+	
 	@Test
 	public void testLoad() {
-
+		if (DEBUG){
 		ZoneExtracter farmer = new ZoneExtracter();
 		DataSet exa = new DataSet();
 		exa.load(farmer.subZone(100), "coverage.wig");// そんな名前のファイルはないので変更しなければ
-		
+		}
 	}
 
 	@Test
