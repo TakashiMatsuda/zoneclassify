@@ -222,6 +222,7 @@ public class DataSet {
 		return tmp;
 	}
 	
+	
 	/**
 	 * AdaBoostのアルゴリズムにしたがってweightを更新
 	 * 完成しています
@@ -235,11 +236,13 @@ public class DataSet {
 		}
 	}
 	
+	
 	/**
 	 * Create and store all 2-5mer Patterns
 	 * @return
+	 * Coding completed.
 	 */
-	private List<String> createMers(){
+	private ArrayList<String> createMers(){
 		/*
 		 * nucleotide : ヌクレオチド4文字のインデックス
 		 * two, ...five digits: 各桁数のmersのパターン数、for文を回すために用意
@@ -279,8 +282,9 @@ public class DataSet {
 		int d5 = d4 + fivedigits;
 		for(int i = d4; i < d5; i++){
 			// 記述が長くなってしまったのでミス確認
-			char[] fivemer = {nucleotide[i / (4 * 4 * 4 * 4), nucleotide[i % (4 * 4 * 4 * 4) / (4 * 4 * 4)],
+			char[] fivemer = {nucleotide[i / (4 * 4 * 4 * 4)], nucleotide[i % (4 * 4 * 4 * 4) / (4 * 4 * 4)],
 			                             nucleotide[(i % (4 * 4 * 4) / (4 * 4))], nucleotide[(i % (4 * 4) / 4)], nucleotide[i / 4]};
+			fruit.add(String.valueOf(fivemer));
 		}
 		return fruit;
 	}
