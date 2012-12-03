@@ -273,20 +273,23 @@ public class DataSet {
 		 */
 		int d3 = twodigits + threedigits;// 脳内暗算記述行
 		for(int i = twodigits; i < d3; i++){
-			char[] threemer = {nucleotide[i / (4 * 4)], nucleotide[(i % (4 * 4) / 4)], nucleotide[(i % 4)]};
+			int tmpi = i - twodigits;
+			char[] threemer = {nucleotide[tmpi / (4 * 4)], nucleotide[(tmpi % (4 * 4) / 4)], nucleotide[(tmpi % 4)]};
 			fruit.add(String.valueOf(threemer));
 		}
 		int d4 = d3 + fourdigits;
 		for(int i = d3; i < d4; i++){
-			char[] fourmer = {nucleotide[i / (4 * 4 * 4)], nucleotide[(i % (4 * 4 * 4)) / (4 * 4)], 
-					nucleotide[(i % (4 * 4)) / 4], nucleotide[i % 4]};
+			int tmpi = i - d3;
+			char[] fourmer = {nucleotide[tmpi / (4 * 4 * 4)], nucleotide[(tmpi % (4 * 4 * 4)) / (4 * 4)], 
+					nucleotide[(tmpi % (4 * 4)) / 4], nucleotide[tmpi % 4]};
 			fruit.add(String.valueOf(fourmer));
 		}
 		int d5 = d4 + fivedigits;
 		for(int i = d4; i < d5; i++){
+			int tmpi = i - d4;
 			// 記述が長くなってしまったのでミス確認
-			char[] fivemer = {nucleotide[i / (4 * 4 * 4 * 4)], nucleotide[i % (4 * 4 * 4 * 4) / (4 * 4 * 4)],
-			                             nucleotide[(i % (4 * 4 * 4) / (4 * 4))], nucleotide[(i % (4 * 4) / 4)], nucleotide[i / 4]};
+			char[] fivemer = {nucleotide[tmpi / (4 * 4 * 4 * 4)], nucleotide[tmpi % (4 * 4 * 4 * 4) / (4 * 4 * 4)],
+			                             nucleotide[(tmpi % (4 * 4 * 4) / (4 * 4))], nucleotide[(tmpi % (4 * 4) / 4)], nucleotide[tmpi % 4]};
 			fruit.add(String.valueOf(fivemer));
 		}
 		return fruit;
@@ -302,11 +305,6 @@ public class DataSet {
 		/*
 		 * 各2-5merの作成
 		 */
-		this.mers = new ArrayList<String>();
-		// AA ==> GGGGGまでのながれを考えよう
-		// 桁数ずつに順番に愚直にやりましょう
-		// 場合によってはprivateメソッドを作成したほうがいいかもしれませんね
-		
 		this.mers = createMers();
 		LS = 0;
 	}
