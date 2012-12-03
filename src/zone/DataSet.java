@@ -52,9 +52,9 @@ public class DataSet {
 	 * recordsに格納する作業です。
 	 * coding finished.
 	 */
-	public boolean load(List<List<int[]>> zones, String filename){
+	public boolean load(List<List<int[]>> zones, String filename){// booleanはわかりにくい, 実際はknowledgesまで？
 		// 下流につなげることを考えよう
-		// this.recordsに記録するところまで。
+		// this.recordsに記録するところまで。<- knowledgesまでじゃないか？
 		try{
 			String line;
 			BufferedReader br = new BufferedReader(new FileReader(filename));
@@ -103,6 +103,11 @@ public class DataSet {
 			e.printStackTrace();
 			return false;
 		}
+		
+		// これではまだknowledgesに格納できていない
+		// recordsからknowledgesへ格納する作業を書き込む必要がある
+		
+		
 	}
 	
 	/**
@@ -170,8 +175,8 @@ public class DataSet {
 	
 	/**
 	 * classifierを作成
-	 * 一から順番にラベルごとに分類器をつくり、エラー率が0.5より大きければその分類器を返します。
-	 * 完成しています
+	 * 一から順番にラベルごとに分類器をつくり、エラー率が0.5より小さければその分類器を返します。
+	 * 完成しています<- 本当？
 	 * @return
 	 */
 	public Classifier weakLearn(){
