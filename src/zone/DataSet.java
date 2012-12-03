@@ -251,27 +251,37 @@ public class DataSet {
 		int fourdigits = (int) Math.pow(4, 4);
 		int fivedigits = (int) Math.pow(4, 5);
 		ArrayList<String> fruit = new ArrayList<String>();
+		/*
+		 * 2merの処理
+		 */
+		// 以下ぴったりの設計です。植木算法を間違えているとArrayOutOfExceptionです。
 		for(int i = 0; i < twodigits; i++){
 			/*
 			 * 10進数iから4進数への変換
 			 */
-			
 			char[] twomer = {nucleotide[i / 4], nucleotide[i % 4]};// 頭の中で暗算して書いた行です
 			fruit.add(String.valueOf(twomer));
 		}
+		/*
+		 * 同様に3-5merも処理
+		 */
 		int d3 = twodigits + threedigits;// 脳内暗算記述行
 		for(int i = twodigits; i < d3; i++){
-			
+			char[] threemer = {nucleotide[i / (4 * 4)], nucleotide[(i % (4 * 4) / 4)], nucleotide[(i % 4)]};
+			fruit.add(String.valueOf(threemer));
 		}
 		int d4 = d3 + fourdigits;
 		for(int i = d3; i < d4; i++){
-			
+			char[] fourmer = {nucleotide[i / (4 * 4 * 4)], nucleotide[(i % (4 * 4 * 4)) / (4 * 4)], 
+					nucleotide[(i % (4 * 4)) / 4], nucleotide[i % 4]};
+			fruit.add(String.valueOf(fourmer));
 		}
 		int d5 = d4 + fivedigits;
 		for(int i = d4; i < d5; i++){
-			
+			// 記述が長くなってしまったのでミス確認
+			char[] fivemer = {nucleotide[i / (4 * 4 * 4 * 4), nucleotide[i % (4 * 4 * 4 * 4) / (4 * 4 * 4)],
+			                             nucleotide[(i % (4 * 4 * 4) / (4 * 4))], nucleotide[(i % (4 * 4) / 4)], nucleotide[i / 4]};
 		}
-		
 		return fruit;
 	}
 	
