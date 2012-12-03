@@ -52,7 +52,7 @@ public class DataSet {
 	 * recordsに格納する作業です。
 	 * coding finished.
 	 */
-	public boolean load(List<List<int[]>> zones, String filename){// booleanはわかりにくい, 実際はknowledgesまで？
+	public boolean load(List<List<int[]>> zones, String filename){// booleanはわかりにくい, 実際はknowledgesまで?
 		// 下流につなげることを考えよう
 		// this.recordsに記録するところまで。<- knowledgesまでじゃないか？
 		try{
@@ -98,6 +98,14 @@ public class DataSet {
 				}
 			}
 			br.close();
+			
+			
+			/*
+			 * 全部使いつくすまでjudgeEXPを実行します
+			 */
+			
+			
+			
 			return true;
 		} catch(Exception e){
 			e.printStackTrace();
@@ -106,6 +114,8 @@ public class DataSet {
 		
 		// これではまだknowledgesに格納できていない
 		// recordsからknowledgesへ格納する作業を書き込む必要がある
+		
+		
 		
 		
 	}

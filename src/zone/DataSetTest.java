@@ -11,7 +11,7 @@ public class DataSetTest {
 
 		ZoneExtracter farmer = new ZoneExtracter();
 		DataSet exa = new DataSet();
-		exa.load(farmer.subZone(100), "coverage.wig");
+		exa.load(farmer.subZone(100), "coverage.wig");// そんな名前のファイルはないので変更しなければ
 		
 	}
 

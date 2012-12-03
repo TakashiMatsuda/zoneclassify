@@ -45,6 +45,7 @@ public class ZoneExtracter {
 	public List<List<int[]>> subZone(int m){
 		// データ型が異なる恐れ
 		// 大きくなりすぎた。もっと分割して書き直したい。
+		// サイズが0!!どこに問題があるのか確認するべき
 		List<List<int[]>> alldata = new ArrayList<List<int[]>>();
 		List<int[]> maxzones = new ArrayList<int[]>();
 		/*
