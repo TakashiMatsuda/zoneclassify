@@ -247,6 +247,9 @@ public class DataSet {
 		char[] nucleotide = {'A', 'T', 'C', 'G'};
 		int twodigits = (int) Math.pow(4, 2);
 		int threedigits = (int) Math.pow(4, 3);// 4であってる？
+		int fourdigits = (int) Math.pow(4, 4);
+		int fivedigits = (int) Math.pow(4, 5);
+		
 		
 	}
 	
