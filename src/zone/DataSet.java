@@ -160,16 +160,13 @@ public class DataSet {
 	}
 	
 	
-	// 次はここから手をつけよう
 	/**
 	 * Initialize weight
 	 */
 	public void initWeight(){
-		int l = knowledges.length;
-		for (int i = 0; i < l; i++){
-			knowledges.set(i, knowledges.get(i).setW(1.0 / (double)l));// ここあとで
-			// knowledgeの型
-			// weightは別管理のほうがいいんじゃないかな？
+		for (int i = 0; i < PATTERN; i++){
+			// そうか、ここの関係でsetWはvoidじゃなくて何か返さなきゃいけなかったんだ
+			teachers.set(i, element);// elementのところにMyPointで提供される関数、wを更新したMyPointを入れる
 		}
 	}
 	
@@ -210,7 +207,6 @@ public class DataSet {
 			if (errorRatio(tmp) < (1.0 / 2.0))
 				break;
 			else{
-				// judgeEXPを使える
 				tmp = new Classifier(LS, (byte) 1);
 				if (errorRatio(tmp) < (1.0 / 2.0))
 					break;
