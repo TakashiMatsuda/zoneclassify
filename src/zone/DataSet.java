@@ -12,16 +12,6 @@ import java.util.regex.Pattern;
  *
  */
 public class DataSet {
-	// とりあえずかたちは整いました、
-	// あとはIOを整備して
-	// 細かい調整、これはIOが整ったら上流から順番に行います
-	// そしてデバッグ
-	// テスト
-	// 完成
-	// という手順を通りましょう。
-	
-	// 先生のクラス構成微妙なんじゃないかな...
-	
 	/*
 	 * 判定器リスト
 	 */
@@ -71,6 +61,7 @@ public class DataSet {
 			 * Count the tag on the fasta file.
 			 */
 			int tagCount = 0;
+			List<int[]> tmpZones;
 			while((line = br.readLine()) != null){
 				/*
 				 * nametagごとに対象区間族の切り出しを行います
@@ -80,10 +71,9 @@ public class DataSet {
 					onePlace.append(line);
 				}
 				else{
-					// もらっているZonesの方に問題がある
-					List<int[]> tmpZones = zones.get(tagCount);// これって速度とスコープ的にどうなんだろうか、
+					tmpZones = zones.get(tagCount);
 					// 今まで避けてきた書き方ですけど・・・
-					// 毎回初期化される!
+					// 毎回初期化される!<- やっぱり良くなかった
 					
 					/*
 					 * tmpZonesの各要素に対応するものを全部切り出す
@@ -131,6 +121,7 @@ public class DataSet {
 		// 低メチル化領域しかピックアップしていないから、学習データの目標属性は全部1です。。後で修復。ZoneExtracterのほう。
 	}
 	
+	
 	/**
 	 * targetにsearchwordが現れる関数を返します。ただし重複し数えない場合の度数です。
 	 * @param target
@@ -140,7 +131,8 @@ public class DataSet {
 	private int countStringInString(String target, String searchWord){
 		return (target.length() - target.replaceAll(searchWord, "").length()) / searchWord.length();
 	}
-
+	
+	
 	/**
 	 * あるn-merがsequenceに含まれる回数が、期待値よりも大きいかを判定します。
 	 * @param factor
@@ -167,11 +159,9 @@ public class DataSet {
 	public void initWeight(){
 		for (int i = 0; i < PATTERN; i++){
 			// そうか、ここの関係でsetWはvoidじゃなくて何か返さなきゃいけなかったんだ
-			teachers.set(i, element);// elementのところにMyPointで提供される関数、wを更新したMyPointを入れる
+			teachers.set(i, teachers.get(i).changeWeight(1));// elementのところにMyPointで提供される関数、wを更新したMyPointを入れる
 		}
 	}
-	
-	//次なにやるか考えておこう
 	
 	/**
 	 * classifierによるpredictionのエラー率を計算
@@ -187,7 +177,7 @@ public class DataSet {
 		int q = x.start;
 		int p = x.prediction();
 		for (int i = 0; i < M; i++){
-			if (knowledges[i][q] == 1){
+			if (teachers.get(i).getColumn()[q] == 1){
 				sum++;
 				if (knowledges[i][M] == p)
 					right++;
@@ -195,6 +185,7 @@ public class DataSet {
 		}
 		return (double)right / (double)sum;
 	}
+	
 	
 	/**
 	 * classifierを作成
@@ -227,7 +218,8 @@ public class DataSet {
 		double e = errorRatio(h);
 		beta = e /(1 - e);
 		for(int i = 0; i < M; i++){
-			knowledges[i][PATTERN + 1] = (byte) (knowledges[i][PATTERN + 1] * Math.pow(beta, (1 - Math.abs(h.prediction() - knowledges[i][PATTERN]))));
+			// knowledges[i][PATTERN + 1] = (byte) (knowledges[i][PATTERN + 1] * Math.pow(beta, (1 - Math.abs(h.prediction() - knowledges[i][PATTERN]))));
+			// knowledgesのknowledges[i][PATTERN] [i][PATTERN + 1]がどういう意味だったか忘れてしまった
 		}
 	}
 	

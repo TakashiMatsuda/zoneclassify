@@ -23,23 +23,24 @@ public class ZoneExtracter {
 	 * @return
 	 */
 	private List<ArrayList<Double>> mezo(){
-		// 
-
 		System.out.println("READING CpGMethylationLevel DATA...");
 		List<ArrayList<Double>> tmp = InputWig.getWIG("blastula_CpGMethylationLevel.wig");
-		List<ArrayList<Double>> harvest = new ArrayList<ArrayList<Double>>();
+		System.out.println(tmp.size());
 		double p = 0;
 		ArrayList<Double> bunch = new ArrayList<Double>();
 		for (int i = 0; i < tmp.size(); i++){
 			bunch.clear();
 			for (int j = 0; j < tmp.get(i).size(); j++){
 				p = (tmp.get(i).get(j) - 0.5) * (-1);
+				
 				bunch.add(p);
 			}
-			harvest.add(bunch);
+			System.out.println(bunch.size());
+			tmp.set(i, bunch);
 		}
-		return harvest;
+		return tmp;
 	}
+	
 	
 	/**
 	 * 重み最大のm区間をもとめる
@@ -152,7 +153,7 @@ public class ZoneExtracter {
 				int d0 = 0;
 				int d1 = 0;
 				if (m > M){
-				
+					// 何もしない
 				}
 				else{
 					/*

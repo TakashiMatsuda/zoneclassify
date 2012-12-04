@@ -55,7 +55,7 @@ public class InputWig {
 			long count = 0;
 			while((line = br.readLine()) != null){
 				if ((count % 10000000) == 0)
-					System.out.println((count / 10000000));
+					System.out.println((count / 10000000) + "* 10000000lines  wigデータ取得中....");
 				// if (j > 100000)
 					// break;// デバッグ中 <- 重いので手元のPCでテストする時には長さ制限をかけています
 				if (chromtag.matcher(line).find())

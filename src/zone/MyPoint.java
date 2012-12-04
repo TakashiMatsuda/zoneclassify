@@ -23,7 +23,13 @@ public class MyPoint {
 	 * Reset weight
 	 * @param w
 	 */
-	public void setW(double w){
+	public MyPoint changeWeight(double w){
+		MyPoint tmp = new MyPoint(this.column);
+		tmp.weight = w;
+		return tmp;
+	}
+	
+	public void setWeight(double w){
 		this.weight = w;
 	}
 	
