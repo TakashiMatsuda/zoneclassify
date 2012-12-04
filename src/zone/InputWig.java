@@ -26,7 +26,7 @@ public class InputWig {
 			Pattern chromtag = Pattern.compile("^fixed");
 			int i = 0;
 			/*
-			 * empty read
+			 * empty reading for the first line
 			 */
 			br.readLine();
 			/*
@@ -39,7 +39,7 @@ public class InputWig {
 			int j = 0;
 			while((line = br.readLine()) != null){
 				if (j > 1000000)
-					break;// デバッグ中
+					break;// デバッグ中 <- 重いので手元のPCでテストする時には長さ制限をかけています
 				if (chromtag.matcher(line).find())
 				{
 					harvest.add(gallon);

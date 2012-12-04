@@ -26,7 +26,7 @@ public class DataSet {
 	 * 判定器リスト
 	 */
 	private ArrayList<Classifier> boxes;
-	private ArrayList<MyPoint> teachers;
+	private ArrayList<MyPoint> teachers;// <- 一度も使われていないとか、もったいなさすぎる
 	private ArrayList<String> records;
 	private ArrayList<String> mers;
 	
@@ -35,7 +35,7 @@ public class DataSet {
 	 */
 	private int M;
 	
-	private int PATTERN = (4 ^ 2) * (5 ^ 3);
+	private static int PATTERN = (int) Math.pow(4, 2) + (int) Math.pow(4, 3) + (int) Math.pow(4, 4) + (int) Math.pow(4, 5);
 	/*
 	 * 教師データ集合
 	 */
@@ -113,30 +113,21 @@ public class DataSet {
 			for(int i = 0; i < recordsize; i++){
 				String lowMethylZone = records.get(i);
 				/*
-				 * 各2-5merについてjudgeExpを実行
+				 * 各2-5merについてjudgeExpを実行し、teachersに格納する
 				 */
-				MyPoint newColumn = new MyPoint();// MyPointであってたか？
-				// 2-5merのパターンを収めたリストがほしい<- つくりましょう！あとで遅くなったらチューニングするということで。
-				// コンストラクタの中に内蔵します。
-				
-				
-				
+				byte[] preColumn = new byte[PATTERN];
+				for(int j = 0; j < PATTERN; j++){
+					preColumn[j] = judgeEXP(lowMethylZone, mers.get(j));
+				}
+				MyPoint tmpMP = new MyPoint(preColumn);
+				teachers.add(tmpMP);
 			}
-			
-			
-			
 			return true;
 		} catch(Exception e){
 			e.printStackTrace();
 			return false;
-		}
-		
-		// これではまだknowledgesに格納できていない
-		// recordsからknowledgesへ格納する作業を書き込む必要がある
-		// 低メチル化領域しかピックあぷしていないから、学習データの目標属性は全部1です。。後で修復。ZoneExtracterのほう。
-		
-		
-		
+		}		
+		// 低メチル化領域しかピックアップしていないから、学習データの目標属性は全部1です。。後で修復。ZoneExtracterのほう。
 	}
 	
 	/**
@@ -155,7 +146,7 @@ public class DataSet {
 	 * @param sequence
 	 * @return
 	 */
-	private int judgeEXP(String factor, String sequence){
+	private byte judgeEXP(String factor, String sequence){
 		int l = factor.length();
 		double ne = ((sequence.length() - l) * (1.0 / Math.pow(4.0, (double)l))) * sequence.length();
 		/*
