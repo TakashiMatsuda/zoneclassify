@@ -2,29 +2,43 @@ package zone;
 
 /**
  *	one column and one target.
- * 
  * @author tks
- * PATTERN	columnの次元数
  */
 public class MyPoint {
-	int PATTERN = 1020;// 2-5merのパターン数<- 違う可能性ある
-	double weight;
-	byte[] column;
-	
+	/*
+	 * PATTERN 2-5merのパターン数
+	 * すなわちcolumnの数
+	 * weight: 重み
+	 * column: 各2-5merの出現頻度に対応する配列
+	 */
+	static int PATTERN = (int)Math.pow(4, 2) + (int)Math.pow(4, 3) + (int)Math.pow(4, 4) + (int)Math.pow(4, 5);
+	public double weight;
+	private byte[] column;
+	// Listで挿入した順番が保持されるなら、columnをprivateとしても問題ない
 	
 	/**
-	 * スレッドセーフとの兼ね合いをどう設計すればいいのか、定石がわからない
-	 * このコードだと遅い、メモリ必要
+	 * これで本当に内容が変更されるのか不安
+	 * あとで試しコード書いて調べてみよう
+	 * 
+	 * Reset weight
 	 * @param w
 	 */
-	public MyPoint setW(double w){
-		MyPoint tmp = new MyPoint();
-		tmp.weight = w;
-		tmp.column = this.column;
-		return tmp;
+	public void setW(double w){
+		this.weight = w;
 	}
 	
-	MyPoint(){
-		this.column = new byte[PATTERN];
+	public byte[] getColumn(){
+		return this.column;
+	}
+	
+	public double getWeight(){
+		return this.weight;
+	}
+	
+	MyPoint(byte[] core){
+		if (core.length == PATTERN)
+			this.column = core;
+		else
+			System.out.println("PARAMETER LENGTH ERROR     -- MyPoint() --");
 	}	
 }

@@ -40,6 +40,8 @@ public class DataSet {
 	 * 教師データ集合
 	 */
 	private byte[][] knowledges;
+	// MyPointが使われていない!
+	// teachersとの競合
 	private int LS;
 	
 	/**
@@ -175,6 +177,8 @@ public class DataSet {
 		int l = knowledges.length;
 		for (int i = 0; i < l; i++){
 			knowledges.set(i, knowledges.get(i).setW(1.0 / (double)l));// ここあとで
+			// knowledgeの型
+			// weightは別管理のほうがいいんじゃないかな？
 		}
 	}
 	
