@@ -13,7 +13,7 @@ public class ZoneExtracterTest {
 		// デバッグ成功、テスト失敗
 		ZoneExtracter exa = new ZoneExtracter();
 		List<List<int[]>> t = exa.subZone(100);
-		System.out.print(t.size());// サイズが0
+		System.out.print(t.size());
 	}
 
 	@Test

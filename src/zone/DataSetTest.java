@@ -11,7 +11,7 @@ public class DataSetTest {
 	public void testLoad() {
 		ZoneExtracter farmer = new ZoneExtracter();
 		DataSet exa = new DataSet();
-		exa.load(farmer.subZone(100), "Oryzias_latipes.MEDAKA1.53.dna.toplevel.fa");// 100000で切ってしまっているからwigとfastaの長さが一致しない、
+		exa.load(farmer.subZone(100), "Oryzias_latipes.MEDAKA1.53.dna.toplevel.fa");
 	}
 
 	@Test

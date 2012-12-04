@@ -12,27 +12,31 @@ public class ZoneExtracter {
 	static boolean DEBUG = false;
 	String genome;
 	int[] sitepos;
-	List<double[]> methyllevel;
+	List<ArrayList<Double>> methyllevel;
 	
 	
 	/**
 	 * harvest ArrayList<double[]>
+	 * 正負反転
+	 * -0.5
+	 * 関数
 	 * @return
 	 */
-	private List<double[]> mezo(){
-		// エラー含みっぽい
-		// そもそもInputWIGにエラーがある可能性も
+	private List<ArrayList<Double>> mezo(){
+		// 
+
 		System.out.println("READING CpGMethylationLevel DATA...");
-		List<double[]> tmp = InputWig.getWIG("blastula_CpGMethylationLevel.wig");
-		List<double[]> harvest = new ArrayList<double[]>();
+		List<ArrayList<Double>> tmp = InputWig.getWIG("blastula_CpGMethylationLevel.wig");
+		List<ArrayList<Double>> harvest = new ArrayList<ArrayList<Double>>();
 		double p = 0;
+		ArrayList<Double> bunch = new ArrayList<Double>();
 		for (int i = 0; i < tmp.size(); i++){
-			double[] bunch = new double[tmp.get(i).length];
-			for (int j = 0; j < tmp.get(i).length; j++){
-				p = (tmp.get(i)[j] - 0.5) * (-1);
-				bunch[i] = p;
+			bunch.clear();
+			for (int j = 0; j < tmp.get(i).size(); j++){
+				p = (tmp.get(i).get(j) - 0.5) * (-1);
+				bunch.add(p);
 			}
-			tmp.set(i, bunch);
+			harvest.add(bunch);
 		}
 		return harvest;
 	}
@@ -48,7 +52,6 @@ public class ZoneExtracter {
 	public List<List<int[]>> subZone(int m){
 		// データ型が異なる恐れ
 		// 大きくなりすぎた。もっと分割して書き直したい。
-		// サイズが0!!どこに問題があるのか確認するべき
 		List<List<int[]>> alldata = new ArrayList<List<int[]>>();
 		List<int[]> maxzones = new ArrayList<int[]>();
 		/*
@@ -69,7 +72,7 @@ public class ZoneExtracter {
 		 * targetの意味書け
 		 * 遺伝子断片の中身、wigファイルの成れの果て
 		 */
-		double[] target = null;
+		ArrayList<Double> target = null;
 		while(methyllevel.size() < tagcount){// iについて並列化したいですね--エラー
 			// methyllevel.get(tagcount) != null
 			target = methyllevel.get(tagcount);
@@ -87,7 +90,7 @@ public class ZoneExtracter {
 				 * 
 				 * とりあえず正区間だけ抽出します。（反転しているので）
 				 */
-				int l = target.length;
+				int l = target.size();
 				/*
 				 * k: 抽出区間の長さ<-必要？
 				 */
@@ -103,12 +106,12 @@ public class ZoneExtracter {
 					 * tmpの登録が始まっていない場合
 					 */
 					if (tmp[0] == -1){
-						if (target[j] > 0){
+						if (target.get(j) > 0){
 							tmp[0] = j;
 						}
 					}
 					else{
-						if (target[j - 1] * target[j] >= 0)
+						if (target.get(j - 1) * target.get(j) >= 0)
 							k++;
 						else{
 							/**
@@ -117,7 +120,7 @@ public class ZoneExtracter {
 							/**
 							 * 条件：正区間・負区間が継続
 							 */
-							if (target[j] > 0)
+							if (target.get(j) > 0)
 							{
 								// 区間継続
 							}
@@ -159,7 +162,7 @@ public class ZoneExtracter {
 						summin2 = 0;
 						for(int kk = 0; kk < u; kk++){// 要素数がぴったり一致しているならば動作する、管理についてのあそびがない設計部分です
 							for(int rr = maxzones.get(kk)[0]; rr < maxzones.get(kk)[1]; rr++){
-								summin2 += target[rr];
+								summin2 += target.get(rr);
 							}
 							if (sug3 > summin2){
 								sug3 = summin2;
