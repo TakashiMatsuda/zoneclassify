@@ -155,6 +155,7 @@ public class DataSet {
 	
 	/**
 	 * Initialize weight
+	 * 完成しています
 	 */
 	public void initWeight(){
 		for (int i = 0; i < PATTERN; i++){
@@ -171,7 +172,7 @@ public class DataSet {
 	public double errorRatio(Classifier x){
 		/*
 		 * xによる予測属性に対して訓練データ中の予測属性の現れる数
-		 */
+		 */knowledges
 		int right = 0;
 		int sum = 0;
 		int q = x.start;
@@ -218,6 +219,7 @@ public class DataSet {
 		double e = errorRatio(h);
 		beta = e /(1 - e);
 		for(int i = 0; i < M; i++){
+			
 			// knowledges[i][PATTERN + 1] = (byte) (knowledges[i][PATTERN + 1] * Math.pow(beta, (1 - Math.abs(h.prediction() - knowledges[i][PATTERN]))));
 			// knowledgesのknowledges[i][PATTERN] [i][PATTERN + 1]がどういう意味だったか忘れてしまった
 		}
