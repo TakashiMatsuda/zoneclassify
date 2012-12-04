@@ -19,8 +19,11 @@ public class InputWig {
 	 * @return
 	 */
 	// 何もharvestに入ってない
-	public static ArrayList<double[]> getWIG(String filename){
-		ArrayList<double[]> harvest = new ArrayList<double[]>();
+	public static ArrayList<ArrayList<Double>> getWIG(String filename){
+		
+		// ArrayList<double[]> harvest = new ArrayList<double[]>();
+		ArrayList<ArrayList<Double>>harvest = new ArrayList<ArrayList<Double>>();
+
 		try{
 			System.out.println("READING COVERAGE DATA...");
 			String line = null;
@@ -38,30 +41,35 @@ public class InputWig {
 			 * 行数取得
 			 */
 			System.out.println("行数取得中....");
-			while((line = br.readLine()) != null){
-				i++;
-			}
-			System.out.println("Line: "+ i);
-			br.close();
-			br = new BufferedReader(new FileReader(filename));
+			//while((line = br.readLine()) != null){
+			//	i++;
+			//}
+			// System.out.println("Line: "+ i);
+			// br.close();
+			// br = new BufferedReader(new FileReader(filename));
 			System.out.println("wigデータ取得中....");
 			// ArrayListに変えてみよう
-			double[] gallon = new double[i / 100];// 足りるかは未知数
-			int j = 0;
+			//double[] gallon = new double[i / 100];// 足りるかは未知数
+			ArrayList<Double> gallon = new ArrayList<Double>();
+			// int j = 0;
+			long count = 0;
 			while((line = br.readLine()) != null){
+				if ((count % 10000000) == 0)
+					System.out.println((count / 10000000));
 				// if (j > 100000)
 					// break;// デバッグ中 <- 重いので手元のPCでテストする時には長さ制限をかけています
 				if (chromtag.matcher(line).find())
 				{
 					harvest.add(gallon);
 					// freeしたい
-					gallon = new double[i / 100];
-					j = 0;
+					gallon.clear();
+					// j = 0;
 				}
 				else{
-					gallon[j] = Double.parseDouble(line);
-					j++;
+					gallon.add(Double.parseDouble(line));
+					// j++;
 				}
+				count++;
 			}
 			br.close();
 		} catch(Exception e){
