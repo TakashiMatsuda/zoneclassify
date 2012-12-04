@@ -23,7 +23,6 @@ public class InputWig {
 		
 		// ArrayList<double[]> harvest = new ArrayList<double[]>();
 		ArrayList<ArrayList<Double>>harvest = new ArrayList<ArrayList<Double>>();
-
 		try{
 			System.out.println("READING COVERAGE DATA...");
 			String line = null;
@@ -66,7 +65,10 @@ public class InputWig {
 					// j = 0;
 				}
 				else{
-					gallon.add(Double.parseDouble(line));
+					/*
+					 * 登録時に同時に変換してから格納
+					 */
+					gallon.add((Double.parseDouble(line) - 0.5) * (-1));// 変更点、あとでワークステーション側とマージして下さい
 					// j++;
 				}
 				count++;

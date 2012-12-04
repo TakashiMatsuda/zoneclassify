@@ -32,7 +32,6 @@ public class ZoneExtracter {
 			bunch.clear();
 			for (int j = 0; j < tmp.get(i).size(); j++){
 				p = (tmp.get(i).get(j) - 0.5) * (-1);
-				
 				bunch.add(p);
 			}
 			System.out.println(bunch.size());
@@ -78,7 +77,6 @@ public class ZoneExtracter {
 			// methyllevel.get(tagcount) != null
 			target = methyllevel.get(tagcount);
 			maxzones.clear();
-			
 			/*
 			 *  この下、区間推定アルゴリズム
 			 */
