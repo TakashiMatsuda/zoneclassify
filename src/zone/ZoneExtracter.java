@@ -20,6 +20,9 @@ public class ZoneExtracter {
 	 * @return
 	 */
 	private List<double[]> mezo(){
+		// エラー含みっぽい
+		// そもそもInputWIGにエラーがある可能性も
+		System.out.println("READING CpGMethylationLevel DATA...");
 		List<double[]> tmp = InputWig.getWIG("blastula_CpGMethylationLevel.wig");
 		List<double[]> harvest = new ArrayList<double[]>();
 		double p = 0;
@@ -52,7 +55,12 @@ public class ZoneExtracter {
 		 * 使いやすくなったメチル化度列を得る
 		 */
 		this.methyllevel = mezo();
+		//for(int i = 0; i < 100; i++){
+			//System.out.print(methyllevel.get(0)[i]);
+			//System.out.print(' ');
+		//}
 		int al = methyllevel.size();
+		System.out.println(al);
 		/*
 		 * tagcountは遺伝子断片の序数
 		 */
@@ -129,65 +137,6 @@ public class ZoneExtracter {
 				/*
 				 * m区間の抽出アルゴリズム
 				 */
-				
-				
-				
-				
-				// 不要になった部分
-				if (DEBUG)
-				{
-				double sug1 = 1 / 0;
-				double summin = 0;
-				int sugminnum1 = 0;
-				double sug2 = 1 / 0;
-				//int sugminnum2 = 0;
-				for(int o = M; o > m; o--){// Mはまだ未記入
-					/*
-					 * 1つめの手法から導かれる候補
-					 */
-					int mm = maxzones.size();
-					for(int u = 0; u < mm; u++){
-						summin = 0;
-						for(int rr = maxzones.get(u)[0]; rr < maxzones.get(u)[1]; rr++){
-							summin += target[rr];
-						}
-						if (sug1 > summin){
-							sugminnum1 = u;
-							sug1 = summin;
-						}
-					}
-					
-					/*
-					 * 2つめの手法から導かれる候補
-					 */
-					for(int u = 0; u < mm - 1; u++){
-						summin = 0;
-						for(int rr = maxzones.get(u)[1]; rr < maxzones.get(u + 1)[0]; rr++){// 端数のカウントが不安
-							summin += target[rr];
-						}
-						if (sug2 > Math.abs(summin)){
-							//sugminnum2 = u;
-							sug2 = summin;
-						}
-					}
-					
-					/*
-					 * どちらの手法が小さい損失であるか
-					 */
-					if (sug1 > sug2){
-						maxzones.remove(sugminnum1);// あってるかどうか確認がひつようです
-					}
-					else{
-						
-						
-						
-						// 区間族がソートされている必要があることに気づきました。
-						// データの型を変更する必要があると思います。
-					}
-				}
-				}// ここまでデバッグ、使われないコード
-				
-				
 				// 何回か手直し、もとのコードは使い回しなので
 				// バグが混入している可能性が
 				/*

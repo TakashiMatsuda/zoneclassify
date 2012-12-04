@@ -80,6 +80,7 @@ public class DataSet {
 					onePlace.append(line);
 				}
 				else{
+					// もらっているZonesの方に問題がある
 					List<int[]> tmpZones = zones.get(tagCount);// これって速度とスコープ的にどうなんだろうか、
 					// 今まで避けてきた書き方ですけど・・・
 					// 毎回初期化される!

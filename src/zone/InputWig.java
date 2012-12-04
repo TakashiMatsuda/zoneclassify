@@ -18,6 +18,7 @@ public class InputWig {
 	 * @param filename
 	 * @return
 	 */
+	// 何もharvestに入ってない
 	public static ArrayList<double[]> getWIG(String filename){
 		ArrayList<double[]> harvest = new ArrayList<double[]>();
 		try{
@@ -33,10 +34,19 @@ public class InputWig {
 			/*
 			 * core, Read and change the wig format to List<double[]>.
 			 */
+			/*
+			 * 行数取得
+			 */
+			System.out.println("行数取得中....");
 			while((line = br.readLine()) != null){
 				i++;
 			}
-			double[] gallon = new double[i / 100];
+			System.out.println("Line: "+ i);
+			br.close();
+			br = new BufferedReader(new FileReader(filename));
+			System.out.println("wigデータ取得中....");
+			// ArrayListに変えてみよう
+			double[] gallon = new double[i / 100];// 足りるかは未知数
 			int j = 0;
 			while((line = br.readLine()) != null){
 				// if (j > 100000)
@@ -44,6 +54,7 @@ public class InputWig {
 				if (chromtag.matcher(line).find())
 				{
 					harvest.add(gallon);
+					// freeしたい
 					gallon = new double[i / 100];
 					j = 0;
 				}

@@ -11,8 +11,8 @@ import java.util.regex.Pattern;
 import org.junit.Test;
 
 /**
- * JUnitも同期しなければいけないようです。
- * 応急的にJUnit 4のビルドパスを通しています。
+ * 
+ * 
  * @author takashi
  *
  */
@@ -24,7 +24,8 @@ public class InputWigTest {
 		final boolean DEBUG = false;
 		
 		ArrayList<double[]> exa = InputWig.getWIG("blastula_CpGMethylationLevel.wig");
-		for(int i = 0; i < 1000; i++){
+		// exaに何も入ってない
+		for(int i = 0; i < 10; i++){
 			System.out.println(exa.get(0)[i]);
 		}
 	}
