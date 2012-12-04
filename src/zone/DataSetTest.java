@@ -9,11 +9,9 @@ public class DataSetTest {
 	
 	@Test
 	public void testLoad() {
-		if (DEBUG){
 		ZoneExtracter farmer = new ZoneExtracter();
 		DataSet exa = new DataSet();
-		exa.load(farmer.subZone(100), "coverage.wig");// そんな名前のファイルはないので変更しなければ
-		}
+		exa.load(farmer.subZone(100), "Oryzias_latipes.MEDAKA1.53.dna.toplevel.fa");// 100000で切ってしまっているからwigとfastaの長さが一致しない、
 	}
 
 	@Test

@@ -26,7 +26,10 @@ public class DataSet {
 	 * 判定器リスト
 	 */
 	private ArrayList<Classifier> boxes;
-	private ArrayList<MyPoint> teachers;// <- 一度も使われていないとか、もったいなさすぎる
+	/*
+	 * 教師データ集合
+	 */
+	private ArrayList<MyPoint> teachers;
 	private ArrayList<String> records;
 	private ArrayList<String> mers;
 	
@@ -39,9 +42,6 @@ public class DataSet {
 	/*
 	 * 教師データ集合
 	 */
-	private byte[][] knowledges;
-	// MyPointが使われていない!
-	// teachersとの競合
 	private int LS;
 	
 	/**
@@ -55,10 +55,9 @@ public class DataSet {
 	 * recordsに格納する作業です。
 	 * coding finished.
 	 */
-	public boolean load(List<List<int[]>> zones, String filename){// booleanはわかりにくい, 実際はknowledgesまで?
-		// 下流につなげることを考えよう
-		// this.recordsに記録するところまで。<- knowledgesまでじゃないか？
+	public boolean load(List<List<int[]>> zones, String filename){
 		try{
+			System.out.println("LOADING GENOME FASTA DATA.....");
 			String line;
 			BufferedReader br = new BufferedReader(new FileReader(filename));
 			// wigとfastaでタグが一致しているかどうか。同じ遺伝子部位についてやらないと意味なし
@@ -102,13 +101,14 @@ public class DataSet {
 			}
 			br.close();
 			/*
-			 * recordsできあがり
+			 * records created
 			 */
 			
 			/*
 			 * 一つの低メチル化領域について全2-5merについてのカラムを作成します。
 			 * 全部使いつくすまでjudgeEXPを実行します
 			 */
+			System.out.println("CREATING SUPERVISING DATA.....");
 			int recordsize = records.size();
 			for(int i = 0; i < recordsize; i++){
 				String lowMethylZone = records.get(i);
