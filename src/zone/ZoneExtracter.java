@@ -70,6 +70,7 @@ public class ZoneExtracter {
 		//}
 		System.out.println("READING CpGMethylationLevel DATA...");
 		methyllevel = InputWig.getWIG("blastula_CpGMethylationLevel.wig");
+		// もらったものが空じゃないか確認
 		int al = methyllevel.size();
 		System.out.println(al);
 		/*
@@ -162,6 +163,8 @@ public class ZoneExtracter {
 				int d0 = 0;
 				int d1 = 0;
 				if (m > M){
+					// System.out.println("何もしない");
+					// ここに全部入ってくる
 					// 何もしない
 				}
 				else{

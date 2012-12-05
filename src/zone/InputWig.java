@@ -26,7 +26,7 @@ public class InputWig {
 			String line = null;
 			BufferedReader br = new BufferedReader(new FileReader(filename));
 			Pattern chromtag = Pattern.compile("^fixed");
-			int i = 0;
+			// int i = 0;
 			/*
 			 * empty reading for the first line
 			 */
@@ -52,8 +52,14 @@ public class InputWig {
 			long count = 0;
 			int nametag = 0;
 			while((line = br.readLine()) != null){
+				/*
+				 * 実行状況表示
+				 */
 				if ((count % 10000000) == 0)
 					System.out.println((count / 10000000) + "* 10000000lines  wigデータ取得中....");
+				/*
+				 * nametag一致
+				 */
 				if (chromtag.matcher(line).find())
 				{
 					harvest.add(gallon);
@@ -68,6 +74,9 @@ public class InputWig {
 					}
 				}
 				else{
+					/*
+					 * 追加
+					 */
 					gallon.add((Double.parseDouble(line) -0.5) * (-1));
 					// j++;
 				}
@@ -77,6 +86,7 @@ public class InputWig {
 		} catch(Exception e){
 			e.printStackTrace();
 		}
+		// harvestに何も入っていない
 		return harvest;
 	}
 }

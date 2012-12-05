@@ -7,11 +7,11 @@ import java.util.List;
 import org.junit.Test;
 
 public class ZoneExtracterTest {
-
+	// とりあえずテストしてそれから考えよう
 	@Test
 	public void testSubZone() {
 		ZoneExtracter exa = new ZoneExtracter();
-		List<List<int[]>> t = exa.subZone(100);
+		List<List<int[]>> t = exa.subZone(10);
 		System.out.print(t.size());
 	}
 
