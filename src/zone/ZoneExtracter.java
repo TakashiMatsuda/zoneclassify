@@ -1,6 +1,7 @@
 package zone;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -29,13 +30,16 @@ public class ZoneExtracter {
 		double p = 0;
 		ArrayList<Double> bunch = new ArrayList<Double>();
 		for (int i = 0; i < tmp.size(); i++){
-			bunch.clear();
+			System.out.println("読み込んだwigファイルを処理可能な形に変形しています・・・・    ( " + i + " / " + tmp.size() + " )");
+			bunch.ensureCapacity(100000);
 			for (int j = 0; j < tmp.get(i).size(); j++){
 				p = (tmp.get(i).get(j) - 0.5) * (-1);
 				bunch.add(p);
 			}
 			System.out.println(bunch.size());
 			tmp.set(i, bunch);
+			bunch.clear();// clearでやるのは逆効果かもしれない。メモリ領域確保のオーバーヘッドをとるか、それとも無駄に消費されるメモリ領域をとるか
+			// lispのmapがあればなあ・・・
 		}
 		return tmp;
 	}
@@ -50,18 +54,22 @@ public class ZoneExtracter {
 	 * @return  maxzones
 	 */
 	public List<List<int[]>> subZone(int m){
-		// データ型が異なる恐れ
+		System.out.println("EXTRACTING subZones....");
 		// 大きくなりすぎた。もっと分割して書き直したい。
 		List<List<int[]>> alldata = new ArrayList<List<int[]>>();
-		List<int[]> maxzones = new ArrayList<int[]>();
+		List<int[]> maxzones = new LinkedList<int[]>();
 		/*
 		 * 使いやすくなったメチル化度列を得る
 		 */
-		this.methyllevel = mezo();
+		// this.methyllevel = mezo();
+		// 必要なくなった
+		
 		//for(int i = 0; i < 100; i++){
 			//System.out.print(methyllevel.get(0)[i]);
 			//System.out.print(' ');
 		//}
+		System.out.println("READING CpGMethylationLevel DATA...");
+		methyllevel = InputWig.getWIG("blastula_CpGMethylationLevel.wig");
 		int al = methyllevel.size();
 		System.out.println(al);
 		/*
@@ -73,16 +81,18 @@ public class ZoneExtracter {
 		 * 遺伝子断片の中身、wigファイルの成れの果て
 		 */
 		ArrayList<Double> target = null;
-		while(methyllevel.size() < tagcount){// iについて並列化したいですね--エラー
+		while(tagcount < methyllevel.size()){// tagcountについて並列化したい
 			// methyllevel.get(tagcount) != null
 			target = methyllevel.get(tagcount);
 			maxzones.clear();
+			
 			/*
 			 *  この下、区間推定アルゴリズム
 			 */
 			/*
 			 * methyllevelの各要素(double[])について下の作業を行います
 			 */
+			System.out.println("methyllevel.size:  " + methyllevel.size() + "||  tagcount: " + tagcount);
 			for(int r = 0; r < al; r++){
 				/*
 				 * 正区間と負区間への分割
@@ -144,8 +154,9 @@ public class ZoneExtracter {
 				/*
 				 * 区間数を減らしていく
 				 */
-				double summin2 = 1 / 0;
-				double sug3 = 1 / 0;
+				// System.out.println("CUTTING DOWN ZONES....");
+				double summin2 = 1.0 / 0.0;
+				double sug3 = 1.0 / 0.0;
 				int sugnum1 = 0;
 				// int sugnum2 = 0;使わない、たぶん
 				int d0 = 0;
@@ -155,16 +166,21 @@ public class ZoneExtracter {
 				}
 				else{
 					/*
-			i		 * 
+			i		 * 並列化できない
 					 */
-					for(int u = M - 1; u >= m; u--){
-						summin2 = 0;
+					// 実際には、子のアルゴリズムを使うのであれば区間の用意のやり方が変わってくる
+					// 遅い
+					for(int u = M - 1; u >= m; u= u -2){// 実験的に。アルゴリズムとしては間違っています
+						//if ((u % 100000) == 0){
+							System.out.println("現在の区間数・・・　" + u  +"　　区間数を減らしています・・・・");
+						//}
 						for(int kk = 0; kk < u; kk++){// 要素数がぴったり一致しているならば動作する、管理についてのあそびがない設計部分です
-							for(int rr = maxzones.get(kk)[0]; rr < maxzones.get(kk)[1]; rr++){
+							summin2 = 0;
+							for(int rr = maxzones.get(kk)[0]; rr < maxzones.get(kk)[1]; rr++){// IndexOutOfBoundsException
 								summin2 += target.get(rr);
 							}
-							if (sug3 > summin2){
-								sug3 = summin2;
+							if (sug3 > Math.abs(summin2)){
+								sug3 = Math.abs(summin2);
 								sugnum1 = kk;
 							}
 						}
@@ -173,14 +189,17 @@ public class ZoneExtracter {
 						 */
 						// 	sugnum1: この番目の区間を中心として前後3つを削除
 						// sugnum1 - 1: ここに再び投入する
+						// sugunum1が0で流れてきています
+						
+						// 3つ減らして1お歯科入れてない、-2になっているのだからuも-2しなければいけない
 						d0 = maxzones.get(sugnum1 - 1)[0];
 						d1 = maxzones.get(sugnum1 + 1)[1];
 						for(int kkk = 0; kkk < 3; kkk++){
 							maxzones.remove(sugnum1 - 1);
 						}
-						int[] newtmp = {d0, d1};//
+						int[] newtmp = {d0, d1};
 						maxzones.add(sugnum1 - 1, newtmp);
-					}// 完成では？
+					}
 				alldata.add(maxzones);
 				// tagcount++; tagcountの場所が違う気がする
 				}

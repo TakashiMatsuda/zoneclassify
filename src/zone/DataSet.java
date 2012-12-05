@@ -3,23 +3,24 @@ package zone;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * 
+ * COdeing complete.
  * @author tks
  *
  */
 public class DataSet {
 	/*
-	 * 判定器リスト
+	 * 判定器リスト -> Boost.classへ移転
 	 */
 	private ArrayList<Classifier> boxes;
 	/*
 	 * 教師データ集合
 	 */
-	private ArrayList<MyPoint> teachers;
+	private LinkedList<MyPoint> teachers;// LinkedかArrayか
 	private ArrayList<String> records;
 	private ArrayList<String> mers;
 	
@@ -155,7 +156,6 @@ public class DataSet {
 	
 	/**
 	 * Initialize weight
-	 * 完成しています
 	 */
 	public void initWeight(){
 		for (int i = 0; i < PATTERN; i++){
@@ -172,15 +172,15 @@ public class DataSet {
 	public double errorRatio(Classifier x){
 		/*
 		 * xによる予測属性に対して訓練データ中の予測属性の現れる数
-		 */knowledges
+		 */
 		int right = 0;
 		int sum = 0;
 		int q = x.start;
-		int p = x.prediction();
+		byte p = x.prediction();
 		for (int i = 0; i < M; i++){
 			if (teachers.get(i).getColumn()[q] == 1){
 				sum++;
-				if (knowledges[i][M] == p)
+				if (teachers.get(i).getTarget() == p)
 					right++;
 			}
 		}
@@ -195,6 +195,8 @@ public class DataSet {
 	 * @return
 	 */
 	public Classifier weakLearn(){
+		// 作り方、歪んでいます。分類器が、ある列が1のときにどうなるか、というものしかない
+		// それで結果十分なのかな？
 		Classifier tmp = new Classifier(LS, (byte) 0);
 		while(LS < PATTERN){
 			if (errorRatio(tmp) < (1.0 / 2.0))
@@ -219,9 +221,10 @@ public class DataSet {
 		double e = errorRatio(h);
 		beta = e /(1 - e);
 		for(int i = 0; i < M; i++){
-			
+			// teachers.get(i).getWeight()// これではweightに差S割れない
+			// スレッドセーフ、カプセル化を破ります
+			teachers.set(i, teachers.get(i).changeWeight(teachers.get(i).getWeight() * Math.pow(beta, (1 - Math.abs(h.prediction() - teachers.get(i).getTarget())))));
 			// knowledges[i][PATTERN + 1] = (byte) (knowledges[i][PATTERN + 1] * Math.pow(beta, (1 - Math.abs(h.prediction() - knowledges[i][PATTERN]))));
-			// knowledgesのknowledges[i][PATTERN] [i][PATTERN + 1]がどういう意味だったか忘れてしまった
 		}
 	}
 	
@@ -286,9 +289,7 @@ public class DataSet {
 	 * Constructer
 	 * open to change
 	 */
-	DataSet(){// 訓練データの入力我必要
-		// その形式はBoostくらすが決めること、ここで考える必要はない<- その方針は変更したほうがよいのでは？
-		
+	DataSet(){
 		/*
 		 * 各2-5merの作成
 		 */

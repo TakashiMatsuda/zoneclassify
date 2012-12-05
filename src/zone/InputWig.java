@@ -6,23 +6,21 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 /**
- * 動作の確認終わっています
- * かなり時間がかかります
+ * 
  * @author tks
  *
  */
 public class InputWig {
 	/**
-	 * 途中で何も書かなかったせいで、なにがかいてあるのかわからない
 	 * 
 	 * @param filename
 	 * @return
 	 */
-	// 何もharvestに入ってない
 	public static ArrayList<ArrayList<Double>> getWIG(String filename){
 		
 		// ArrayList<double[]> harvest = new ArrayList<double[]>();
 		ArrayList<ArrayList<Double>>harvest = new ArrayList<ArrayList<Double>>();
+
 		try{
 			System.out.println("READING COVERAGE DATA...");
 			String line = null;
@@ -52,23 +50,25 @@ public class InputWig {
 			ArrayList<Double> gallon = new ArrayList<Double>();
 			// int j = 0;
 			long count = 0;
+			int nametag = 0;
 			while((line = br.readLine()) != null){
 				if ((count % 10000000) == 0)
 					System.out.println((count / 10000000) + "* 10000000lines  wigデータ取得中....");
-				// if (j > 100000)
-					// break;// デバッグ中 <- 重いので手元のPCでテストする時には長さ制限をかけています
 				if (chromtag.matcher(line).find())
 				{
 					harvest.add(gallon);
 					// freeしたい
 					gallon.clear();
 					// j = 0;
+					
+					// デバッグ中
+					nametag++;
+					if (nametag > 4000){
+						break;
+					}
 				}
 				else{
-					/*
-					 * 登録時に同時に変換してから格納
-					 */
-					gallon.add((Double.parseDouble(line) - 0.5) * (-1));// 変更点、あとでワークステーション側とマージして下さい
+					gallon.add((Double.parseDouble(line) -0.5) * (-1));
 					// j++;
 				}
 				count++;
