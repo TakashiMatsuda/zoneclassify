@@ -11,6 +11,8 @@ import java.util.regex.Pattern;
  *
  */
 public class InputWig {
+	static boolean DEBUG = false;
+	
 	/**
 	 * 
 	 * @param filename
@@ -68,9 +70,11 @@ public class InputWig {
 					// j = 0;
 					
 					// デバッグ中
+					if (DEBUG){
 					nametag++;
 					if (nametag > 4000){
-						break;
+						return harvest;// これを書いたことの影響を考えろ
+					}
 					}
 				}
 				else{

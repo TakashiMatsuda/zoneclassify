@@ -19,5 +19,5 @@ public class ZoneExtracterTest {
 	public void testZoneExtracter() {
 		ZoneExtracter exa = new ZoneExtracter();
 	}
-
+	
 }

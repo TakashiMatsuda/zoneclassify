@@ -25,8 +25,8 @@ public class InputWigTest {
 		
 		ArrayList<ArrayList<Double>> exa = InputWig.getWIG("blastula_CpGMethylationLevel.wig");
 		// exaに何も入ってない
-		for(int i = 0; i < 10; i++){
-			System.out.println(exa.get(0).get(i));
-		}
+		// for(int i = 0; i < 10; i++){
+			//System.out.println(exa.get(0).get(i));
+		//}
 	}
 }
