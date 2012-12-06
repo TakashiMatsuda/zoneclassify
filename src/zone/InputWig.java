@@ -68,9 +68,10 @@ public class InputWig {
 				 */
 				if (chromtag.matcher(line).find())
 				{
-					harvest.add((ArrayList<Double>) gallon.clone());
+					harvest.add((ArrayList<Double>) gallon);
 					// freeしたい
-					gallon.clear();// clearの仕様がよくない
+					gallon = null;// clearの仕様がよくない
+					// nullで書き換え
 					// j = 0;
 					
 					// デバッグ中
@@ -81,6 +82,7 @@ public class InputWig {
 						return harvest;
 					}
 					}
+					gallon = new ArrayList<Double>();
 				}
 				else{
 					/*

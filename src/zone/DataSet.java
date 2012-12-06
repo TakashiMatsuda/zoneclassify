@@ -180,7 +180,7 @@ public class DataSet {
 		for (int i = 0; i < M; i++){
 			if (teachers.get(i).getColumn()[q] == 1){
 				sum++;
-				if (teachers.get(i).getTarget() == p)
+				if ((teachers.get(i)).getTarget() == p)
 					right++;
 			}
 		}
