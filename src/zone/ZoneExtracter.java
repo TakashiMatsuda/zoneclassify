@@ -39,7 +39,6 @@ public class ZoneExtracter {
 			System.out.println(bunch.size());
 			tmp.set(i, bunch);
 			bunch.clear();// clearでやるのは逆効果かもしれない。メモリ領域確保のオーバーヘッドをとるか、それとも無駄に消費されるメモリ領域をとるか
-			// lispのmapがあればなあ・・・
 		}
 		return tmp;
 	}
@@ -195,6 +194,9 @@ public class ZoneExtracter {
 						// sugunum1が0で流れてきています
 						
 						// 3つ減らして1お歯科入れてない、-2になっているのだからuも-2しなければいけない
+						
+						// sugnum -1: sugnumが端数で合った場合は別処理をしなければいけない
+						// アルゴリズムを再検討して下さい
 						d0 = maxzones.get(sugnum1 - 1)[0];
 						d1 = maxzones.get(sugnum1 + 1)[1];
 						for(int kkk = 0; kkk < 3; kkk++){

@@ -11,14 +11,18 @@ import java.util.regex.Pattern;
  *
  */
 public class InputWig {
-	static boolean DEBUG = false;
+	static boolean DEBUG = true;
 	
 	/**
 	 * 
 	 * @param filename
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public static ArrayList<ArrayList<Double>> getWIG(String filename){
+		// CpGの量とメチル化の比を見るべきであって、全体のメチル化率ではよくないのでは？
+		// 区間のラベル付けは複雑になるが、そのほうが正しい(どの文脈において？)
+		
 		
 		// ArrayList<double[]> harvest = new ArrayList<double[]>();
 		ArrayList<ArrayList<Double>>harvest = new ArrayList<ArrayList<Double>>();
@@ -64,16 +68,17 @@ public class InputWig {
 				 */
 				if (chromtag.matcher(line).find())
 				{
-					harvest.add(gallon);
+					harvest.add((ArrayList<Double>) gallon.clone());
 					// freeしたい
-					gallon.clear();
+					gallon.clear();// clearの仕様がよくない
 					// j = 0;
 					
 					// デバッグ中
 					if (DEBUG){
 					nametag++;
 					if (nametag > 4000){
-						return harvest;// これを書いたことの影響を考えろ
+						br.close();
+						return harvest;
 					}
 					}
 				}
@@ -81,7 +86,7 @@ public class InputWig {
 					/*
 					 * 追加
 					 */
-					gallon.add((Double.parseDouble(line) -0.5) * (-1));
+					gallon.add((Double.parseDouble(line) - 0.5) * (-1));
 					// j++;
 				}
 				count++;
