@@ -23,6 +23,7 @@ public class InputWigTest {
 	public void testgetWIG() {
 		final boolean DEBUG = false;
 		
+		
 		ArrayList<ArrayList<Double>> exa = InputWig.getWIG("blastula_CpGMethylationLevel.wig");
 		// exaに何も入ってない
 		// for(int i = 0; i < 10; i++){

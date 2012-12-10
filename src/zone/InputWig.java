@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
  */
 public class InputWig {
 	static boolean DEBUG = true;
+	// 愚直に全部読む必要はないのでは。CpGPositionデータを使ってそこだけよめば良い
 	
 	/**
 	 * 
@@ -61,8 +62,8 @@ public class InputWig {
 				/*
 				 * 実行状況表示
 				 */
-				if ((count % 10000000) == 0)
-					System.out.println((count / 10000000) + "* 10000000lines  wigデータ取得中....");
+				if ((count % 1000000) == 0)
+					System.out.println((count / 1000000) + "* 10000000lines  wigデータ取得中....");
 				/*
 				 * nametag一致
 				 */
@@ -73,15 +74,6 @@ public class InputWig {
 					gallon = null;// clearの仕様がよくない
 					// nullで書き換え
 					// j = 0;
-					
-					// デバッグ中
-					if (DEBUG){
-					nametag++;
-					if (nametag > 4000){
-						br.close();
-						return harvest;
-					}
-					}
 					gallon = new ArrayList<Double>();
 				}
 				else{

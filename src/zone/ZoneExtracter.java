@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+// 構成比で書き換える
+
 /**
  * 最小メチル化領域の抽出を担うクラス
  * @author tks
