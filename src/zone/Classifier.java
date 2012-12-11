@@ -8,19 +8,23 @@ package zone;
  */
 public class Classifier {
 	
-	/**
-	 * law[0]: ラベルの番号
-	 * law[1]: 目標属性
-	 */
 	int start;
 	byte target;
 	
-	public byte prediction(){
-		return target;
+	
+	/**
+	 * 
+	 * @param a
+	 * @return
+	 */
+	public byte prediction(byte[] a){
+		if (a[start] == 1)
+			return target;
+		else
+			return (byte) ((target - 1) * (-1));
 	}
 	
 	Classifier(int ls, byte t){
-		
 		this.start = ls;
 		this.target = t;
 	}

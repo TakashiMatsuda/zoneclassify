@@ -1,5 +1,8 @@
 package zone;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * メインクラス
  * @author takashi
@@ -34,20 +37,21 @@ public class Boost {
 		/*
 		 * DataSet
 		 */
-		DataSet prince = new DataSet();
-		/*
-		 * パースしてDataSetが扱える形にしたい
-		 * それはDataSetがやること？
-		 */
-		prince.load(farmer.subZone(M), "coverage.wig");// Mは区間数、ゆくゆくは区間長の制限に変えたいですね
+		DataSet dataset = new DataSet();
+		dataset.load(farmer.subZone(M), "coverage.wig");// Mは区間数、ゆくゆくは区間長の制限に変えたいですね
+		
+		// 最終classifierのリストを作成する
+		List<Classifier> teacher = new LinkedList<Classifier>();
+		
 		
 		/*
 		 * 引数を与えられる設計にする。
 		 * DataSetはカプセル化されている。
 		 */
-		prince.initWeight();
-		prince.weakLearn();
-		prince.reviseWeight();
+		// 下の関数をパブリックにする必要性を感じない
+		dataset.initWeight();
+		dataset.weakLearn();
+		dataset.reviseWeight(null);//
 		
 		/*
 		 * 最終的なクラス分類器を作成する

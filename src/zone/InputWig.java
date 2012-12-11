@@ -13,6 +13,11 @@ import java.util.regex.Pattern;
 public class InputWig {
 	static boolean DEBUG = true;
 	// 愚直に全部読む必要はないのでは。CpGPositionデータを使ってそこだけよめば良い
+	// 実装を考えよう
+	
+	// まずCpGPositionデータを読んで場所データを得る
+	// 場所が一致するところのメチル化率を記録していく
+	// 
 	
 	/**
 	 * 

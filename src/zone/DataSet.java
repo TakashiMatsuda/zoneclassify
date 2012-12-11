@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * COdeing complete.
+ * Codeing complete.
  * @author tks
  *
  */
