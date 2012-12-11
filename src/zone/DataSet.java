@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * Codeing complete.
+ * Co deing complete.
  * @author tks
  *
  */
@@ -51,8 +51,6 @@ public class DataSet {
 			System.out.println("LOADING GENOME FASTA DATA.....");
 			String line;
 			BufferedReader br = new BufferedReader(new FileReader(filename));
-			// wigとfastaでタグが一致しているかどうか。同じ遺伝子部位についてやらないと意味なし
-			// 一致確認。なので各int[]について
 			// 0, Nの関係でちゃんと一致しているのか自信がもてません
 			// 0, Nをどうするのかの方針を固めておこう
 			StringBuilder onePlace = new StringBuilder();
@@ -73,9 +71,6 @@ public class DataSet {
 				}
 				else{
 					tmpZones = zones.get(tagCount);
-					// 今まで避けてきた書き方ですけど・・・
-					// 毎回初期化される!<- やっぱり良くなかった
-					
 					/*
 					 * tmpZonesの各要素に対応するものを全部切り出す
 					 */
