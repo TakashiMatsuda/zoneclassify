@@ -21,8 +21,9 @@ public class Boost {
 	 * これが全体のメインクラス
 	 */
 	
-	/*
-	 * 最初は低メチル化領域だけを実装します。
+	/**
+	 * 
+	 * @param args
 	 */
 	public static void main(char[] args){
 		
@@ -49,6 +50,9 @@ public class Boost {
 		 * DataSetはカプセル化されている。
 		 */
 		// 下の関数をパブリックにする必要性を感じない
+		// 一つ叩いたらあとは流れて結果が帰ってくるイメージ
+		// 結果とは、分類器の集合体
+		// 正解率が高い分類器を上位100断片くらい返してほしい
 		dataset.initWeight();
 		dataset.weakLearn();
 		dataset.reviseWeight(null);//
