@@ -57,9 +57,22 @@ public class Boost {
 		dataset.weakLearn();
 		dataset.reviseWeight(null);//
 		
-		/*
-		 * 最終的なクラス分類器を作成する
-		 */
+//		DataSetとは、リファクタリング後にでてくるものだったんだ
+//		dataSetには、必ずしもメソッドはいらないんだ
+		
+//		各レコードの重みを正規化した分布を計算
+		dataset.initWeight();
+		
+//		weakLearnを呼び、エラー率が1/2未満クラス分類器htを作成
+		for(int i = 0; i < t; i++){
+			newclassifier = dataset.weakLearn(i);
+			dataset.reviseWeight(newclassifier);
+		}
+		
+//		各レコードの重みを更新　正解だと軽くし、不正解だとそのまま
+		
+		
+//		最終のクラス分類器hf
 		
 		
 		

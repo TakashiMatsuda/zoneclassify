@@ -11,10 +11,14 @@ import java.util.regex.Pattern;
  * Co deing complete.
  * @author tks
  *
+ *
+ *
  */
 public class DataSet {
 	/*
-	 * 判定器リスト -> Boost.classへ移転
+	 * 判定器リスト -> Boost.classへ移転しない
+	 * DataSetはBoostクラスが扱うdataのごちゃごちゃをまとめるためのクラス
+	 * 
 	 */
 	private ArrayList<Classifier> boxes;
 	/*
@@ -184,9 +188,9 @@ public class DataSet {
 	
 	
 	/**
-	 * classifierを作成
-	 * 一から順番にラベルごとに分類器をつくり、エラー率が0.5より小さければその分類器を返します。
+	 * エラー率が平均よりは低いclassifierを作成
 	 * 完成しています<- 本当？
+	 * これで完成しているの？
 	 * @return
 	 */
 	public Classifier weakLearn(){
