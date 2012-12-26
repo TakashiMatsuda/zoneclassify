@@ -15,6 +15,7 @@ public class MyPoint {
 	public double weight;
 	private byte[] column;
 	// Listで挿入した順番が保持されるなら、columnをprivateとしても問題ない
+//	コメントはもっとわかりやすくなるように書こう
 	
 	/**
 	 * これで本当に内容が変更されるのか不安

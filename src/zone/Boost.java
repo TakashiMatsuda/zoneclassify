@@ -45,18 +45,6 @@ public class Boost {
 		List<Classifier> teacher = new LinkedList<Classifier>();
 		
 		
-		/*
-		 * 引数を与えられる設計にする。
-		 * DataSetはカプセル化されている。
-		 */
-		// 下の関数をパブリックにする必要性を感じない
-		// 一つ叩いたらあとは流れて結果が帰ってくるイメージ
-		// 結果とは、分類器の集合体
-		// 正解率が高い分類器を上位100断片くらい返してほしい
-		dataset.initWeight();
-		dataset.weakLearn();
-		dataset.reviseWeight(null);//
-		
 //		DataSetとは、リファクタリング後にでてくるものだったんだ
 //		dataSetには、必ずしもメソッドはいらないんだ
 		
@@ -64,13 +52,12 @@ public class Boost {
 		dataset.initWeight();
 		
 //		weakLearnを呼び、エラー率が1/2未満クラス分類器htを作成
+//		各レコードの重みを更新　正解だと軽くし、不正解だとそのまま
 		for(int i = 0; i < t; i++){
 			newclassifier = dataset.weakLearn(i);
 			dataset.reviseWeight(newclassifier);
 		}
-		
-//		各レコードの重みを更新　正解だと軽くし、不正解だとそのまま
-		
+				
 		
 //		最終のクラス分類器hf
 		
