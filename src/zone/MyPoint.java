@@ -29,18 +29,38 @@ public class MyPoint {
 		return tmp;
 	}
 	
+	
+	/**
+	 * 
+	 * @param w
+	 */
 	public void setWeight(double w){
 		this.weight = w;
 	}
 	
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public byte[] getColumn(){
 		return this.column;
 	}
 	
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public double getWeight(){
 		return this.weight;
 	}
 	
+	
+	/**
+	 * 
+	 * @param core
+	 */
 	MyPoint(byte[] core){
 		if (core.length == PATTERN)
 			this.column = core;

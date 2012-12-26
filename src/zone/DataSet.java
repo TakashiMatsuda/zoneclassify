@@ -15,15 +15,8 @@ import java.util.regex.Pattern;
  *
  */
 public class DataSet {
-	/*
-	 * 判定器リスト -> Boost.classへ移転しない
-	 * DataSetはBoostクラスが扱うdataのごちゃごちゃをまとめるためのクラス
-	 * 
-	 */
 	private ArrayList<Classifier> boxes;
-	/*
-	 * 教師データ集合
-	 */
+	/* 教師データ集合 */
 	private LinkedList<MyPoint> teachers;// LinkedかArrayか
 	private ArrayList<String> records;
 	private ArrayList<String> mers;
