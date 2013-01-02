@@ -176,7 +176,10 @@ public class DataSet {
 					right++;
 			}
 		}
-		return (double)right / (double)sum;
+		
+		double ratio = (double)right / (double)sum;
+		x.recordErrorRatio(ratio);
+		return ratio;
 	}
 	
 	
@@ -194,6 +197,10 @@ public class DataSet {
 			if (errorRatio(tmp) < (1.0 / 2.0))
 				break;
 			else{
+				// なんか効率悪そう。。。
+//				不必要なオブジェクト作成操作が存在する。
+//				この作業は全体比にしてかなり大きな計算時間をとるので、
+//				最適化したい。
 				tmp = new Classifier(LS, (byte) 1);
 				if (errorRatio(tmp) < (1.0 / 2.0))
 					break;

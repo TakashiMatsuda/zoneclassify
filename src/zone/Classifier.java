@@ -2,15 +2,15 @@ package zone;
 
 
 /**
- * 単位クラス分類器
+ * 簡易単位クラス分類器
  * @author takashi
  *
  */
 public class Classifier {
 	
-	int start;
-	byte target;
-	
+	private int start;
+	private byte target;
+	private double ratio;
 	
 	/**
 	 * 
@@ -22,6 +22,17 @@ public class Classifier {
 			return target;
 		else
 			return (byte) ((target - 1) * (-1));
+	}
+	
+	
+	/**
+	 * 
+	 * @param r
+	 * @return true, if recording successfully done.
+	 */
+	public boolean recordErrorRatio(double r){
+		this.ratio = r;
+		return true;
 	}
 	
 	Classifier(int ls, byte t){

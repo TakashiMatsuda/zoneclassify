@@ -41,10 +41,6 @@ public class Boost {
 		DataSet dataset = new DataSet();
 		dataset.load(farmer.subZone(M), "coverage.wig");// Mは区間数、ゆくゆくは区間長の制限に変えたいですね
 		
-		// 最終classifierのリストを作成する
-		List<Classifier> teacher = new LinkedList<Classifier>();
-		
-		
 //		DataSetとは、リファクタリング後にでてくるものだったんだ
 //		dataSetには、必ずしもメソッドはいらないんだ
 		
@@ -56,8 +52,7 @@ public class Boost {
 		for(int i = 0; i < t; i++){
 			newclassifier = dataset.weakLearn(i);
 			dataset.reviseWeight(newclassifier);
-		}
-				
+		}		
 		
 //		最終のクラス分類器hf
 		
@@ -65,4 +60,66 @@ public class Boost {
 		
 	}
 	
+	
+	/**
+	 * 
+	 * @author takashi
+	 *	継承の詳しい仕様がまだ理解できていない
+	 *	最終的に獲得する分類器のクラス
+	 */
+	private class FinalClassifier extends Classifier {
+		
+		/**
+		 * 
+		 * @param ls
+		 * @param t
+		 */
+		FinalClassifier(int ls, byte t) {
+			super(ls, t);
+			// TODO 動的束縛・静的束縛について理解する
+		}
+		
+		
+		
+		public byte lastprediction(byte[] a){
+//			重みつき多数決をするメソッド
+//			名前微妙。かぶっている。わざとでないなら変えるべき。
+			
+			return 0;
+			
+		}
+		
+		
+		/**
+		 * これはpredictionと統合してもいいかもしれない。
+		 * @param greatTeachers
+		 * @return
+		 */
+		private boolean majorityRule(List<Classifier> greatTeachers){
+			double prob = 0;
+			double aver = 0;
+			
+//			何をしているのか？
+			for(int t = 0; t < T; t++){
+				prob += (- Math.log(a));
+//				betaをどこから持ってくればいいのか考えよう
+			}
+			
+			
+			
+			if(true){
+				return true;
+			}
+			else
+				return false;
+			
+		}
+		
+	}
+	
 }
+
+
+
+
+
