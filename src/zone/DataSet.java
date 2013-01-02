@@ -15,16 +15,18 @@ import java.util.regex.Pattern;
  *
  */
 public class DataSet {
-	private ArrayList<Classifier> boxes;
+	// FIXME DataSetはBoostのフィールドをまとめただけなのでフィールドはpublicにしてもよい
+	public ArrayList<Classifier> boxes;
 	/* 教師データ集合 */
-	private LinkedList<MyPoint> teachers;// LinkedかArrayか
-	private ArrayList<String> records;
-	private ArrayList<String> mers;
+	public LinkedList<MyPoint> teachers;// LinkedかArrayか
+	public ArrayList<String> records;
+	public ArrayList<String> mers;
 	
 	/*
 	 * MyPointの数 <- 意味がわからなくなってしまいました。
 	 */
-	private int M;
+	private final int M;
+	// TODO finalの意味, java文法の勉強
 	
 	private static int PATTERN = (int) Math.pow(4, 2) + (int) Math.pow(4, 3) + (int) Math.pow(4, 4) + (int) Math.pow(4, 5);
 	/*
@@ -227,7 +229,7 @@ public class DataSet {
 		}
 	}
 	
-	
+	// FIXME コメントをもっとわかりやすくしよう
 	/**
 	 * Create and store all 2-5mer Patterns
 	 * @return

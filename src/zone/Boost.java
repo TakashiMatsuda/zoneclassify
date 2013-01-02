@@ -22,7 +22,7 @@ public class Boost {
 	 */
 	
 	/**
-	 * 
+	 * Main function
 	 * @param args
 	 */
 	public static void main(char[] args){
@@ -95,31 +95,28 @@ public class Boost {
 		 * @param greatTeachers
 		 * @return
 		 */
-		private boolean majorityRule(List<Classifier> greatTeachers){
+		private boolean majorityRule(List<Classifier> greatTeachers, DataSet dataset){
+			// TODO 最終クラス分類器の構築と設計のところをコードする
 			double prob = 0;
 			double aver = 0;
-			
 //			何をしているのか？
+			double beta;
+			// TODO classifier.predictionに与える引数の選択
+			// NOW
 			for(int t = 0; t < T; t++){
-				prob += (- Math.log(a));
-//				betaをどこから持ってくればいいのか考えよう
-			}
+//				左辺の計算
+				beta = dataset.boxes.get(t).omomikeisu();
+				prob += (- Math.log(beta)) * (dataset.boxes.get(t).prediction()/*classifier[t]のprediction*/);
+				
+//				右辺の計算
+				aver += (- Math.log(beta)) / 2.0;
+			}		
 			
-			
-			
-			if(true){
+			if(beta >= aver){
 				return true;
 			}
 			else
 				return false;
-			
 		}
-		
 	}
-	
 }
-
-
-
-
-

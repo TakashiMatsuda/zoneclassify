@@ -35,6 +35,15 @@ public class Classifier {
 		return true;
 	}
 	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public double omomikeisu(){
+		return ratio / (1 - ratio); 
+	}
+	
 	Classifier(int ls, byte t){
 		this.start = ls;
 		this.target = t;
