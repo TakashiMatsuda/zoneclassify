@@ -8,14 +8,12 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * Co deing complete.
+ *	
  * @author tks
- *
- *
+ *	Boost.classのフィールドをまとめるクラス
  *
  */
 public class DataSet {
-	// FIXME DataSetはBoostのフィールドをまとめただけなのでフィールドはpublicにしてもよい
 	public ArrayList<Classifier> boxes;
 	/* 教師データ集合 */
 	public LinkedList<MyPoint> teachers;// LinkedかArrayか

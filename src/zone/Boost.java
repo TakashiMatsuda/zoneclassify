@@ -64,7 +64,6 @@ public class Boost {
 	/**
 	 * 
 	 * @author takashi
-	 *	継承の詳しい仕様がまだ理解できていない
 	 *	最終的に獲得する分類器のクラス
 	 */
 	private class FinalClassifier extends Classifier {
@@ -80,39 +79,45 @@ public class Boost {
 		}
 		
 		
-		
-		public byte lastprediction(byte[] a){
+		/**
+		 * 内装はmajorityRuleによる。
+		 * 重み付き多数決による結果を返す。
+		 * 完成しました。
+		 * @param a
+		 * @return
+		 */
+		public byte lastprediction(DataSet dataset, byte[] sample){
 //			重みつき多数決をするメソッド
 //			名前微妙。かぶっている。わざとでないなら変えるべき。
-			
-			return 0;
-			
+			if(majorityRule(dataset, sample)){
+				return 1;
+			}
+			else
+				return 0;
 		}
 		
 		
 		/**
-		 * これはpredictionと統合してもいいかもしれない。
+		 * この結果を再計算するのはもったいないので、このクラスの中にフィールドを作って格納したい。
+		 * 完成しています。
 		 * @param greatTeachers
 		 * @return
 		 */
-		private boolean majorityRule(List<Classifier> greatTeachers, DataSet dataset){
-			// TODO 最終クラス分類器の構築と設計のところをコードする
+		private boolean majorityRule(DataSet dataset, byte[] sample){
 			double prob = 0;
 			double aver = 0;
-//			何をしているのか？
-			double beta;
-			// TODO classifier.predictionに与える引数の選択
+			double beta = 0;
 			// NOW
 			for(int t = 0; t < T; t++){
 //				左辺の計算
 				beta = dataset.boxes.get(t).omomikeisu();
-				prob += (- Math.log(beta)) * (dataset.boxes.get(t).prediction()/*classifier[t]のprediction*/);
+				prob += (- Math.log(beta)) * (dataset.boxes.get(t).prediction(sample));
 				
 //				右辺の計算
 				aver += (- Math.log(beta)) / 2.0;
 			}		
 			
-			if(beta >= aver){
+			if(prob >= aver){
 				return true;
 			}
 			else
