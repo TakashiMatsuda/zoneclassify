@@ -9,8 +9,10 @@ import java.util.List;
  *
  */
 public class Boost {
-	static int M = 10;// あとで仕様変更を受けます.
-	static int T = 50;// 最終的に用いる分類器の数
+	private static int M = 10;// あとで仕様変更を受けます.
+	private static int T = 50;// 最終的に用いる分類器の数
+	private static int PATTERN = (int) Math.pow(4, 2) + (int) Math.pow(4, 3) + (int) Math.pow(4, 4) + (int) Math.pow(4, 5);
+	
 	
 	/**
 	 * 訓練データを読み込む
@@ -46,15 +48,13 @@ public class Boost {
 //		newclassifierはどういうものか？
 //		weakLearnを呼び、エラー率が1/2未満クラス分類器htを作成
 //		各レコードの重みを更新　正解だと軽くし、不正解だとそのまま
-		for(int i = 0; i < t; i++){
-			newclassifier = dataset.weakLearn(i);
-			dataset.reviseWeight(newclassifier);
-		}		
+		Classifier newclassifier = null;
+//		二回ループをまわしてしまっている（内部と、外部で）
+		
+		dataset.run();
 		
 //		最終のクラス分類器hf
 		FinalClassifier finalclassifier = new FinalClassifier(dataset);
-		
-		
 		
 	}
 	

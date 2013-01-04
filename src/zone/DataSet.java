@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
  *
  */
 public class DataSet {
+//	TODO 例外処理の方法を勉強したい
 	public ArrayList<Classifier> boxes;
 	/* 教師データ集合 */
 	public LinkedList<MyPoint> teachers;// LinkedかArrayか
@@ -28,9 +29,23 @@ public class DataSet {
 	
 	private static int PATTERN = (int) Math.pow(4, 2) + (int) Math.pow(4, 3) + (int) Math.pow(4, 4) + (int) Math.pow(4, 5);
 	/*
-	 * 教師データ集合
+	 * 教師データ集合（の数？）
 	 */
 	private int LS;
+	
+	
+	/**
+	 * Constructer
+	 * open to change
+	 */
+	DataSet(){
+		/*
+		 * 各2-5merの作成
+		 */
+		this.mers = createMers();
+		LS = 0;
+	}
+	
 	
 	/**
 	 * 入力ファイルからrecordをloadしてknowledgesに格納
@@ -184,20 +199,34 @@ public class DataSet {
 	
 	
 	/**
-	 * エラー率が平均よりは低いclassifierを作成
+	 * a番目のmer patternに対するweaklearnアルゴリズムによって
+	 * 定義される分類器を作成する。
+	 * エラー率が平均よりは低いclassifierを作成し、boxesに格納したのち、
+	 * 同時にweightを更新する。
 	 * 完成しています<- 本当？
-	 * これで完成しているの？
-	 * @return
 	 */
-	public Classifier weakLearn(){
+	private void weakLearn(int a){
+//		リファクタリング中。
+		
+//		learning set  : LS
+		
+		
+		
 		// 作り方、歪んでいます。分類器が、ある列が1のときにどうなるか、というものしかない
 		// それで結果十分なのかな？
-		Classifier tmp = new Classifier(LS, (byte) 0);
+		
+		
+		
+		
+		Classifier tmp = null;
 		while(LS < PATTERN){
+			tmp = new Classifier(LS, (byte) 0);
 			if (errorRatio(tmp) < (1.0 / 2.0))
 				break;
 			else{
+//				FIXME weakLearnの効率の改善
 				// なんか効率悪そう。。。
+//				3回同じ動作をしている。
 //				不必要なオブジェクト作成操作が存在する。
 //				この作業は全体比にしてかなり大きな計算時間をとるので、
 //				最適化したい。
@@ -207,7 +236,8 @@ public class DataSet {
 			}
 			LS++;
 		}
-		return tmp;
+		boxes.add(tmp);
+		reviseWeight(tmp);
 	}
 	
 	
@@ -215,7 +245,7 @@ public class DataSet {
 	 * AdaBoostのアルゴリズムにしたがってweightを更新
 	 * 完成しています
 	 */
-	public void reviseWeight(Classifier h){
+	private void reviseWeight(Classifier h){
 		double beta;
 		double e = errorRatio(h);
 		beta = e /(1 - e);
@@ -227,8 +257,9 @@ public class DataSet {
 		}
 	}
 	
-	// FIXME コメントをもっとわかりやすくしよう
+	
 	/**
+	 * コンストラクタから呼び出されます。
 	 * Create and store all patterns for 2-5mer
 	 * Coding completed.
 	 * The calculation speed is fast.
@@ -283,17 +314,15 @@ public class DataSet {
 		}
 		return fruit;
 	}
+
 	
 	/**
-	 * Constructer
-	 * open to change
+	 * weaklearnとreviseweightを実行し、結果を当オブジェクトに格納します。
 	 */
-	DataSet(){
-		/*
-		 * 各2-5merの作成
-		 */
-		this.mers = createMers();
-		LS = 0;
+	public void run() {
+		for(int i = 0; i < PATTERN; i++){
+			weakLearn(i);
+		}
+		
 	}
-	
 }
