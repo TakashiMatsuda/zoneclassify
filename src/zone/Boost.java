@@ -26,8 +26,6 @@ public class Boost {
 	 * @param args
 	 */
 	public static void main(char[] args){
-		
-		
 		ZoneExtracter farmer = new ZoneExtracter();
 		
 		/*
@@ -40,13 +38,12 @@ public class Boost {
 		 */
 		DataSet dataset = new DataSet();
 		dataset.load(farmer.subZone(M), "coverage.wig");// Mは区間数、ゆくゆくは区間長の制限に変えたいですね
-		
-//		DataSetとは、リファクタリング後にでてくるものだったんだ
-//		dataSetには、必ずしもメソッドはいらないんだ
-		
+				
 //		各レコードの重みを正規化した分布を計算
 		dataset.initWeight();
 		
+//		FIXME Boost.javaのweaklearnの呼出部分を書き上げる
+//		newclassifierはどういうものか？
 //		weakLearnを呼び、エラー率が1/2未満クラス分類器htを作成
 //		各レコードの重みを更新　正解だと軽くし、不正解だとそのまま
 		for(int i = 0; i < t; i++){
@@ -55,6 +52,7 @@ public class Boost {
 		}		
 		
 //		最終のクラス分類器hf
+		FinalClassifier finalclassifier = new FinalClassifier(dataset);
 		
 		
 		
@@ -65,17 +63,17 @@ public class Boost {
 	 * 
 	 * @author takashi
 	 *	最終的に獲得する分類器のクラス
+	 *	DataSetと一対一に対応
 	 */
-	private class FinalClassifier extends Classifier {
-		
+	private class FinalClassifier {
+		DataSet dataset;
 		/**
-		 * 
+		 * DataSetと一対一の関係をもつクラス
 		 * @param ls
 		 * @param t
 		 */
-		FinalClassifier(int ls, byte t) {
-			super(ls, t);
-			// TODO 動的束縛・静的束縛について理解する
+		FinalClassifier(DataSet dataset) {
+			this.dataset = dataset;
 		}
 		
 		
@@ -86,10 +84,10 @@ public class Boost {
 		 * @param a
 		 * @return
 		 */
-		public byte lastprediction(DataSet dataset, byte[] sample){
+		public byte lastprediction(byte[] sample){
 //			重みつき多数決をするメソッド
 //			名前微妙。かぶっている。わざとでないなら変えるべき。
-			if(majorityRule(dataset, sample)){
+			if(majorityRule(sample)){
 				return 1;
 			}
 			else
@@ -103,7 +101,7 @@ public class Boost {
 		 * @param greatTeachers
 		 * @return
 		 */
-		private boolean majorityRule(DataSet dataset, byte[] sample){
+		private boolean majorityRule(byte[] sample){
 			double prob = 0;
 			double aver = 0;
 			double beta = 0;

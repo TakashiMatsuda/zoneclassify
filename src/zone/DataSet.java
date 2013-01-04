@@ -23,7 +23,7 @@ public class DataSet {
 	/*
 	 * MyPointの数 <- 意味がわからなくなってしまいました。
 	 */
-	private final int M;
+	private int M;
 	// TODO finalの意味, java文法の勉強
 	
 	private static int PATTERN = (int) Math.pow(4, 2) + (int) Math.pow(4, 3) + (int) Math.pow(4, 4) + (int) Math.pow(4, 5);
@@ -229,10 +229,10 @@ public class DataSet {
 	
 	// FIXME コメントをもっとわかりやすくしよう
 	/**
-	 * Create and store all 2-5mer Patterns
-	 * @return
+	 * Create and store all patterns for 2-5mer
 	 * Coding completed.
 	 * The calculation speed is fast.
+	 * @return List of all patterns for 2-5mer.
 	 */
 	private ArrayList<String> createMers(){
 		/*
