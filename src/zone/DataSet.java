@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
  *
  */
 public class DataSet {
-//	TODO 例外処理の方法を勉強したい
 	public ArrayList<Classifier> boxes;
 	/* 教師データ集合 */
 	public LinkedList<MyPoint> teachers;// LinkedかArrayか
@@ -25,7 +24,7 @@ public class DataSet {
 	 * MyPointの数 <- 意味がわからなくなってしまいました。
 	 */
 	private int M;
-	// TODO finalの意味, java文法の勉強
+
 	
 	private static int PATTERN = (int) Math.pow(4, 2) + (int) Math.pow(4, 3) + (int) Math.pow(4, 4) + (int) Math.pow(4, 5);
 	/*
@@ -183,7 +182,7 @@ public class DataSet {
 		int right = 0;
 		int sum = 0;
 		int q = x.start;
-		byte p = x.prediction();
+		byte p = x.target;
 		for (int i = 0; i < M; i++){
 			if (teachers.get(i).getColumn()[q] == 1){
 				sum++;
@@ -209,20 +208,14 @@ public class DataSet {
 //		リファクタリング中。
 		
 //		learning set  : LS
-		
-		
-		
 		// 作り方、歪んでいます。分類器が、ある列が1のときにどうなるか、というものしかない
-		// それで結果十分なのかな？
-		
-		
-		
-		
+//		その効果について考察する
 		Classifier tmp = null;
-		while(LS < PATTERN){
-			tmp = new Classifier(LS, (byte) 0);
+//		while(LS < PATTERN){
+			tmp = new Classifier(a, (byte) 0);
 			if (errorRatio(tmp) < (1.0 / 2.0))
-				break;
+//				break;
+			{}
 			else{
 //				FIXME weakLearnの効率の改善
 				// なんか効率悪そう。。。
@@ -230,17 +223,18 @@ public class DataSet {
 //				不必要なオブジェクト作成操作が存在する。
 //				この作業は全体比にしてかなり大きな計算時間をとるので、
 //				最適化したい。
-				tmp = new Classifier(LS, (byte) 1);
-				if (errorRatio(tmp) < (1.0 / 2.0))
-					break;
+				tmp = new Classifier(a, (byte) 1);
+//				if (errorRatio(tmp) < (1.0 / 2.0)){}
+//					break;
 			}
-			LS++;
-		}
+//			LS++;
+//		}
 		boxes.add(tmp);
 		reviseWeight(tmp);
 	}
 	
 	
+//	TODO reviseWeightのコードを読んで実装する。これで最後。
 	/**
 	 * AdaBoostのアルゴリズムにしたがってweightを更新
 	 * 完成しています
@@ -252,7 +246,8 @@ public class DataSet {
 		for(int i = 0; i < M; i++){
 			// teachers.get(i).getWeight()// これではweightに差S割れない
 			// スレッドセーフ、カプセル化を破ります
-			teachers.set(i, teachers.get(i).changeWeight(teachers.get(i).getWeight() * Math.pow(beta, (1 - Math.abs(h.prediction() - teachers.get(i).getTarget())))));
+			teachers.set(i, teachers.get(i).changeWeight(teachers.get(i).getWeight() 
+					* Math.pow(beta, (1 - Math.abs(h.prediction() - teachers.get(i).getTarget())))));
 			// knowledges[i][PATTERN + 1] = (byte) (knowledges[i][PATTERN + 1] * Math.pow(beta, (1 - Math.abs(h.prediction() - knowledges[i][PATTERN]))));
 		}
 	}

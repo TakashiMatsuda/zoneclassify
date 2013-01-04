@@ -17,12 +17,9 @@ public class Boost {
 	/**
 	 * 訓練データを読み込む
 	 * 訓練データに大してadaboostアルゴリズムを適用しclassifierのリストを計算
-	 * テストデータのも好評属性をadaboostで計算したclassifierを使って予測し、error率を計算
+	 * テストデータの目標属性をadaboostで計算したclassifierを使って予測し、error率を計算
 	 * 全部datasetに入る
-	 * 
-	 * これが全体のメインクラス
 	 */
-	
 	/**
 	 * Main function
 	 * @param args
@@ -44,17 +41,16 @@ public class Boost {
 //		各レコードの重みを正規化した分布を計算
 		dataset.initWeight();
 		
-//		FIXME Boost.javaのweaklearnの呼出部分を書き上げる
 //		newclassifierはどういうものか？
 //		weakLearnを呼び、エラー率が1/2未満クラス分類器htを作成
 //		各レコードの重みを更新　正解だと軽くし、不正解だとそのまま
-		Classifier newclassifier = null;
+//		Classifier newclassifier = null;
 //		二回ループをまわしてしまっている（内部と、外部で）
 		
 		dataset.run();
 		
 //		最終のクラス分類器hf
-		FinalClassifier finalclassifier = new FinalClassifier(dataset);
+		Boost.FinalClassifier finalclassifier = new FinalClassifier(dataset);
 		
 	}
 	
@@ -65,7 +61,7 @@ public class Boost {
 	 *	最終的に獲得する分類器のクラス
 	 *	DataSetと一対一に対応
 	 */
-	private class FinalClassifier {
+	private static class FinalClassifier {
 		DataSet dataset;
 		/**
 		 * DataSetと一対一の関係をもつクラス

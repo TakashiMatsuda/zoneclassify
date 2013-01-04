@@ -8,8 +8,8 @@ package zone;
  */
 public class Classifier {
 	
-	private int start;
-	private byte target;
+	public final int start;
+	public final byte target;
 	private double ratio;
 	
 	/**

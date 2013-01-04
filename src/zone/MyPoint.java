@@ -59,6 +59,18 @@ public class MyPoint {
 	
 	
 	/**
+	 * targetの属性を返します。(1 or 0)
+	 * column[column.length - 2]を返しています。
+	 * columnの実装記録が失われているため、
+	 * 自信はありません。
+	 * 
+	 * @return このmypointの目標属性
+	 */
+	public byte getTarget(){
+		return this.column[column.length - 2];
+	}
+	
+	/**
 	 * 
 	 * @param core
 	 */
