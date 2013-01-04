@@ -247,7 +247,7 @@ public class DataSet {
 			// teachers.get(i).getWeight()// これではweightに差S割れない
 			// スレッドセーフ、カプセル化を破ります
 			teachers.set(i, teachers.get(i).changeWeight(teachers.get(i).getWeight() 
-					* Math.pow(beta, (1 - Math.abs(h.prediction() - teachers.get(i).getTarget())))));
+					* Math.pow(beta, (1 - Math.abs(h.prediction(teachers.get(i).getColumn()) - teachers.get(i).getTarget())))));
 			// knowledges[i][PATTERN + 1] = (byte) (knowledges[i][PATTERN + 1] * Math.pow(beta, (1 - Math.abs(h.prediction() - knowledges[i][PATTERN]))));
 		}
 	}
