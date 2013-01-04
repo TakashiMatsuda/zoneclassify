@@ -234,7 +234,7 @@ public class DataSet {
 	}
 	
 	
-//	TODO reviseWeightのコードを読んで実装する。これで最後。
+
 	/**
 	 * AdaBoostのアルゴリズムにしたがってweightを更新
 	 * 完成しています
@@ -258,6 +258,7 @@ public class DataSet {
 	 * Create and store all patterns for 2-5mer
 	 * Coding completed.
 	 * The calculation speed is fast.
+	 * テスト済、完動しています
 	 * @return List of all patterns for 2-5mer.
 	 */
 	private ArrayList<String> createMers(){

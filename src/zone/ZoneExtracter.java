@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 // 構成比で書き換える
+// TODO ZoneExtracterを完成させる、それでこの仕事はおしまい
 
 /**
  * 最小メチル化領域の抽出を担うクラス
@@ -23,11 +24,13 @@ public class ZoneExtracter {
 	 * 正負反転
 	 * -0.5
 	 * 関数
+	 * 必要なくなっている？？？？
 	 * @return
 	 */
 	private List<ArrayList<Double>> mezo(){
-		System.out.println("READING CpGMethylationLevel DATA...");
-		List<ArrayList<Double>> tmp = InputWig.getWIG("blastula_CpGMethylationLevel.wig");
+		String filename = "blastula_CpGMethylationLevel.wig";
+		System.out.println("READING CpGMethylationLevel DATA...  :  " + filename);
+		List<ArrayList<Double>> tmp = InputWig.getWIG(filename);
 		System.out.println(tmp.size());
 		double p = 0;
 		ArrayList<Double> bunch = new ArrayList<Double>();
@@ -69,8 +72,10 @@ public class ZoneExtracter {
 			//System.out.print(methyllevel.get(0)[i]);
 			//System.out.print(' ');
 		//}
-		System.out.println("READING CpGMethylationLevel DATA...");
-		methyllevel = InputWig.getWIG("blastula_CpGMethylationLevel.wig");
+		
+		String filename = "blastula_CpGMethylationLevel.wig";
+		System.out.println("READING CpGMethylationLevel DATA...  :  " + filename);
+		methyllevel = InputWig.getWIG(filename);
 		// もらったものが空じゃないか確認
 		int al = methyllevel.size();
 		System.out.println(al);
@@ -174,7 +179,7 @@ public class ZoneExtracter {
 					 */
 					// 実際には、子のアルゴリズムを使うのであれば区間の用意のやり方が変わってくる
 					// 遅い
-					for(int u = M - 1; u >= m; u= u -2){// 実験的に。アルゴリズムとしては間違っています
+					for(int u = M - 1; u >= m; u= u -2){// 実験的に。アルゴリズムとしては間違っています <- どういうこと？？
 						//if ((u % 100000) == 0){
 							System.out.println("現在の区間数・・・　" + u  +"　　区間数を減らしています・・・・");
 						//}
