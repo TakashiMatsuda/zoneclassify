@@ -24,10 +24,10 @@ public class InputWigTest {
 		final boolean DEBUG = false;
 		
 		
-		ArrayList<ArrayList<Double>> exa = InputWig.getWIG("chromosome_blastula_CpGMethylationLevel.wig");
+		ArrayList<ArrayList<Double>> exa = InputWig.getWIG("blastula_CpGMethylationLevel_chrome=1.wig");
 		// exaに何も入ってない
-		// for(int i = 0; i < 10; i++){
-			//System.out.println(exa.get(0).get(i));
-		//}
+		for(int i = 0; i < 10; i++){
+			System.out.println(exa.get(0).get(1));
+		}
 	}
 }

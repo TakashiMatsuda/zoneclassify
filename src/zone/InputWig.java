@@ -7,17 +7,17 @@ import java.util.regex.Pattern;
 
 /**
  * 
+ * このクラスは愚直にInputするだけ。他のことをしてはいけない。
  * @author tks
- *
+ * 
  */
 public class InputWig {
 	static boolean DEBUG = true;
 	// 愚直に全部読む必要はないのでは。CpGPositionデータを使ってそこだけよめば良い
-	// 実装を考えよう
+//	実装変更をしようとしている？
 	
 	// まずCpGPositionデータを読んで場所データを得る
 	// 場所が一致するところのメチル化率を記録していく
-	// 
 	
 	/**
 	 * 
@@ -26,10 +26,6 @@ public class InputWig {
 	 */
 	@SuppressWarnings("unchecked")
 	public static ArrayList<ArrayList<Double>> getWIG(String filename){
-		// CpGの量とメチル化の比を見るべきであって、全体のメチル化率ではよくないのでは？
-		// 区間のラベル付けは複雑になるが、そのほうが正しい(どの文脈において？)
-		
-		
 		// ArrayList<double[]> harvest = new ArrayList<double[]>();
 		ArrayList<ArrayList<Double>>harvest = new ArrayList<ArrayList<Double>>();
 
@@ -48,8 +44,9 @@ public class InputWig {
 			 */
 			/*
 			 * 行数取得
+			 * 現在使われていません
 			 */
-			System.out.println("行数取得中....");
+//			System.out.println("行数取得中....");
 			//while((line = br.readLine()) != null){
 			//	i++;
 			//}
@@ -74,7 +71,8 @@ public class InputWig {
 				 */
 				if (chromtag.matcher(line).find())
 				{
-					harvest.add((ArrayList<Double>) gallon);
+					System.out.println("Hit: " + line);
+					harvest.add((ArrayList<Double>)gallon);// キャストは高速化のため、今後配列に移行したい
 					// freeしたい
 					gallon = null;// clearの仕様がよくない
 					// nullで書き換え
@@ -83,13 +81,14 @@ public class InputWig {
 				}
 				else{
 					/*
-					 * 追加
+					 * 加工
 					 */
 					gallon.add((Double.parseDouble(line) - 0.5) * (-1));
 					// j++;
 				}
 				count++;
 			}
+			harvest.add((ArrayList<Double>)gallon);
 			br.close();
 		} catch(Exception e){
 			e.printStackTrace();

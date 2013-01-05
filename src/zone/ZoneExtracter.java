@@ -24,7 +24,7 @@ public class ZoneExtracter {
 	 * 正負反転
 	 * -0.5
 	 * 関数
-	 * 必要なくなっている？？？？
+	 * 必要なくなった
 	 * @return
 	 */
 	private List<ArrayList<Double>> mezo(){
@@ -59,14 +59,8 @@ public class ZoneExtracter {
 	 */
 	public List<List<int[]>> subZone(int m){
 		System.out.println("EXTRACTING subZones....");
-		// 大きくなりすぎた。もっと分割して書き直したい。
 		List<List<int[]>> alldata = new ArrayList<List<int[]>>();
 		List<int[]> maxzones = new LinkedList<int[]>();
-		/*
-		 * 使いやすくなったメチル化度列を得る
-		 */
-		// this.methyllevel = mezo();
-		// 必要なくなった
 		
 		//for(int i = 0; i < 100; i++){
 			//System.out.print(methyllevel.get(0)[i]);
