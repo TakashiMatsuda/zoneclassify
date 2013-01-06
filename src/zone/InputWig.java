@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 /**
  * 
  * このクラスは愚直にInputするだけ。他のことをしてはいけない。
+ * テスト通過しました。
  * @author tks
  * 
  */
@@ -93,7 +94,6 @@ public class InputWig {
 		} catch(Exception e){
 			e.printStackTrace();
 		}
-		// harvestに何も入っていない
 		return harvest;
 	}
 }

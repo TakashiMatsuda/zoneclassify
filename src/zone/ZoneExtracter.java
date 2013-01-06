@@ -28,7 +28,7 @@ public class ZoneExtracter {
 	 * @return
 	 */
 	private List<ArrayList<Double>> mezo(){
-		String filename = "blastula_CpGMethylationLevel.wig";
+		String filename = "blastula_CpGMethylationLevel_chrom=1.wig";
 		System.out.println("READING CpGMethylationLevel DATA...  :  " + filename);
 		List<ArrayList<Double>> tmp = InputWig.getWIG(filename);
 		System.out.println(tmp.size());
@@ -43,6 +43,8 @@ public class ZoneExtracter {
 			}
 			System.out.println(bunch.size());
 			tmp.set(i, bunch);
+			
+//			下のコメントはおかしい
 			bunch.clear();// clearでやるのは逆効果かもしれない。メモリ領域確保のオーバーヘッドをとるか、それとも無駄に消費されるメモリ領域をとるか
 		}
 		return tmp;
@@ -67,7 +69,7 @@ public class ZoneExtracter {
 			//System.out.print(' ');
 		//}
 		
-		String filename = "blastula_CpGMethylationLevel.wig";
+		String filename = "blastula_CpGMethylationLevel_chrome=1.wig";
 		System.out.println("READING CpGMethylationLevel DATA...  :  " + filename);
 		methyllevel = InputWig.getWIG(filename);
 		// もらったものが空じゃないか確認
@@ -155,7 +157,7 @@ public class ZoneExtracter {
 				/*
 				 * 区間数を減らしていく
 				 */
-				// System.out.println("CUTTING DOWN ZONES....");
+				System.out.println("CUTTING DOWN ZONES....");
 				double summin2 = 1.0 / 0.0;
 				double sug3 = 1.0 / 0.0;
 				int sugnum1 = 0;
@@ -163,7 +165,7 @@ public class ZoneExtracter {
 				int d0 = 0;
 				int d1 = 0;
 				if (m > M){
-					// System.out.println("何もしない");
+					System.out.println("何もしない");
 					// ここに全部入ってくる
 					// 何もしない
 				}
