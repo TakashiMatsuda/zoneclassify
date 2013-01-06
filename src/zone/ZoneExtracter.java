@@ -6,6 +6,7 @@ import java.util.List;
 
 // 構成比で書き換える
 // TODO ZoneExtracterを完成させる、それでこの仕事はおしまい
+// TODO 最短区間長制限アルゴリズムを解く
 
 /**
  * 最小メチル化領域の抽出を担うクラス
@@ -179,6 +180,7 @@ public class ZoneExtracter {
 						//if ((u % 100000) == 0){
 							System.out.println("現在の区間数・・・　" + u  +"　　区間数を減らしています・・・・");
 						//}
+							
 						for(int kk = 0; kk < u; kk++){// 要素数がぴったり一致しているならば動作する、管理についてのあそびがない設計部分です
 							summin2 = 0;
 							for(int rr = maxzones.get(kk)[0]; rr < maxzones.get(kk)[1]; rr++){// IndexOutOfBoundsException
