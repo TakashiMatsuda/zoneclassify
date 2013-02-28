@@ -36,8 +36,10 @@ public class Boost {
 		 * DataSet
 		 */
 		DataSet dataset = new DataSet();
-		dataset.load(farmer.subZone(M), "coverage.wig");// Mは区間数、ゆくゆくは区間長の制限に変えたいですね
-				
+		// メチル化度の定義だが、最初は自分の好きなようにやって、あとで論文を呼んでチェックすればよい。
+		dataset.load(farmer.subZone(M), "coverage.wig");
+		// Mは区間数、ゆくゆくは区間長の制限に変えたいですね
+
 //		各レコードの重みを正規化した分布を計算
 		dataset.initWeight();
 		
@@ -47,75 +49,38 @@ public class Boost {
 //		Classifier newclassifier = null;
 //		二回ループをまわしてしまっている（内部と、外部で）
 		
-		dataset.run();
+		dataset.adaboost();
 		
 //		最終のクラス分類器hf
-		Boost.FinalClassifier finalclassifier = new FinalClassifier(dataset);
+		FinalClassifier finalclassifier = new FinalClassifier(dataset, T);
+		
+		
+//		FIXME このあと何をしなければいけないか考えよう。
+//		cis-elementの場所を返す。
+//		cis-elementの塩基配列を返す。
+//		(出力する)
+		
+		
+		
+//		最終的な分類器を作成する。
+//		入力待ち状態
+//		テストからの呼出を受付 : lastprediction
+		
+		
+//		何らかの塩基配列を受け取って、それがcis-elementかどうかを返す。
+		
+		
+		
+		
+		
+	}	
+	
+	
+	
+	private void write_cis(CisEList ciselmlist){
+		
+		
 		
 	}
 	
-	
-	/**
-	 * 
-	 * @author takashi
-	 *	最終的に獲得する分類器のクラス
-	 *	DataSetと一対一に対応
-	 */
-	private static class FinalClassifier {
-		DataSet dataset;
-		/**
-		 * DataSetと一対一の関係をもつクラス
-		 * @param ls
-		 * @param t
-		 */
-		FinalClassifier(DataSet dataset) {
-			this.dataset = dataset;
-		}
-		
-		
-		/**
-		 * 内装はmajorityRuleによる。
-		 * 重み付き多数決による結果を返す。
-		 * 完成しました。
-		 * @param a
-		 * @return
-		 */
-		public byte lastprediction(byte[] sample){
-//			重みつき多数決をするメソッド
-//			名前微妙。かぶっている。わざとでないなら変えるべき。
-			if(majorityRule(sample)){
-				return 1;
-			}
-			else
-				return 0;
-		}
-		
-		
-		/**
-		 * この結果を再計算するのはもったいないので、このクラスの中にフィールドを作って格納したい。
-		 * 完成しています。
-		 * @param greatTeachers
-		 * @return
-		 */
-		private boolean majorityRule(byte[] sample){
-			double prob = 0;
-			double aver = 0;
-			double beta = 0;
-			// NOW
-			for(int t = 0; t < T; t++){
-//				左辺の計算
-				beta = dataset.boxes.get(t).omomikeisu();
-				prob += (- Math.log(beta)) * (dataset.boxes.get(t).prediction(sample));
-				
-//				右辺の計算
-				aver += (- Math.log(beta)) / 2.0;
-			}		
-			
-			if(prob >= aver){
-				return true;
-			}
-			else
-				return false;
-		}
-	}
 }
