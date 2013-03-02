@@ -12,14 +12,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * ciselementを、byte[]の形で保存している。
- * 実装完了
+ * ciselementを、byte[]の形で保存している。 実装完了
+ * 
  * @author takashi
  * 
  * 
  */
 public class CisEList extends ArrayList<String> {
-//	本当はCisEクラスを作った方がいい
+	// 本当はCisEクラスを作った方がいい
 
 	/**
 	 * 
@@ -43,18 +43,18 @@ public class CisEList extends ArrayList<String> {
 		super(c);
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
-	
-	
+
 	/**
 	 * 実装終了しているが、char -> byteの対応付けに応じて修正する必要が生じているかもしれません。
+	 * 
 	 * @param record
 	 * @return
 	 */
-	public static String trans_byte_str(byte[] record){
+	public static String trans_byte_str(byte[] record) {
 		StringBuilder sb = new StringBuilder();
-		for(int i = 0; i < record.length; i++){
-//			FIXME byte[]をStringからもともとどのように格納したか覚えていない
-			switch(record[i]){
+		for (int i = 0; i < record.length; i++) {
+
+			switch (record[i]) {
 			case 0:
 				sb.append('A');
 				break;
@@ -71,11 +71,10 @@ public class CisEList extends ArrayList<String> {
 				break;
 			}
 		}
-		
+
 		return sb.toString();
 	}
 
-	
 	/**
 	 * 実装終了
 	 */
@@ -91,8 +90,8 @@ public class CisEList extends ArrayList<String> {
 			// File output = new File(CLUSTERNUM + "K_" + JIGEN + "D_"
 			// + DATASIZE + "NLloyd_result" + i + ".tsv");
 			out = new BufferedWriter(new FileWriter(output));
-			
-			for(int i = 0; i < size(); i++){
+
+			for (int i = 0; i < size(); i++) {
 				out.write(get(i) + "\n");
 			}
 			out.close();

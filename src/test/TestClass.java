@@ -8,13 +8,13 @@ public class TestClass {
 	 */
 	public static void main(String[] args) {
 		System.out.println("SysTEST");
-		
+
 		ArrayList<Integer> it = new ArrayList<Integer>();
 		Integer a = new Integer(1);
 		it.add(a);
 		a = null;
 		System.out.println(it.get(0));
-				
+
 		// TETETETETETE
 	}
 }

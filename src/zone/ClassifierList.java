@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * 完成しています。
+ * 
  * @author takashi
- *
+ * 
  */
 public class ClassifierList extends ArrayList<Classifier> {
 
@@ -29,7 +31,7 @@ public class ClassifierList extends ArrayList<Classifier> {
 	 */
 	public ClassifierList(int initialCapacity) {
 		super(initialCapacity);
-		
+
 	}
 
 	/**
@@ -39,9 +41,20 @@ public class ClassifierList extends ArrayList<Classifier> {
 		super(c);
 
 	}
-	
-	public CisEList get_intense_classifier(int n){
-//		FIXME not yet implemented
+
+	/**
+	 * 完成しています。
+	 * 
+	 * @param n
+	 * @return
+	 */
+	public CisEList get_intense_classifier(int n, ClassifierRanking memberlist) {
+		CisEList res = new CisEList(n);
+		for (int i = 0; i < n; i++) {
+			res.add(get(i).get_record());
+		}
+
+		return res;
 	}
-	
+
 }

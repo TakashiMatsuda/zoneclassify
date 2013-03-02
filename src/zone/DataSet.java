@@ -13,8 +13,8 @@ import java.util.regex.Pattern;
  * 
  */
 public class DataSet {
-//	分類器のリスト
-//	public ArrayList<Classifier> boxes;
+	// 分類器のリスト
+	// public ArrayList<Classifier> boxes;
 	public ClassifierList classifierlist;// setでいい
 	/* 教師データ集合 */
 	public LinkedList<MyPoint> teachers;// LinkedかArrayか
@@ -196,8 +196,6 @@ public class DataSet {
 	 * エラー率が平均よりは低いclassifierを作成し、boxesに格納したのち、 同時にweightを更新する。 完成しています<- 本当？
 	 */
 	private void weakLearn(int a) {
-		// リファクタリング中。
-
 		// learning set : LS
 		// 作り方、歪んでいます。分類器が、ある列が1のときにどうなるか、というものしかない
 		// その効果について考察する
@@ -220,7 +218,7 @@ public class DataSet {
 		}
 		// LS++;
 		// }
-//		box.add(tmp);
+		// box.add(tmp);
 		classifierlist.add(tmp);
 		reviseWeight(tmp);
 	}
@@ -235,18 +233,21 @@ public class DataSet {
 		for (int i = 0; i < M; i++) {
 			// teachers.get(i).getWeight()// これではweightに差S割れない
 			// スレッドセーフ、カプセル化を破ります
-			teachers.set(
-					i,
-					teachers.get(i).changeWeight(
-							teachers.get(i).getWeight()
-									* Math.pow(beta, (1 - Math.abs(h
-											.prediction(teachers.get(i)
-													.getColumn())
-											- teachers.get(i).getTarget())))));
+			// ここ、文法的ミスを抱えている可能性があります。(JengaCode)上二行をコメントアウトしました。
+			// teachers.set(
+			// i,
+			double old_w = teachers.get(i).getWeight();
+			teachers.get(i).changeWeight(
+					old_w
+							* Math.pow(beta, (1 - Math.abs(h
+									.prediction(teachers.get(i).getColumn())
+									- teachers.get(i).getTarget()))));// );
 			// knowledges[i][PATTERN + 1] = (byte) (knowledges[i][PATTERN + 1] *
 			// Math.pow(beta, (1 - Math.abs(h.prediction() -
 			// knowledges[i][PATTERN]))));
+
 		}
+
 	}
 
 	/**
@@ -314,18 +315,18 @@ public class DataSet {
 	public void adaboost() {
 		for (int i = 0; i < PATTERN; i++) {
 			weakLearn(i);
-			
+
 		}
 
 	}
-	
+
 	/**
-	 * ciselementのリストを求められた数だけ上位から取り出します。
-	 * 完成しています。
+	 * ciselementのリストを求められた数だけ上位から取り出します。 完成しています。
+	 * 
 	 * @param n
 	 * @return
 	 */
-	public CisEList get_intense_classifier(int n){
-		return this.classifierlist.get_intense_classifier(n);
+	public CisEList get_intense_classifier(int n, ClassifierRanking memberlist) {
+		return this.classifierlist.get_intense_classifier(n, memberlist);
 	}
 }

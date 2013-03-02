@@ -1,22 +1,17 @@
 package zone;
 
-import java.util.LinkedList;
-import java.util.List;
-
 /**
- * メインクラス
- * 完成しています。
+ * メインクラス 完成しています。
  * 
  * @author takashi
  * 
  */
 public class Boost {
 	private static int M = 10;// あとで仕様変更を受けます.
-	private static int T = 50;// 最終的に用いる分類器の数
+	private static int T = 50;// 最終的に用いる分類器の数 <- 全部使えばいいのではないか、大丈夫ならそのままいれこむ
 	private static int PATTERN = (int) Math.pow(4, 2) + (int) Math.pow(4, 3)
 			+ (int) Math.pow(4, 4) + (int) Math.pow(4, 5);
 	private static int CIS_NUM = 100;
-	
 
 	private ZoneExtracter farmer;
 	private DataSet dataset;
@@ -55,9 +50,10 @@ public class Boost {
 			dataset.adaboost();
 
 			// 最終のクラス分類器finalclassiierを作成する。
-			FinalClassifier finalclassifier = new FinalClassifier(dataset, T);
+			finalclassifier = new FinalClassifier(dataset, T);
 			sign_analysed = true;
 		}
+
 	}
 
 	/**
@@ -77,19 +73,19 @@ public class Boost {
 
 	/**
 	 * 高メチル化なら1, 低メチル化なら0を返します。
+	 * 
 	 * @param record
 	 * @return
 	 */
 	public byte methyl_prediction(String record) {
-		if (sign_analysed){
-		byte[] sample = trans_str_byte(record);
-		return this.finalclassifier.lastprediction(sample);
-		}
-		else{
+		if (sign_analysed) {
+			byte[] sample = trans_str_byte(record);
+			return this.finalclassifier.lastprediction(sample);
+		} else {
 			System.err.println("not yet analysed(@methyl_prediction:error)");
 			return -1;
 		}
-		
+
 	}
 
 	/**
@@ -104,12 +100,12 @@ public class Boost {
 	public static void main(char[] args) {
 		Boost singleton = new Boost();
 		singleton.analyse();
+
 	}
 
 	/**
 	 * 
-	 * recordをもらって、その判定を与えられた最終分類器を用いて行う。
-	 * (overloaded)
+	 * recordをもらって、その判定を与えられた最終分類器を用いて行う。 (overloaded)
 	 * 
 	 * @param record
 	 * @param finalclassifier
