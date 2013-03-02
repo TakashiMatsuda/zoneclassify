@@ -8,6 +8,9 @@ package zone;
  */
 public class Classifier {
 	
+//	意味がわからない
+//	しっかり作りなおした方が良さそうだ。少し計算コストが大きくなっても、そのほうがいい。
+//	
 	public final int start;
 	public final byte target;
 	private double ratio;

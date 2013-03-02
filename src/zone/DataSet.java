@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 public class DataSet {
 //	分類器のリスト
 //	public ArrayList<Classifier> boxes;
-	public ClassifierList classifierlist;
+	public ClassifierList classifierlist;// setでいい
 	/* 教師データ集合 */
 	public LinkedList<MyPoint> teachers;// LinkedかArrayか
 	public ArrayList<String> records;
@@ -317,5 +317,15 @@ public class DataSet {
 			
 		}
 
+	}
+	
+	/**
+	 * ciselementのリストを求められた数だけ上位から取り出します。
+	 * 完成しています。
+	 * @param n
+	 * @return
+	 */
+	public CisEList get_intense_classifier(int n){
+		return this.classifierlist.get_intense_classifier(n);
 	}
 }
