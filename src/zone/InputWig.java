@@ -25,11 +25,10 @@ public class InputWig {
 	 * @param filename
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public static ArrayList<ArrayList<Double>> getWIG(String filename) {
 		// ArrayList<double[]> harvest = new ArrayList<double[]>();
 		ArrayList<ArrayList<Double>> harvest = new ArrayList<ArrayList<Double>>();
-
+		
 		try {
 			System.out.println("READING COVERAGE DATA...");
 			String line = null;

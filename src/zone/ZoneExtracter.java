@@ -79,6 +79,7 @@ public class ZoneExtracter {
 		System.out.println("READING CpGMethylationLevel DATA...  :  "
 				+ filename);
 		methyllevel = InputWig.getWIG(filename);
+		
 		// もらったものが空じゃないか確認
 		int al = methyllevel.size();
 		System.out.println(al);
