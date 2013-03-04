@@ -45,7 +45,8 @@ public class ZoneExtracter {
 			tmp.set(i, bunch);
 
 			// 下のコメントはおかしい
-			bunch.clear();// clearでやるのは逆効果かもしれない。メモリ領域確保のオーバーヘッドをとるか、それとも無駄に消費されるメモリ領域をとるか
+			bunch.clear();
+			// clearでやるのは逆効果かもしれない。メモリ領域確保のオーバーヘッドをとるか、それとも無駄に消費されるメモリ領域をとるか
 		}
 		return tmp;
 	}
@@ -61,16 +62,19 @@ public class ZoneExtracter {
 	 */
 	public List<List<int[]>> subZone(int m) {
 //		TODO リファクタリング。特にsubZoneの型を変更するべきだ。このクラスをつくるべき。
+//		-> SegmentSetsExtracterに入れていく
+//		Zoneクラス
+//		ZoneListクラス
 		
 		System.out.println("EXTRACTING subZones....");
 		List<List<int[]>> alldata = new ArrayList<List<int[]>>();
 		List<int[]> maxzones = new LinkedList<int[]>();
-
+		
 		// for(int i = 0; i < 100; i++){
 		// System.out.print(methyllevel.get(0)[i]);
 		// System.out.print(' ');
 		// }
-
+		
 		String filename = "blastula_CpGMethylationLevel_chrome=1.wig";
 		System.out.println("READING CpGMethylationLevel DATA...  :  "
 				+ filename);
@@ -93,8 +97,6 @@ public class ZoneExtracter {
 
 			/*
 			 * この下、区間推定アルゴリズム
-			 */
-			/*
 			 * methyllevelの各要素(double[])について下の作業を行います
 			 */
 			System.out.println("methyllevel.size:  " + methyllevel.size()
@@ -128,7 +130,7 @@ public class ZoneExtracter {
 						if (target.get(j - 1) * target.get(j) >= 0)
 							k++;
 						else {
-							/**
+							/**上
 							 * 条件: 正・負区間<.今はこっちではない
 							 */
 							/**
@@ -138,8 +140,9 @@ public class ZoneExtracter {
 								// 区間継続
 							} else {
 								// 負区間抽出のための区間は消してしまったけどここだった
-								tmp[1] = j - 1;// j - 1でエラー含みだがちゃんと動いていればj ==
-												// 0となることはないはず
+								tmp[1] = j - 1;
+								// j - 1でエラー含みだがちゃんと動いていればj ==
+								// 0となることはないはず
 								maxzones.add(tmp);
 								tmp = new int[2];
 								tmp[0] = -1;
@@ -173,15 +176,18 @@ public class ZoneExtracter {
 					 * i * 並列化できない
 					 */
 					// 実際には、子のアルゴリズムを使うのであれば区間の用意のやり方が変わってくる
-					// 遅い
-					for (int u = M - 1; u >= m; u = u - 2) {// 実験的に。アルゴリズムとしては間違っています
-															// <- どういうこと？？
+
+					for (int u = M - 1; u >= m; u = u - 2) {
+						// 実験的に。アルゴリズムとしては間違っています
+						// <- どういうこと？？
+						
 						// if ((u % 100000) == 0){
 						System.out.println("現在の区間数・・・　" + u
 								+ "　　区間数を減らしています・・・・");
 						// }
 
-						for (int kk = 0; kk < u; kk++) {// 要素数がぴったり一致しているならば動作する、管理についてのあそびがない設計部分です
+						for (int kk = 0; kk < u; kk++) {
+							// 要素数がぴったり一致しているならば動作する、管理についてのあそびがない設計部分です
 							summin2 = 0;
 							for (int rr = maxzones.get(kk)[0]; rr < maxzones
 									.get(kk)[1]; rr++) {// IndexOutOfBoundsException
@@ -220,6 +226,4 @@ public class ZoneExtracter {
 		return alldata;
 	}
 
-	ZoneExtracter() {
-	}
 }

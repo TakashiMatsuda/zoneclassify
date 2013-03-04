@@ -25,10 +25,11 @@ public class SegmentSetsExtracter {
 	 * @param filename
 	 * @return
 	 */
-	public static List<List<int[]>> extract(String filename) {
-
+	public static List<ZoneList> extract(String filename) {
+		
+		
 		return null;
-
+		
 	}
 
 }
