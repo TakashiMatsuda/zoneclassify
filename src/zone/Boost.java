@@ -12,7 +12,7 @@ public class Boost {
 	private static int PATTERN = (int) Math.pow(4, 2) + (int) Math.pow(4, 3)
 			+ (int) Math.pow(4, 4) + (int) Math.pow(4, 5);
 	private static int CIS_NUM = 100;
-
+	
 	private ZoneExtracter farmer;
 	private DataSet dataset;
 	private FinalClassifier finalclassifier;

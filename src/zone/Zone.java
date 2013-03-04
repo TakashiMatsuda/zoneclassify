@@ -29,6 +29,20 @@ public class Zone {
 		record = rec;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public int get_start(){
+		return start;
+	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public int get_end(){
+		return end;
+	}
 	
 }

@@ -11,9 +11,9 @@ public class Classifier {
 	public final int start;
 	public final byte target;
 	private double ratio;
-	// FIXME recordをclassifierに入れておいて下さい。
+// 	FIXME recordをclassifierに入れておいて下さい。
 	private String record;
-
+	
 	/**
 	 * 
 	 * @param a
@@ -25,7 +25,7 @@ public class Classifier {
 		else
 			return (byte) ((target - 1) * (-1));
 	}
-
+	
 	/**
 	 * 
 	 * @param r
@@ -43,7 +43,7 @@ public class Classifier {
 	public double omomikeisu() {
 		return ratio / (1 - ratio);
 	}
-
+	
 	/**
 	 * 
 	 * @param ls

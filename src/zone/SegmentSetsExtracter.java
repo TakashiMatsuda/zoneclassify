@@ -112,14 +112,45 @@ public class SegmentSetsExtracter {
 				/*
 				 * 区間数を減らしていく
 				 */
+				System.out.println("CUTTING DOWN ZONES....");
+				double summin2 = 1.0 / 0.0;
+				double sug3 = 1.0 / 0.0;
+				int sugnum1 = 0;
 				
-				
+				int d0 = 0;
+				int d1 = 0;
+				if (m > M){
+					System.out.println("何もしない");
+				} else {
+					for(int u = M - 1; u >= m; u = u - 2){
+						System.out.println("現在の区間数・・・" + u + "   区間数を減らしています・・・・");
+						for (int kk = 0; kk < u; kk++){
+							summin2 = 0;
+							
+							for(int rr = maxzones.get(kk).get_start(); rr < maxzones.get(kk).get_end(); rr++){
+								summin2 += target.get(rr);
+							}
+							if (sug3 > Math.abs(summin2)){
+								sug3 = Math.abs(summin2);
+								sugnum1 = kk;
+							}
+						}
+						d0 = maxzones.get(sugnum1 - 1).get_start();
+						d1 = maxzones.get(sugnum1 + 1).get_end();
+						
+						for(int kkk = 0; kkk < 3; kkk++){
+							maxzones.remove(sugnum1 - 1);
+						}
+						maxzones.add(sugnum1 - 1, new Zone(d0, d1));
+					}
+					alldata.add(maxzones);
+				}
 				
 			}
+			tagcount++;
 			
 		}
-		
-		return null;
+		return alldata;
 		
 	}
 
