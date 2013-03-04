@@ -57,9 +57,11 @@ public class ZoneExtracter {
 	 * 主要関数。これを外から呼び出してください。
 	 * 
 	 * @param m
-	 * @return maxzones
+	 * @return maxzones　高メチル化対象区間の場所
 	 */
 	public List<List<int[]>> subZone(int m) {
+//		TODO リファクタリング。特にsubZoneの型を変更するべきだ。このクラスをつくるべき。
+		
 		System.out.println("EXTRACTING subZones....");
 		List<List<int[]>> alldata = new ArrayList<List<int[]>>();
 		List<int[]> maxzones = new LinkedList<int[]>();

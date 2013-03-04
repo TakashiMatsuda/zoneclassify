@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 /**
  * 
  * このクラスは愚直にInputするだけ。他のことをしてはいけない。 テスト通過しました。
- * 
+ * 読み取り機構に問題なし。その後の標準化の方法を考えなければいけない。 
  * @author tks
  * 
  */
@@ -16,7 +16,6 @@ public class InputWig {
 	static boolean DEBUG = true;
 
 	// 愚直に全部読む必要はないのでは。CpGPositionデータを使ってそこだけよめば良い
-	// 実装変更をしようとしている？
 
 	// まずCpGPositionデータを読んで場所データを得る
 	// 場所が一致するところのメチル化率を記録していく
@@ -83,6 +82,7 @@ public class InputWig {
 					/*
 					 * 加工
 					 */
+//					FIXME メチル化度の読み取り方法とその標準化についてここを修正する
 					gallon.add((Double.parseDouble(line) - 0.5) * (-1));
 					// j++;
 				}

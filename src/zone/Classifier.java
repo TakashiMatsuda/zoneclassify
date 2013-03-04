@@ -44,9 +44,16 @@ public class Classifier {
 		return ratio / (1 - ratio);
 	}
 
-	Classifier(int ls, byte t) {
+	/**
+	 * 
+	 * @param ls
+	 * @param t
+	 * @param record
+	 */
+	Classifier(int ls, byte t, String record) {
 		this.start = ls;
 		this.target = t;
+		this.record = record;
 	}
 
 	/**

@@ -55,6 +55,7 @@ public class DataSet {
 	 * @return recordsに格納する作業です。 coding finished.
 	 */
 	public boolean load(List<List<int[]>> zones, String filename) {
+//		FIXME 全体的にload関数をbugfix
 		try {
 			System.out.println("LOADING GENOME FASTA DATA.....");
 			String line;
@@ -81,8 +82,7 @@ public class DataSet {
 					 * tmpZonesの各要素に対応するものを全部切り出す
 					 */
 					while (tmpZones.size() == 0) {// ここはどう書くのがイディオム的に正しいのかわからない
-						// for文を使っても綺麗にかける、メモリ使用量がどっちが多いのかで決めよう
-						// コンパイル後は一緒かな？
+						// for文を使っても綺麗にかける
 						int[] mold = tmpZones.get(tmpZones.size());// 末端から消去。ArrayListなのでこれが速いはず。
 						String cast = onePlace.substring(mold[0], mold[1]);// 植木算があってる確証をとっていません
 						this.records.add(cast);

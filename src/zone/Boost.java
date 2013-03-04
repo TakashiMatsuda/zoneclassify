@@ -35,9 +35,15 @@ public class Boost {
 		if (sign_analysed) {
 			System.err.println("already analysed(@analyse_error)");
 		} else {
+			System.out.println("starting analysis...");
+			// FIXME SegmentSetsExtracterを利用するように、farmer.subZone(M)を書き換える。
 			dataset.load(farmer.subZone(M), "coverage.wig");
+			// FIXME coverage.wigではなくそのchrome=1だけのデータを使って研究する。上を書き換え。
+			
 			// Mは区間数、ゆくゆくは区間長の制限に変えたいですね
-
+			// メモリは足りているので、高速化したい
+			// 並列処理もできるとよい
+			
 			// 各レコードの重みを正規化した分布を計算
 			dataset.initWeight();
 
@@ -97,7 +103,8 @@ public class Boost {
 	 * 
 	 * @param args
 	 */
-	public static void main(char[] args) {
+	public static void main(String[] args) {
+		System.out.println("-------------MinMethyl-------------");
 		Boost singleton = new Boost();
 		singleton.analyse();
 
@@ -106,12 +113,13 @@ public class Boost {
 	/**
 	 * 
 	 * recordをもらって、その判定を与えられた最終分類器を用いて行う。 (overloaded)
+	 * 使わない予定
 	 * 
 	 * @param record
 	 * @param finalclassifier
 	 * @return
 	 */
-	public byte prediction(String record, FinalClassifier finalclassifier) {
+	private byte prediction(String record, FinalClassifier finalclassifier) {
 		byte[] sample = trans_str_byte(record);
 		return finalclassifier.lastprediction(sample);
 	}
