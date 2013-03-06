@@ -11,7 +11,7 @@ import java.util.List;
  * 
  */
 public class SegmentSetsExtracter {
-	private static final int MAX_BOUND = 39973034;
+	private static final int MAX_BOUND = 10000000;//39973034;
 
 	/**
 	 * staticに用いられるクラスのためコンストラクタは特に使われない、空です
