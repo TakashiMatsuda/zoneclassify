@@ -56,6 +56,7 @@ public class DataSet {
 	 */
 	public boolean load(List<List<int[]>> zones, String filename) {
 		// FIXME 全体的にload関数をbugfix
+		
 		try {
 			System.out.println("LOADING GENOME FASTA DATA.....");
 			String line;

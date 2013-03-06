@@ -43,7 +43,7 @@ public class InputWig {
 //				CAUTION countの値は正確でなくてはいけない
 				if ((count % 1000000) == 0)
 					System.out.println((count / 1000000)
-							+ "* 10000000lines  CpgPositionデータ取得中....");
+							+ "* 10000000lines  CpGPositionデータ取得中....");
 				/*
 				 * nametag一致
 				 */

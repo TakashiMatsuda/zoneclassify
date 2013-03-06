@@ -18,10 +18,10 @@ public class SegmentSetsExtracter {
 	 */
 	public SegmentSetsExtracter() {
 	}
-	
-//	TODO まず、InputWigによってい得られたものからCpGPosition値ベースの区間を推定する。
-//	その座標を塩基対座標に変換すればよい。
-	
+
+	// TODO まず、InputWigによってい得られたものからCpGPosition値ベースの区間を推定する。
+	// その座標を塩基対座標に変換すればよい。
+
 	// FIXME 最短区間長制限問題をといているが、そもそもの「メチル化率」の定義をしていない
 	// 区間に対するメチル化率という言葉の定義が必要。
 	/**
@@ -31,7 +31,7 @@ public class SegmentSetsExtracter {
 	 * @param m
 	 * @return
 	 */
-	public static List<ZoneList> extract(int sign, int m, String filename) {
+	public static List<ZoneList> extract(int sign, int m, String filename, String posfile) {
 		System.out.println("EXTRACTING subZones....");
 		List<ZoneList> alldata = new ArrayList<ZoneList>();
 		// kouho
@@ -40,8 +40,10 @@ public class SegmentSetsExtracter {
 		// wig shutoku
 		System.out.println("READING CpGMethylationLevel DATA...  :  "
 				+ filename);
-		ArrayList<int[]> pos_indicator = InputWig.load_CpGPosition(filename, MAX_BOUND);
-		List<double[]> list_methyllevelarray = InputWig.getWIG(filename, pos_indicator));
+		ArrayList<int[]> pos_indicator = InputWig.load_CpGPosition(posfile,
+				MAX_BOUND);
+		List<double[]> list_methyllevelarray = InputWig.getWIG(filename,
+				pos_indicator);
 
 		if (list_methyllevelarray.size() == 0) {
 			System.err.println(list_methyllevelarray.size());
@@ -64,8 +66,9 @@ public class SegmentSetsExtracter {
 			/*
 			 * この下、区間推定アルゴリズム methyllevelの各要素(double[])について下の作業を行います
 			 */
-			System.out.println("methyllevel.size: " + list_methyllevelarray.size()
-					+ "||  tagcount: " + tagcount);
+			System.out.println("methyllevel.size: "
+					+ list_methyllevelarray.size() + "||  tagcount: "
+					+ tagcount);
 
 			// naniositeiru?
 			// for (int r = 0; r < methyllevel.size(); r++) {// ここ違うのではないか。
@@ -76,7 +79,7 @@ public class SegmentSetsExtracter {
 			 */
 			int start = -1;
 			int end = 0;
-
+			
 			for (int j = 0; j < target.length; j++) {
 				/*
 				 * start, endの登録が始まっていない場合
@@ -112,7 +115,7 @@ public class SegmentSetsExtracter {
 				// }
 			}
 			// 仮登録ここまで
-			
+
 			int M = maxzones.size();
 
 			/*
@@ -131,26 +134,23 @@ public class SegmentSetsExtracter {
 			int d0 = 0;
 			int d1 = 0;
 			if (m > M) {
-				System.out.println("何もしない");
+				System.out.println("何もしない" + list_methyllevelarray.size());
 			} else {
-				
-				
-				
 				double abs_sum2 = 0;
 				for (int u = M - 1; u >= m; u = u - 2) {
 					System.out.println("現在の区間数・・・" + u + "   区間数を減らしています・・・・");
-					
+
 					// FIXME アルゴリズムのミス
 					for (int kk = 0; kk < u; kk++) {// TODO ここを並列化して下さい。
-						if ((kk % 1000) == 0){
+						if ((kk % 1000) == 0) {
 							System.err.println(kk);
 						}
 						summin2 = 0;
-										
-//						FIXME この下、とても遅い
-//						-> 処理数が多くなっているのは、CpGMethylationSiteの乗法を生かしていないため。
-						for (int rr = maxzones.get(kk).get_start(); 
-								rr < maxzones.get(kk).get_end(); rr++) {
+
+						// FIXME この下、とても遅い
+						// -> 処理数が多くなっているのは、CpGMethylationSiteの乗法を生かしていないため。
+						for (int rr = maxzones.get(kk).get_start(); rr < maxzones
+								.get(kk).get_end(); rr++) {
 							summin2 += target[rr];
 						}
 						abs_sum2 = Math.abs(summin2);
@@ -171,11 +171,11 @@ public class SegmentSetsExtracter {
 			}
 			tagcount++;
 		}
-		
-//		TODO コード改良中。この上まではpositionベースの区間を求めておき、ここから下で変換する。
-//		最終格納時にpos_indicatorで座標変換してもよい。		
+
+		// TODO コード改良中。この上まではpositionベースの区間を求めておき、ここから下で変換する。
+		// 最終格納時にpos_indicatorで座標変換してもよい。
 		return alldata;
 
 	}
-	
+
 }
