@@ -95,7 +95,7 @@ public class ZoneExtracter {
 			// methyllevel.get(tagcount) != null
 			target = methyllevel.get(tagcount);
 			maxzones.clear();
-
+			
 			/*
 			 * この下、区間推定アルゴリズム
 			 * methyllevelの各要素(double[])について下の作業を行います

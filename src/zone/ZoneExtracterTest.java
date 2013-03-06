@@ -17,6 +17,7 @@ public class ZoneExtracterTest {
 
 	@Test
 	public void testZoneExtracter() {
+		@SuppressWarnings("unused")
 		ZoneExtracter exa = new ZoneExtracter();
 	}
 

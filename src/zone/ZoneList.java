@@ -27,6 +27,4 @@ public class ZoneList extends LinkedList<Zone> {
 
 	}
 	
-	
-
 }
