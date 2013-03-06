@@ -55,7 +55,7 @@ public class DataSet {
 	 * @return recordsに格納する作業です。 coding finished.
 	 */
 	public boolean load(List<List<int[]>> zones, String filename) {
-//		FIXME 全体的にload関数をbugfix
+		// FIXME 全体的にload関数をbugfix
 		try {
 			System.out.println("LOADING GENOME FASTA DATA.....");
 			String line;
@@ -96,7 +96,7 @@ public class DataSet {
 			/*
 			 * records created
 			 */
-			
+
 			/*
 			 * 一つの低メチル化領域について全2-5merについてのカラムを作成します。 全部使いつくすまでjudgeEXPを実行します
 			 */
@@ -121,6 +121,7 @@ public class DataSet {
 		}
 		// 低メチル化領域しかピックアップしていないから、学習データの目標属性は全部1です。。後で修復。ZoneExtracterのほう。
 	}
+
 
 	/**
 	 * targetにsearchwordが現れる関数を返します。ただし重複し数えない場合の度数です。

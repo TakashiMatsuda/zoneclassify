@@ -23,11 +23,26 @@ public class InputWigTest {
 	public void testgetWIG() {
 		final boolean DEBUG = false;
 
-		ArrayList<ArrayList<Double>> exa = InputWig
-				.getWIG("blastula_CpGMethylationLevel_chrome=1.wig");
-
+		// ArrayList<ArrayList<Double>> exa = InputWig
+		// .getWIG("blastula_CpGMethylationLevel_chrome=1.wig");
+		//
+		// for (int i = 0; i < 1000; i++) {
+		// System.out.println(exa.get(0).get(1));
+		// }
+		ArrayList<int[]> pre_exa = InputWig.load_CpGPosition("CpGsitePosition_chrom=1.wig", 39973034);
+		ArrayList<double[]> exa = InputWig.getWIG("blastula_CpGMethylationLevel_chrome=1.wig", pre_exa);
 		for (int i = 0; i < 10; i++) {
-			System.out.println(exa.get(0).get(1));
+			 System.out.println(exa.get(0)[i] + " " + pre_exa.get(0)[i]);
 		}
+	}
+
+	@Test
+	public void testload_CpGPosition() {
+		ArrayList<int[]> exa = InputWig.load_CpGPosition(
+				"CpGsitePosition_chrom=1.wig", 11222712);
+		for (int i = 0; i < 10; i++) {
+			System.out.println(exa.get(0)[i]);
+		}
+
 	}
 }

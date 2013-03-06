@@ -13,7 +13,8 @@ public class Boost {
 			+ (int) Math.pow(4, 4) + (int) Math.pow(4, 5);
 	private static int CIS_NUM = 100;
 	
-	private ZoneExtracter farmer;
+//	private ZoneExtracter farmer;
+	
 	private DataSet dataset;
 	private FinalClassifier finalclassifier;
 
@@ -23,7 +24,7 @@ public class Boost {
 	 * コンストラクタ。singletonの初期化に用います。
 	 */
 	private Boost() {
-		farmer = new ZoneExtracter();
+//		farmer = new ZoneExtracter();
 		dataset = new DataSet();
 		sign_analysed = false;
 	}
@@ -36,9 +37,9 @@ public class Boost {
 			System.err.println("already analysed(@analyse_error)");
 		} else {
 			System.out.println("starting analysis...");
-			// FIXME SegmentSetsExtracterを利用するように、farmer.subZone(M)を書き換える。
-			dataset.load(farmer.subZone(M), "coverage.wig");
-			// FIXME coverage.wigではなくそのchrome=1だけのデータを使って研究する。上を書き換え。
+			// FIXME SegmentSetsExtracterを利用するようにloadを書き換える。
+//			dataset.load(farmer.subZone(M), "coverage.wig");
+			dataset.load(SegmentSetsExtracter.extract(sign, m, filename);
 			
 			// Mは区間数、ゆくゆくは区間長の制限に変えたいですね
 			// メモリは足りているので、高速化したい
