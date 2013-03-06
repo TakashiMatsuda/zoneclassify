@@ -11,7 +11,7 @@ import java.util.List;
  * 
  */
 public class SegmentSetsExtracter {
-	private static final int MAX_BOUND = 10000000;//39973034;
+	private static final int MAX_BOUND = 6000000;// 39973034;
 
 	/**
 	 * staticに用いられるクラスのためコンストラクタは特に使われない、空です
@@ -31,7 +31,8 @@ public class SegmentSetsExtracter {
 	 * @param m
 	 * @return
 	 */
-	public static List<ZoneList> extract(int sign, int m, String filename, String posfile) {
+	public static List<ZoneList> extract(int sign, int m, String filename,
+			String posfile) {
 		System.out.println("EXTRACTING subZones....");
 		List<ZoneList> alldata = new ArrayList<ZoneList>();
 		// kouho
@@ -58,7 +59,6 @@ public class SegmentSetsExtracter {
 		 */
 		// ArrayList<Double> target = null;
 		// while (tagcount < methyllevel.size()){
-		// 拡張forへの切り替え
 		for (double[] target : list_methyllevelarray) {
 			// target = methyllevel.get(tagcount);
 			maxzones.clear();
@@ -66,9 +66,8 @@ public class SegmentSetsExtracter {
 			/*
 			 * この下、区間推定アルゴリズム methyllevelの各要素(double[])について下の作業を行います
 			 */
-			System.out.println("methyllevel.size: "
-					+ list_methyllevelarray.size() + "||  tagcount: "
-					+ tagcount);
+			System.out.println("methyllevel.size: " + target.length
+					+ "||  tagcount: " + tagcount);
 
 			// naniositeiru?
 			// for (int r = 0; r < methyllevel.size(); r++) {// ここ違うのではないか。
@@ -79,7 +78,7 @@ public class SegmentSetsExtracter {
 			 */
 			int start = -1;
 			int end = 0;
-			
+
 			for (int j = 0; j < target.length; j++) {
 				/*
 				 * start, endの登録が始まっていない場合
@@ -134,7 +133,7 @@ public class SegmentSetsExtracter {
 			int d0 = 0;
 			int d1 = 0;
 			if (m > M) {
-				System.out.println("何もしない" + list_methyllevelarray.size());
+				System.out.println("何もしない" + M);
 			} else {
 				double abs_sum2 = 0;
 				for (int u = M - 1; u >= m; u = u - 2) {
