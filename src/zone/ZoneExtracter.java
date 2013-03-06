@@ -53,8 +53,7 @@ public class ZoneExtracter {
 
 	/**
 	 * 重み最大のm区間をもとめる
-	 * 
-	 * 
+	 *
 	 * 主要関数。これを外から呼び出してください。
 	 * 
 	 * @param m
@@ -65,6 +64,7 @@ public class ZoneExtracter {
 //		-> SegmentSetsExtracterに入れていく
 //		Zoneクラス
 //		ZoneListクラス
+		
 		
 		System.out.println("EXTRACTING subZones....");
 		List<List<int[]>> alldata = new ArrayList<List<int[]>>();
