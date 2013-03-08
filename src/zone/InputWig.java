@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
  * 
  * このクラスは愚直にInputするだけ。他のことをしてはいけない。 テスト通過しました。
  * 読み取り機構に問題なし。その後の標準化の方法を考えなければいけない。
+ * 完成しました。
  * 
  * @author tks
  * 
@@ -36,16 +37,17 @@ public class InputWig {
 			
 			
 			
-//			TODO 修正必要
+//			正しく格納されている。使い方がおかしいのかもしれない。
+			
 			
 			int[] array_pos = new int[max_bound];// 大したオーバーヘッドではないので気にしない、メモリも足りてるし
 			int count = 0;
 			int tag_count = 0;
 			int pos_count = 0;
 
-			br.readLine();
+			line = br.readLine();
 			while ((line = br.readLine()) != null) {
-				// CAUTION countの値は正確でなくてはいけない
+
 				if ((count % 10000000) == 0)
 					System.out.println((count / 10000000)
 							+ "* 10000000lines  CpGPositionデータ取得中....");
@@ -57,21 +59,24 @@ public class InputWig {
 					array_pos[pos_count] = count;
 					count++;
 					pos_count++;
+					continue;
 				} else if (tag_chrom.matcher(line).find()) {
 					tag_count++;
-					if (tag_count > 1){
-						break;
-					}
+//					if (tag_count > 1){
+//						break;
+//					}
 					count = 0;
 					System.out.println("Hit: " + line);
 					res.add(array_pos);
 					array_pos = new int[max_bound];
 					pos_count = 0;
+					
 					continue;
 				} else {
 					count++;
 					continue;
 				}
+				
 			}
 			res.add(array_pos);
 
@@ -99,29 +104,15 @@ public class InputWig {
 			String line = null;
 			BufferedReader br = new BufferedReader(new FileReader(filename));
 			Pattern chromtag = Pattern.compile("^fixed");
+			
 			// int i = 0;
 			/*
 			 * empty reading for the first line
 			 */
-			br.readLine();
+			
 			/*
 			 * core, Read and change the wig format to List<double[]>.
 			 */
-			/*
-			 * 行数取得 現在使われていません
-			 */
-			// System.out.println("行数取得中....");
-			// while((line = br.readLine()) != null){
-			// i++;
-			// }
-			// System.out.println("Line: "+ i);
-			// br.close();
-			// br = new BufferedReader(new FileReader(filename));
-
-			// ArrayListに変えてみよう
-			// double[] gallon = new double[i / 100];// 足りるかは未知数
-			// ArrayList<Double> gallon = new ArrayList<Double>();
-			// int j = 0;
 			long count = 0;
 
 			// 座標と、値を結び付けなければいけない。
@@ -129,48 +120,54 @@ public class InputWig {
 			// 新しい形
 			double[] gallon2 = null;
 			int c = 0;
-			String preline = null;
 			int tag_count = 0;
+			br.readLine();
 			outer:
 			for (int[] site : pos_indicator) {
 				int zahyo = 0;
-				int now = 0;
+				int pos_count = 0;
 				System.err.println(site.length);
 				gallon2 = new double[site.length];// これがメモリを一番消費する。
-				
+//				line = br.readLine();
 				scaffold: while ((line = br.readLine()) != null) {
-					preline = line.toString();
+					
 					c++;
 					if ((zahyo % 10000000) == 0)
 						System.out
 								.println((zahyo / 10000000)
 										+ "* 10000000lines  methylationlevelデータ取得中....");
 					
-					if (!(zahyo == site[now])) {// ずれている
+					
+					if (zahyo == site[pos_count]){
+						// FIXME ここを修正したら、区間抽出のアルゴリズムの評価ができます。
+						gallon2[pos_count] = (Double.parseDouble(line) - 0.45) * (-1);						
+						pos_count++;
 						zahyo++;
 						continue;
-					} else {
-						// FIXME ここを修正したら、区間抽出のアルゴリズムの評価ができます。
-						gallon2[now] = (Double.parseDouble(line) - 0.5) * (-1);
-//						System.out.println(preline);
-						now++;
-						zahyo++;
+					} else if (chromtag.matcher(line).find()) {
 						/* 1断片の解析が終了したか確認します */
-						if (site[now] == 0) {
-							res.add(gallon2);
-							System.out.println("Next scaffold  " + now);
-//							br.readLine();
-							tag_count++;
+						
+//						if (site[pos_count] == 0) {
+//							次のところまで読み飛ばしする作業が欠けていたので廃止した
 							
-							// TODO DEBUG中、あとで除去
-							if (tag_count > 1){
-								break outer;
-							}
-							break scaffold;
-						}
+						res.add(gallon2);
+						System.out.println("Next scaffold  " + pos_count);
+						tag_count++;
+							
+							// TODO DEBUG中のため量を省略している、あとで除去
+//						if (tag_count > 1){
+//							break outer;
+//						}
+							
+							
+						break scaffold;
+					} else {
+						zahyo++;				
 					}
+				
 				}
 			}
+
 
 			// while ((line = br.readLine()) != null) {
 			/*

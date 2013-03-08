@@ -3,11 +3,17 @@ package zone;
 import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -33,14 +39,18 @@ public class InputWigTest {
 				"chromosome_CpGsitePosition.wig", 6000000);
 		ArrayList<double[]> exa = InputWig.getWIG(
 				"chromosome_blastula_CpGmethylationLevel.wig", pre_exa);
-		for (int j = 0; j < 3; j++) {
-			for (int i = 0; i < 10; i++) {
-				System.out.println(exa.get(j)[i] + " " + pre_exa.get(j)[i]);
+
+			for (int j = 0; j < 10; j++) {
+				for (int i = 0; i < 10; i++) {
+					System.out.println(exa.get(j)[i] + " " + pre_exa.get(j)[i]);
+				}
 			}
-		}
+		
+		
+
 	}
 
-	@Test
+	@Ignore
 	public void testload_CpGPosition() {
 		ArrayList<int[]> exa = InputWig.load_CpGPosition(
 				"CpGsitePosition_chrom=1.wig", 11222712);
