@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SegmentSetsExtracterTest {
@@ -18,14 +19,14 @@ public class SegmentSetsExtracterTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
+	@Ignore
 	public void testSegmentSetsExtracter() {
 	}
 
 	@Test
 	public void testExtract() {
-		List<ZoneList> exa = SegmentSetsExtracter.extract(1, 1,
-				"chromosome_CpGsitePosition.wig", "chromosome_blastula_CpGmethylationLevel.wig");
+		List<ZoneList> exa = SegmentSetsExtracter.extract(1, 2000,
+				"chromosome_blastula_CpGmethylationLevel.wig", "chromosome_CpGsitePosition.wig");
 		System.out.println("テスト終了");
 	}
 	

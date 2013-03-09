@@ -40,7 +40,7 @@ public class InputWigTest {
 		ArrayList<double[]> exa = InputWig.getWIG(
 				"chromosome_blastula_CpGmethylationLevel.wig", pre_exa);
 
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < 2; j++) {
 				for (int i = 0; i < 10; i++) {
 					System.out.println(exa.get(j)[i] + " " + pre_exa.get(j)[i]);
 				}

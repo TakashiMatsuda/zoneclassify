@@ -33,6 +33,8 @@ public class SegmentSetsExtracter {
 	 */
 	public static List<ZoneList> extract(int sign, int m, String filename,
 			String posfile) {
+		// TODO これから作業開始。
+
 		System.out.println("EXTRACTING subZones....");
 		List<ZoneList> alldata = new ArrayList<ZoneList>();
 		// kouho
@@ -45,6 +47,14 @@ public class SegmentSetsExtracter {
 				MAX_BOUND);
 		List<double[]> list_methyllevelarray = InputWig.getWIG(filename,
 				pos_indicator);
+
+		// FIXME デバッグ終了したら取り除く
+		for (int j = 0; j < 2; j++) {
+			for (int i = 0; i < 10; i++) {
+				System.out.println(list_methyllevelarray.get(j)[i] + " "
+						+ pos_indicator.get(j)[i]);
+			}
+		}
 
 		if (list_methyllevelarray.size() == 0) {
 			System.err.println(list_methyllevelarray.size());
@@ -69,6 +79,7 @@ public class SegmentSetsExtracter {
 			System.out.println("methyllevel.size: " + target.length
 					+ "||  tagcount: " + tagcount);
 
+			System.out.println(target.length);
 			// naniositeiru?
 			// for (int r = 0; r < methyllevel.size(); r++) {// ここ違うのではないか。
 			/*
@@ -79,16 +90,19 @@ public class SegmentSetsExtracter {
 			int start = -1;
 			int end = 0;
 
+//			負区間の抽出に変更した。ここの中身は以後動かさない。（3月)
 			for (int j = 0; j < target.length; j++) {
+
 				/*
 				 * start, endの登録が始まっていない場合
 				 */
 				if (start == -1) {
-					if (target[j] > 0) {
+					if (target[j] < 0) {
 						start = j;
 					}
 				} else {
 					if (target[j - 1] * target[j] >= 0) {
+						// ここは？
 
 					} else {
 						/*
@@ -97,9 +111,10 @@ public class SegmentSetsExtracter {
 						/*
 						 * 条件：正区間・負区間
 						 */
-						if (target[j] > 0) {
-							// 区間継続
-						} else {
+//						if (target[j] > 0) {
+//							System.out.println(target[j] + "区間継続");
+//							 区間継続
+//						} else {
 							// 負区間抽出のためのの区間は消してしまったけどここだった
 							end = j - 1;
 							// j - 1でエラー含みだがちゃんとうごいていれば
@@ -108,10 +123,9 @@ public class SegmentSetsExtracter {
 							start = -1;
 							end = -1;
 
-						}
+//						}
 					}
 				}
-				// }
 			}
 			// 仮登録ここまで
 
@@ -120,8 +134,6 @@ public class SegmentSetsExtracter {
 			/*
 			 * m区間の抽出アルゴリズム
 			 */
-			// 何回か手直し、もとのコードは使い回しなので
-			// バグが混入している可能性が
 			/*
 			 * 区間数を減らしていく
 			 */
@@ -137,27 +149,34 @@ public class SegmentSetsExtracter {
 			} else {
 				double abs_sum2 = 0;
 				for (int u = M - 1; u >= m; u = u - 2) {
-					System.out.println("現在の区間数・・・" + u + "   区間数を減らしています・・・・");
+					if ((u % 10) == 0){
+						System.out.println("現在の区間数・・・" + u + "   区間数を減らしています・・・・");
+					}
 
-					// FIXME アルゴリズムのミス
-					for (int kk = 0; kk < u; kk++) {// TODO ここを並列化して下さい。
-						if ((kk % 1000) == 0) {
-							System.err.println(kk);
-						}
+					// FIXME アルゴリズムのミス 超遅く、実用にならない。
+					for (int kk = 0; kk < u; kk++) {
+
+//						if ((kk % 1000) == 0) {
+//							System.out.println("区間縮小中  " + kk);
+//							System.out.println("abs_sum2  " + abs_sum2);
+//							System.out.println(maxzones.get(kk).get_start()
+//									+ " -> " + maxzones.get(kk).get_end());
+//						}
+
 						summin2 = 0;
-
-						// FIXME この下、とても遅い
-						// -> 処理数が多くなっているのは、CpGMethylationSiteの乗法を生かしていないため。
 						for (int rr = maxzones.get(kk).get_start(); rr < maxzones
 								.get(kk).get_end(); rr++) {
 							summin2 += target[rr];
+
 						}
 						abs_sum2 = Math.abs(summin2);
 						if (sug3 > abs_sum2) {
 							sug3 = abs_sum2;
 							sugnum1 = kk;
 						}
+
 					}
+
 					d0 = maxzones.get(sugnum1 - 1).get_start();
 					d1 = maxzones.get(sugnum1 + 1).get_end();
 

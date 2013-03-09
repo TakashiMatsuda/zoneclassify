@@ -50,11 +50,11 @@ public class DataSet {
 	 * 
 	 * 仕様変更があります、型を配列に変えたので変更をうけます　<- なんのことだかわかっていない(12/2)
 	 * 
-	 * @param zones
+	 * @param list_zonelist
 	 *            , filename
 	 * @return recordsに格納する作業です。 coding finished.
 	 */
-	public boolean load(List<List<int[]>> zones, String filename) {
+	public boolean load(List<ZoneList> list_zonelist, String filename) {
 		// FIXME 全体的にload関数をbugfix
 		
 		try {
@@ -70,7 +70,7 @@ public class DataSet {
 			 * Count the tag on the fasta file.
 			 */
 			int tagCount = 0;
-			List<int[]> tmpZones;
+			ZoneList tmpZones;
 			while ((line = br.readLine()) != null) {
 				/*
 				 * nametagごとに対象区間族の切り出しを行います tagcountで管理します
@@ -78,7 +78,7 @@ public class DataSet {
 				if (nametag.matcher(line).find() != true) {// 綺麗な否定の方法を勉強したい
 					onePlace.append(line);
 				} else {
-					tmpZones = zones.get(tagCount);
+					tmpZones = list_zonelist.get(tagCount);
 					/*
 					 * tmpZonesの各要素に対応するものを全部切り出す
 					 */

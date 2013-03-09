@@ -12,9 +12,9 @@ public class Boost {
 	private static int PATTERN = (int) Math.pow(4, 2) + (int) Math.pow(4, 3)
 			+ (int) Math.pow(4, 4) + (int) Math.pow(4, 5);
 	private static int CIS_NUM = 100;
-	
-//	private ZoneExtracter farmer;
-	
+
+	// private ZoneExtracter farmer;
+
 	private DataSet dataset;
 	private FinalClassifier finalclassifier;
 
@@ -24,7 +24,7 @@ public class Boost {
 	 * コンストラクタ。singletonの初期化に用います。
 	 */
 	private Boost() {
-//		farmer = new ZoneExtracter();
+		// farmer = new ZoneExtracter();
 		dataset = new DataSet();
 		sign_analysed = false;
 	}
@@ -38,13 +38,15 @@ public class Boost {
 		} else {
 			System.out.println("starting analysis...");
 			// FIXME SegmentSetsExtracterを利用するようにloadを書き換える。
-//			dataset.load(farmer.subZone(M), "coverage.wig");
-			dataset.load(SegmentSetsExtracter.extract(sign, m, filename);
-			
+			// dataset.load(farmer.subZone(M), "coverage.wig");
+			dataset.load(SegmentSetsExtracter.extract(1, 2000,
+					"chromosome_blastula_CpGmethylationLevel.wig",
+					"chromosome_CpGsitePosition.wig"), "shortMEDAKA.fa");
+
 			// Mは区間数、ゆくゆくは区間長の制限に変えたいですね
 			// メモリは足りているので、高速化したい
 			// 並列処理もできるとよい
-			
+
 			// 各レコードの重みを正規化した分布を計算
 			dataset.initWeight();
 
@@ -67,12 +69,14 @@ public class Boost {
 	 * cis-elementのリストを出力する。
 	 */
 	public void write_cis_element() {
-		if (sign_analysed) {
-			// cis-elementの場所を返す。
-			// cis-elementの塩基配列を返す。
-			// (出力する)
+		// if (sign_analysed) {
+		// cis-elementの場所を返す。
+		// cis-elementの塩基配列を返す。
+		// (出力する)
+		if (finalclassifier != null) {
 			CisEList ciselementlist = finalclassifier.suggest_cis(CIS_NUM);
 			ciselementlist.write();
+			// }
 		} else {
 			System.err.println("not yet analysed(@write_error)");
 		}
@@ -85,9 +89,11 @@ public class Boost {
 	 * @return
 	 */
 	public byte methyl_prediction(String record) {
-		if (sign_analysed) {
+		// if (sign_analysed) {
+		if (finalclassifier != null) {
 			byte[] sample = trans_str_byte(record);
 			return this.finalclassifier.lastprediction(sample);
+			// }
 		} else {
 			System.err.println("not yet analysed(@methyl_prediction:error)");
 			return -1;
@@ -113,8 +119,7 @@ public class Boost {
 
 	/**
 	 * 
-	 * recordをもらって、その判定を与えられた最終分類器を用いて行う。 (overloaded)
-	 * 使わない予定
+	 * recordをもらって、その判定を与えられた最終分類器を用いて行う。 (overloaded) 使わない予定
 	 * 
 	 * @param record
 	 * @param finalclassifier

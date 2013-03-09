@@ -62,9 +62,9 @@ public class InputWig {
 					continue;
 				} else if (tag_chrom.matcher(line).find()) {
 					tag_count++;
-//					if (tag_count > 1){
-//						break;
-//					}
+					if (tag_count > 1){
+						break;
+					}
 					count = 0;
 					System.out.println("Hit: " + line);
 					res.add(array_pos);
@@ -140,7 +140,7 @@ public class InputWig {
 					
 					if (zahyo == site[pos_count]){
 						// FIXME ここを修正したら、区間抽出のアルゴリズムの評価ができます。
-						gallon2[pos_count] = (Double.parseDouble(line) - 0.45) * (-1);						
+						gallon2[pos_count] = (Double.parseDouble(line) - 0.5) * (-1);						
 						pos_count++;
 						zahyo++;
 						continue;
@@ -155,9 +155,9 @@ public class InputWig {
 						tag_count++;
 							
 							// TODO DEBUG中のため量を省略している、あとで除去
-//						if (tag_count > 1){
-//							break outer;
-//						}
+						if (tag_count > 1){
+							break outer;
+						}
 							
 							
 						break scaffold;
