@@ -56,6 +56,7 @@ public class FinalClassifier {
 		classifierranking = new ClassifierRanking();
 		for (int t = 0; t < T; t++) {
 			// 左辺の計算
+//			ちゃんとカプセル化したほうがよい
 			beta = dataset.classifierlist.get(t).omomikeisu();
 
 			// 重みに重複があった場合、不適切な結果が帰ります。

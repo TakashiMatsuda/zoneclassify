@@ -49,14 +49,13 @@ public class SegmentSetsExtracter {
 				pos_indicator);
 		
 		
-
-		// FIXME デバッグ終了したら取り除く
-		for (int j = 0; j < 2; j++) {
-			for (int i = 0; i < 10; i++) {
-				System.out.println(list_methyllevelarray.get(j)[i] + " "
-						+ pos_indicator.get(j)[i]);
-			}
-		}
+//		デバッグのための監視コードだった
+//		for (int j = 0; j < 1; j++) {
+//			for (int i = 0; i < 10; i++) {
+//				System.out.println(list_methyllevelarray.get(j)[i] + " "
+//						+ pos_indicator.get(j)[i]);
+//			}
+//		}
 
 		if (list_methyllevelarray.size() == 0) {
 			System.err.println(list_methyllevelarray.size());
@@ -71,6 +70,10 @@ public class SegmentSetsExtracter {
 		 */
 		// ArrayList<Double> target = null;
 		// while (tagcount < methyllevel.size()){
+		
+//		TODO ここのループを並列化したい。
+//		fork/joinを見てみよう
+//		入れる順番を揃えなければいけないから、ダメっぽい。
 		for (double[] target : list_methyllevelarray) {
 			// target = methyllevel.get(tagcount);
 			maxzones.clear();
@@ -139,6 +142,7 @@ public class SegmentSetsExtracter {
 			/*
 			 * 区間数を減らしていく
 			 */
+//			律速です。
 			System.out.println("CUTTING DOWN ZONES....");
 			double summin2 = 1.0 / 0.0;
 			double sug3 = 1.0 / 0.0;
@@ -155,7 +159,7 @@ public class SegmentSetsExtracter {
 						System.out.println("現在の区間数・・・" + u + "   区間数を減らしています・・・・");
 //					}
 
-					// FIXME アルゴリズムのミス 超遅く、実用にならない。
+//					FIXME 別アルゴリズムの実装が望まれる。
 					for (int kk = 0; kk < u; kk++) {
 
 //						if ((kk % 1000) == 0) {

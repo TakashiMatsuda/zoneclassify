@@ -21,13 +21,13 @@ public class MyPoint {
 	 * これで本当に内容が変更されるのか不安 あとで試しコード書いて調べてみよう
 	 * 
 	 * Reset weight
-	 * 
+	 * voidに変更した。
 	 * @param w
 	 */
-	public MyPoint changeWeight(double w) {
-		MyPoint tmp = new MyPoint(this.column);
-		tmp.weight = w;
-		return tmp;
+	public void changeWeight(double w) {
+		
+		this.weight = w;
+		
 	}
 
 	/**

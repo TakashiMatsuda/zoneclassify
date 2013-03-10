@@ -2,13 +2,19 @@ package zone;
 
 import static org.junit.Assert.*;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class BoostTest {
 
-	@Test
+	@Ignore
 	public void testMain() {
-		fail("まだ実装されていません");
+		Boost.main(null);
+	}
+	
+	@Test
+	public void testRun(){
+		Boost exa = Boost.run();
 	}
 
 }

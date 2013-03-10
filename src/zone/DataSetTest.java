@@ -22,7 +22,7 @@ public class DataSetTest {
 		// ZoneExtracter farmer = new ZoneExtracter();
 		DataSet exa = new DataSet();
 		List<List<int[]>> a = new LinkedList<List<int[]>>();
-		exa.load(SegmentSetsExtracter.extract(1, 2000,
+		exa.load(SegmentSetsExtracter.extract(1, 4000,
 				"chromosome_blastula_CpGmethylationLevel.wig",
 				"chromosome_CpGsitePosition.wig"), "chromosomeMEDAKA.fa");
 	}

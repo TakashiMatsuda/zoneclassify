@@ -17,8 +17,8 @@ public class DataSet {
 	// public ArrayList<Classifier> boxes;
 	public ClassifierList classifierlist;// setでいい
 	/* 教師データ集合 */
-	public LinkedList<MyPoint> teachers;// LinkedかArrayか
-	public ArrayList<String> records;
+	public LinkedList<MyPoint> mypointlist;// LinkedかArrayか
+	public ArrayList<String> record_list;
 	public ArrayList<String> mers;
 
 	/*
@@ -41,6 +41,12 @@ public class DataSet {
 		 * 各2-5merの作成
 		 */
 		this.mers = createMers();
+		this.record_list = new ArrayList<String>();
+		// FIXME mersとmer_listの違いがわからなくなってしまった
+
+		this.classifierlist = new ClassifierList();
+		this.mypointlist = new LinkedList<MyPoint>();
+
 		LS = 0;
 	}
 
@@ -55,8 +61,6 @@ public class DataSet {
 	 * @return recordsに格納する作業です。 coding finished.
 	 */
 	public boolean load(List<ZoneList> list_zonelist, String filename) {
-		// FIXME 次はここから、全体的にload関数をbugfix
-
 		try {
 			System.out.println("LOADING GENOME FASTA DATA.....");
 			String line;
@@ -71,58 +75,93 @@ public class DataSet {
 			 */
 			int tagCount = 0;
 			ZoneList tmpZones;
+			
+//			一行目の空よみ
+			br.readLine();
 			while ((line = br.readLine()) != null) {
 				/*
 				 * nametagごとに対象区間族の切り出しを行います tagcountで管理します
 				 */
-				if (nametag.matcher(line).find() != true) {// 綺麗な否定の方法を勉強したい
+				if (! nametag.matcher(line).find()) {// 綺麗な否定の方法を勉強したい
 					onePlace.append(line);
 				} else {
 					tmpZones = list_zonelist.get(tagCount);
 					/*
 					 * tmpZonesの各要素に対応するものを全部切り出す
 					 */
-					while (tmpZones.size() == 0) {// ここはどう書くのがイディオム的に正しいのかわからない
-						// for文を使っても綺麗にかける
-						Zone mold = tmpZones.get(tmpZones.size());// 末端から消去。ArrayListなのでこれが速いはず。
-						String cast = onePlace.substring(mold.get_start_fasta(),
-								mold.get_end_fasta());// 植木算があってる確証をとっていません
-						this.records.add(cast);
-						tmpZones.remove(tmpZones.size());
+
+					// FIXME このやり方、メモリを稼ごうとして変なことをしているようなきがする。とりあえず下に書きなおしてみよう。
+					// while (tmpZones.size() > 0) {
+					// Zone mold = tmpZones.get(tmpZones.size() -
+					// 1);//末端から消去。ArrayListなのでこれが速いはず。
+					// String cast = onePlace.substring(mold.get_start_fasta(),
+					// mold.get_end_fasta());// 植木算があってる確証をとっていません <- ここが問題か？
+					// this.record_list.add(cast);
+					// tmpZones.remove(tmpZones.size() - 1);
+					// }
+					
+					System.out.println("onePlace length: " + onePlace.length());
+//					FIXME onePlaceの長さが0, 中に書き込みされていない。
+					
+					for (Zone zone : tmpZones) {
+						System.out.println(zone.get_start_fasta() + "  ->  " + zone.get_end_fasta());
+						this.record_list.add(onePlace.substring(
+								zone.get_start_fasta(), zone.get_end_fasta()));
+
 					}
+
 					onePlace.delete(0, onePlace.length());// クリアの方法、早い方法が何かわからなかったので自分なりに工夫した部分
 					tagCount++;
+					
+					
+					
+					// FIXME デバッグのための機能制限
+					if (tagCount > 0) {
+						break;
+					}
 				}
 			}
 			br.close();
-			/*
-			 * records created
-			 */
 
-			/*
-			 * 一つの低メチル化領域について全2-5merについてのカラムを作成します。 全部使いつくすまでjudgeEXPを実行します
-			 */
-			System.out.println("CREATING SUPERVISING DATA.....");
-			int recordsize = records.size();
-			for (int i = 0; i < recordsize; i++) {
-				String lowMethylZone = records.get(i);
-				/*
-				 * 各2-5merについてjudgeExpを実行し、teachersに格納する
-				 */
-				byte[] preColumn = new byte[PATTERN];
-				for (int j = 0; j < PATTERN; j++) {
-					preColumn[j] = judgeEXP(lowMethylZone, mers.get(j));
-				}
-				MyPoint tmpMP = new MyPoint(preColumn);
-				teachers.add(tmpMP);
-			}
-			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-		// 低メチル化領域しかピックアップしていないから、学習データの目標属性は全部1です。。後で修復。ZoneExtracterのほう。
+
+		/*
+		 * creating mer_list
+		 */
+		/*
+		 * 一つの低メチル化領域について全2-5merについてのカラムを作成します。 全部使つくすまでjudgeEXPを実行します
+		 */
+		System.out.println("CREATING SUPERVISING DATA.....");
+
+		System.out.println("recordsize:   " + record_list.size());
+
+		int recordsize = record_list.size();
+		for (int i = 0; i < recordsize; i++) {
+			if (i % 100 == 0){
+				System.out.println("record " + i);
+			}
+			
+			
+			String lowMethylZone = record_list.get(i);
+			/*
+			 * 各2-5merについてjudgeExpを実行し、teachersに格納する
+			 */
+			byte[] preColumn = new byte[PATTERN];
+			for (int j = 0; j < PATTERN; j++) {
+				preColumn[j] = judgeEXP(mers.get(j), lowMethylZone);// 引数入れ替えました
+			}
+			MyPoint tmpMP = new MyPoint(preColumn);
+			mypointlist.add(tmpMP);
+		}
+		
+		System.out.println("The dataset is succuessfully loaded");
+		return true;
 	}
+
+	// 低メチル化領域しかピックアップしていないから、学習データの目標属性は全部1です。。後で修復。ZoneExtracterのほう。
 
 	/**
 	 * targetにsearchwordが現れる関数を返します。ただし重複し数えない場合の度数です。
@@ -131,7 +170,7 @@ public class DataSet {
 	 * @param searchWord
 	 * @return
 	 */
-	private int countStringInString(String target, String searchWord) {
+	private int countStringInString(String searchWord, String target) {
 		return (target.length() - target.replaceAll(searchWord, "").length())
 				/ searchWord.length();
 	}
@@ -139,18 +178,18 @@ public class DataSet {
 	/**
 	 * あるn-merがsequenceに含まれる回数が、期待値よりも大きいかを判定します。
 	 * 
-	 * @param factor
-	 * @param sequence
+	 * @param factor	検索クエリ
+	 * @param sequence　対象
 	 * @return
 	 */
-	private byte judgeEXP(String factor, String sequence) {
+	private byte judgeEXP(String factor, String sequence) {		
 		int l = factor.length();
 		double ne = ((sequence.length() - l) * (1.0 / Math.pow(4.0, (double) l)))
 				* sequence.length();
 		/*
 		 * factorがsequenceに含まれる回数
 		 */
-		int dosu = countStringInString(sequence, factor);
+		int dosu = countStringInString(factor, sequence);
 		if (dosu >= ne)
 			return 1;
 		else
@@ -158,12 +197,18 @@ public class DataSet {
 	}
 
 	/**
-	 * Initialize weight
+	 * Initialize weight そもそも必要か？
 	 */
 	public void initWeight() {
+		System.out.println("initWeight");
 		for (int i = 0; i < PATTERN; i++) {
+			
+			
+			
 			// そうか、ここの関係でsetWはvoidじゃなくて何か返さなきゃいけなかったんだ
-			teachers.set(i, teachers.get(i).changeWeight(1));// elementのところにMyPointで提供される関数、wを更新したMyPointを入れる
+			// teachers.set(i, teachers.get(i).changeWeight(1));//
+			// elementのところにMyPointで提供される関数、wを更新したMyPointを入れる
+			mypointlist.get(i).changeWeight(1);
 		}
 	}
 
@@ -181,9 +226,9 @@ public class DataSet {
 		int q = x.start;
 		byte p = x.target;
 		for (int i = 0; i < M; i++) {
-			if (teachers.get(i).getColumn()[q] == 1) {
+			if (mypointlist.get(i).getColumn()[q] == 1) {
 				sum++;
-				if ((teachers.get(i)).getTarget() == p)
+				if ((mypointlist.get(i)).getTarget() == p)
 					right++;
 			}
 		}
@@ -203,7 +248,7 @@ public class DataSet {
 		// その効果について考察する
 		Classifier tmp = null;
 		// while(LS < PATTERN){
-		tmp = new Classifier(a, (byte) 0, records.get(a));
+		tmp = new Classifier(a, (byte) 0, record_list.get(a));
 		if (errorRatio(tmp) < (1.0 / 2.0))
 		// break;
 		{
@@ -214,7 +259,7 @@ public class DataSet {
 			// 不必要なオブジェクト作成操作が存在する。
 			// この作業は全体比にしてかなり大きな計算時間をとるので、
 			// 最適化したい。
-			tmp = new Classifier(a, (byte) 1, records.get(a));
+			tmp = new Classifier(a, (byte) 1, record_list.get(a));
 			// if (errorRatio(tmp) < (1.0 / 2.0)){}
 			// break;
 		}
@@ -238,12 +283,15 @@ public class DataSet {
 			// ここ、文法的ミスを抱えている可能性があります。(JengaCode)上二行をコメントアウトしました。
 			// teachers.set(
 			// i,
-			double old_w = teachers.get(i).getWeight();
-			teachers.get(i).changeWeight(
-					old_w
-							* Math.pow(beta, (1 - Math.abs(h
-									.prediction(teachers.get(i).getColumn())
-									- teachers.get(i).getTarget()))));// );
+			double old_w = mypointlist.get(i).getWeight();
+			mypointlist
+					.get(i)
+					.changeWeight(
+							old_w
+									* Math.pow(beta, (1 - Math.abs(h
+											.prediction(mypointlist.get(i)
+													.getColumn())
+											- mypointlist.get(i).getTarget()))));// );
 			// knowledges[i][PATTERN + 1] = (byte) (knowledges[i][PATTERN + 1] *
 			// Math.pow(beta, (1 - Math.abs(h.prediction() -
 			// knowledges[i][PATTERN]))));
@@ -315,7 +363,12 @@ public class DataSet {
 	 * weaklearnとreviseweightを実行し、結果を当オブジェクトに格納します。
 	 */
 	public void adaboost() {
+		System.out.println("adaboost");
+		
 		for (int i = 0; i < PATTERN; i++) {
+			if (i % 10 == 0){
+				System.out.println("weakLearn  " + i);
+			}
 			weakLearn(i);
 
 		}
@@ -329,11 +382,10 @@ public class DataSet {
 	 * @return
 	 */
 	public CisEList get_intense_classifier(int n, ClassifierRanking memberlist) {
-		if (classifierlist == null){
+		if (classifierlist == null) {
 			System.err.println("classifierlist is not yet created");
 			return null;
-		}
-		else
+		} else
 			return this.classifierlist.get_intense_classifier(n, memberlist);
 	}
 }

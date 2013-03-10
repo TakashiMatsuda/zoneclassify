@@ -41,7 +41,7 @@ public class Boost {
 			// dataset.load(farmer.subZone(M), "coverage.wig");
 			dataset.load(SegmentSetsExtracter.extract(1, 2000,
 					"chromosome_blastula_CpGmethylationLevel.wig",
-					"chromosome_CpGsitePosition.wig"), "shortMEDAKA.fa");
+					"chromosome_CpGsitePosition.wig"), "chromosomeMEDAKA.fa");
 
 			// Mは区間数、ゆくゆくは区間長の制限に変えたいですね
 			// メモリは足りているので、高速化したい
@@ -114,7 +114,18 @@ public class Boost {
 		System.out.println("-------------MinMethyl-------------");
 		Boost singleton = new Boost();
 		singleton.analyse();
+		
+		
 
+	}
+	
+	
+	
+	public static Boost run(){
+		System.out.println("-------------MinMethyl-------------");
+		Boost singleton = new Boost();
+		singleton.analyse();
+		return singleton;
 	}
 
 	/**
