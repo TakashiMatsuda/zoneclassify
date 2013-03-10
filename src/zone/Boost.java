@@ -37,7 +37,7 @@ public class Boost {
 			System.err.println("already analysed(@analyse_error)");
 		} else {
 			System.out.println("starting analysis...");
-			// FIXME SegmentSetsExtracterを利用するようにloadを書き換える。
+
 			// dataset.load(farmer.subZone(M), "coverage.wig");
 			dataset.load(SegmentSetsExtracter.extract(1, 2000,
 					"chromosome_blastula_CpGmethylationLevel.wig",

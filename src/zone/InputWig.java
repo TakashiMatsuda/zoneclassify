@@ -62,7 +62,7 @@ public class InputWig {
 					continue;
 				} else if (tag_chrom.matcher(line).find()) {
 					tag_count++;
-					if (tag_count > 1){
+					if (tag_count > 0){
 						break;
 					}
 					count = 0;
@@ -155,7 +155,7 @@ public class InputWig {
 						tag_count++;
 							
 							// TODO DEBUG中のため量を省略している、あとで除去
-						if (tag_count > 1){
+						if (tag_count > 0){
 							break outer;
 						}
 							

@@ -55,8 +55,8 @@ public class DataSet {
 	 * @return recordsに格納する作業です。 coding finished.
 	 */
 	public boolean load(List<ZoneList> list_zonelist, String filename) {
-		// FIXME 全体的にload関数をbugfix
-		
+		// FIXME 次はここから、全体的にload関数をbugfix
+
 		try {
 			System.out.println("LOADING GENOME FASTA DATA.....");
 			String line;
@@ -84,8 +84,9 @@ public class DataSet {
 					 */
 					while (tmpZones.size() == 0) {// ここはどう書くのがイディオム的に正しいのかわからない
 						// for文を使っても綺麗にかける
-						int[] mold = tmpZones.get(tmpZones.size());// 末端から消去。ArrayListなのでこれが速いはず。
-						String cast = onePlace.substring(mold[0], mold[1]);// 植木算があってる確証をとっていません
+						Zone mold = tmpZones.get(tmpZones.size());// 末端から消去。ArrayListなのでこれが速いはず。
+						String cast = onePlace.substring(mold.get_start_fasta(),
+								mold.get_end_fasta());// 植木算があってる確証をとっていません
 						this.records.add(cast);
 						tmpZones.remove(tmpZones.size());
 					}
@@ -122,7 +123,6 @@ public class DataSet {
 		}
 		// 低メチル化領域しかピックアップしていないから、学習データの目標属性は全部1です。。後で修復。ZoneExtracterのほう。
 	}
-
 
 	/**
 	 * targetにsearchwordが現れる関数を返します。ただし重複し数えない場合の度数です。
@@ -203,7 +203,7 @@ public class DataSet {
 		// その効果について考察する
 		Classifier tmp = null;
 		// while(LS < PATTERN){
-		tmp = new Classifier(a, (byte) 0);
+		tmp = new Classifier(a, (byte) 0, records.get(a));
 		if (errorRatio(tmp) < (1.0 / 2.0))
 		// break;
 		{
@@ -214,7 +214,7 @@ public class DataSet {
 			// 不必要なオブジェクト作成操作が存在する。
 			// この作業は全体比にしてかなり大きな計算時間をとるので、
 			// 最適化したい。
-			tmp = new Classifier(a, (byte) 1);
+			tmp = new Classifier(a, (byte) 1, records.get(a));
 			// if (errorRatio(tmp) < (1.0 / 2.0)){}
 			// break;
 		}
@@ -233,7 +233,7 @@ public class DataSet {
 		double e = errorRatio(h);
 		beta = e / (1 - e);
 		for (int i = 0; i < M; i++) {
-			// teachers.get(i).getWeight()// これではweightに差S割れない
+			// teachers.get(i).getWeight()// これではweightに差S割れない <= 触れます
 			// スレッドセーフ、カプセル化を破ります
 			// ここ、文法的ミスを抱えている可能性があります。(JengaCode)上二行をコメントアウトしました。
 			// teachers.set(
@@ -329,6 +329,11 @@ public class DataSet {
 	 * @return
 	 */
 	public CisEList get_intense_classifier(int n, ClassifierRanking memberlist) {
-		return this.classifierlist.get_intense_classifier(n, memberlist);
+		if (classifierlist == null){
+			System.err.println("classifierlist is not yet created");
+			return null;
+		}
+		else
+			return this.classifierlist.get_intense_classifier(n, memberlist);
 	}
 }

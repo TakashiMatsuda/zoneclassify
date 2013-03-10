@@ -47,6 +47,8 @@ public class SegmentSetsExtracter {
 				MAX_BOUND);
 		List<double[]> list_methyllevelarray = InputWig.getWIG(filename,
 				pos_indicator);
+		
+		
 
 		// FIXME デバッグ終了したら取り除く
 		for (int j = 0; j < 2; j++) {
@@ -149,9 +151,9 @@ public class SegmentSetsExtracter {
 			} else {
 				double abs_sum2 = 0;
 				for (int u = M - 1; u >= m; u = u - 2) {
-					if ((u % 10) == 0){
+//					if ((u % 4) == 0){
 						System.out.println("現在の区間数・・・" + u + "   区間数を減らしています・・・・");
-					}
+//					}
 
 					// FIXME アルゴリズムのミス 超遅く、実用にならない。
 					for (int kk = 0; kk < u; kk++) {
@@ -190,10 +192,17 @@ public class SegmentSetsExtracter {
 			tagcount++;
 		}
 
-		// TODO コード改良中。この上まではpositionベースの区間を求めておき、ここから下で変換する。
-		// 最終格納時にpos_indicatorで座標変換してもよい。
+		
+		//pos_indicatorで座標変換
+		for(int i = 0; i < alldata.size(); i++){
+			alldata.get(i).trans_cpg_fasta(pos_indicator.get(i));
+		}
+		
 		return alldata;
 
 	}
+	
+	
+	
 
 }
