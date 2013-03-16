@@ -19,7 +19,6 @@ public class SegmentSetsExtracter {
 	public SegmentSetsExtracter() {
 	}
 
-	// TODO まず、InputWigによってい得られたものからCpGPosition値ベースの区間を推定する。
 	// その座標を塩基対座標に変換すればよい。
 
 	// FIXME 最短区間長制限問題をといているが、そもそもの「メチル化率」の定義をしていない
@@ -33,7 +32,6 @@ public class SegmentSetsExtracter {
 	 */
 	public static List<ZoneList> extract(int sign, int m, String filename,
 			String posfile) {
-		// TODO これから作業開始。
 
 		System.out.println("EXTRACTING subZones....");
 		List<ZoneList> alldata = new ArrayList<ZoneList>();
@@ -155,9 +153,9 @@ public class SegmentSetsExtracter {
 			} else {
 				double abs_sum2 = 0;
 				for (int u = M - 1; u >= m; u = u - 2) {
-//					if ((u % 4) == 0){
+					if (((u - M + 1) % 10) == 0){
 						System.out.println("現在の区間数・・・" + u + "   区間数を減らしています・・・・");
-//					}
+					}
 
 //					FIXME 別アルゴリズムの実装が望まれる。
 					for (int kk = 0; kk < u; kk++) {

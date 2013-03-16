@@ -54,12 +54,14 @@ public class FinalClassifier {
 		double beta = 0;
 
 		classifierranking = new ClassifierRanking();
+		
+		
 		for (int t = 0; t < T; t++) {
 			// 左辺の計算
 //			ちゃんとカプセル化したほうがよい
 			beta = dataset.classifierlist.get(t).omomikeisu();
 
-			// 重みに重複があった場合、不適切な結果が帰ります。
+			// FIXME 重みに重複があった場合、不適切な結果が帰ります。
 			if (classifierranking.containsKey(beta)) {
 				System.err.println("重み係数が重複しました。結果は不適切です。");
 			}
@@ -96,7 +98,12 @@ public class FinalClassifier {
 		// 上の乗法はどこに求めるべきか。 -> dataset.classifierlistの中にその演算を設ければよい。
 		// ArrayList<String> dataset.classifierlist.importantlist();
 		if (sign_ranked) {
-			return dataset.get_intense_classifier(num, classifierranking);
+//			 classifierrankingを用いればいいんじゃないか。
+//			CisEList res = new CisEList(num);
+//			for(int i = 0; i < num; i++){
+//				dataset.mers.get(classifierranking.)
+//			}
+			 return dataset.get_intense_classifier(num, classifierranking);
 		} else {
 			System.err.println("not yet ranked(@suggest_cis)");
 			return null;

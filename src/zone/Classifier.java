@@ -8,10 +8,9 @@ package zone;
  */
 public class Classifier {
 
-	public final int start;
-	public final byte target;
+	public final int start;// もとにした列・2-5mer
+	public final byte target;// 目標属性
 	private double ratio;
-// 	FIXME recordをclassifierに入れておいて下さい。
 	private String record;
 	
 	/**
@@ -20,10 +19,15 @@ public class Classifier {
 	 * @return
 	 */
 	public byte prediction(byte[] a) {
-		if (a[start] == 1)
+//		aは文字列を変換したbyte[]
+//		そもそも何を想定していたのか、調べたい
+//		startは何を表しているのか。
+		
+		if (a[start] == 1)// FIXME outofbounds
 			return target;
 		else
 			return (byte) ((target - 1) * (-1));
+		// 1なら0を、oなら1を
 	}
 	
 	/**
@@ -46,12 +50,12 @@ public class Classifier {
 	
 	/**
 	 * 
-	 * @param ls
-	 * @param t
-	 * @param record
+	 * @param start 生成材料にする2-5merが何番目の2-5merに対応するか
+	 * @param t		分類先符号
+	 * @param record	その2-5mer(なくても解析は可能, めんどくさかったのでここにいれた)
 	 */
-	Classifier(int ls, byte t, String record) {
-		this.start = ls;
+	Classifier(int start, byte t, String record) {
+		this.start = start;
 		this.target = t;
 		this.record = record;
 	}

@@ -15,7 +15,8 @@ import java.util.TreeMap;
  * 
  */
 public class ClassifierRanking extends TreeMap<Double, Integer> {
-
+//	TODO 重みが大きいとはどういうことか
+	
 	/**
 	 * 
 	 */
@@ -33,7 +34,7 @@ public class ClassifierRanking extends TreeMap<Double, Integer> {
 	 */
 	public ClassifierRanking(Comparator<? super Double> comparator) {
 		super(comparator);
-		// TODO 自動生成されたコンストラクター・スタブ
+
 	}
 
 	/**
@@ -41,7 +42,7 @@ public class ClassifierRanking extends TreeMap<Double, Integer> {
 	 */
 	public ClassifierRanking(Map<? extends Double, ? extends Integer> m) {
 		super(m);
-		// TODO 自動生成されたコンストラクター・スタブ
+
 	}
 
 	/**
@@ -49,7 +50,7 @@ public class ClassifierRanking extends TreeMap<Double, Integer> {
 	 */
 	public ClassifierRanking(SortedMap<Double, ? extends Integer> m) {
 		super(m);
-		// TODO 自動生成されたコンストラクター・スタブ
+
 	}
 
 }

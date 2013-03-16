@@ -87,8 +87,6 @@ public class CisEList extends ArrayList<String> {
 			Writer out = null;
 			File output = new File("cis_element_list.txt");
 
-			// File output = new File(CLUSTERNUM + "K_" + JIGEN + "D_"
-			// + DATASIZE + "NLloyd_result" + i + ".tsv");
 			out = new BufferedWriter(new FileWriter(output));
 
 			for (int i = 0; i < size(); i++) {

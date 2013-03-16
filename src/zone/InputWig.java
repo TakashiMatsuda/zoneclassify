@@ -139,7 +139,6 @@ public class InputWig {
 					
 					
 					if (zahyo == site[pos_count]){
-						// FIXME ここを修正したら、区間抽出のアルゴリズムの評価ができます。
 						gallon2[pos_count] = (Double.parseDouble(line) - 0.5) * (-1);						
 						pos_count++;
 						zahyo++;
@@ -191,7 +190,7 @@ public class InputWig {
 			/*
 			 * 加工
 			 */
-			// FIXME メチル化度の読み取り方法とその標準化についてここを修正する
+
 			// gallon.add((Double.parseDouble(line) - 0.5) * (-1));
 			// j++;
 			// }

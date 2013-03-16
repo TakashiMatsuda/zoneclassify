@@ -42,7 +42,6 @@ public class DataSet {
 		 */
 		this.mers = createMers();
 		this.record_list = new ArrayList<String>();
-		// FIXME mersとmer_listの違いがわからなくなってしまった
 
 		this.classifierlist = new ClassifierList();
 		this.mypointlist = new LinkedList<MyPoint>();
@@ -89,22 +88,8 @@ public class DataSet {
 					/*
 					 * tmpZonesの各要素に対応するものを全部切り出す
 					 */
-
-					// FIXME このやり方、メモリを稼ごうとして変なことをしているようなきがする。とりあえず下に書きなおしてみよう。
-					// while (tmpZones.size() > 0) {
-					// Zone mold = tmpZones.get(tmpZones.size() -
-					// 1);//末端から消去。ArrayListなのでこれが速いはず。
-					// String cast = onePlace.substring(mold.get_start_fasta(),
-					// mold.get_end_fasta());// 植木算があってる確証をとっていません <- ここが問題か？
-					// this.record_list.add(cast);
-					// tmpZones.remove(tmpZones.size() - 1);
-					// }
-					
-					System.out.println("onePlace length: " + onePlace.length());
-//					FIXME onePlaceの長さが0, 中に書き込みされていない。
-					
+//					System.out.println("onePlace length: " + onePlace.length());
 					for (Zone zone : tmpZones) {
-						System.out.println(zone.get_start_fasta() + "  ->  " + zone.get_end_fasta());
 						this.record_list.add(onePlace.substring(
 								zone.get_start_fasta(), zone.get_end_fasta()));
 
@@ -112,8 +97,6 @@ public class DataSet {
 
 					onePlace.delete(0, onePlace.length());// クリアの方法、早い方法が何かわからなかったので自分なりに工夫した部分
 					tagCount++;
-					
-					
 					
 					// FIXME デバッグのための機能制限
 					if (tagCount > 0) {
@@ -182,7 +165,7 @@ public class DataSet {
 	 * @param sequence　対象
 	 * @return
 	 */
-	private byte judgeEXP(String factor, String sequence) {		
+	public byte judgeEXP(String factor, String sequence) {		
 		int l = factor.length();
 		double ne = ((sequence.length() - l) * (1.0 / Math.pow(4.0, (double) l)))
 				* sequence.length();
@@ -201,8 +184,8 @@ public class DataSet {
 	 */
 	public void initWeight() {
 		System.out.println("initWeight");
-		for (int i = 0; i < PATTERN; i++) {
-			
+		for (int i = 0; i < mypointlist.size(); i++) {
+//			動くようだったらforeachに書き換える
 			
 			
 			// そうか、ここの関係でsetWはvoidじゃなくて何か返さなきゃいけなかったんだ
@@ -248,18 +231,17 @@ public class DataSet {
 		// その効果について考察する
 		Classifier tmp = null;
 		// while(LS < PATTERN){
-		tmp = new Classifier(a, (byte) 0, record_list.get(a));
+		
+		tmp = new Classifier(a, (byte) 0, mers.get(a));
 		if (errorRatio(tmp) < (1.0 / 2.0))
 		// break;
 		{
 		} else {
-			// FIXME weakLearnの効率の改善
+			
 			// なんか効率悪そう。。。
 			// 3回同じ動作をしている。
 			// 不必要なオブジェクト作成操作が存在する。
-			// この作業は全体比にしてかなり大きな計算時間をとるので、
-			// 最適化したい。
-			tmp = new Classifier(a, (byte) 1, record_list.get(a));
+			tmp = new Classifier(a, (byte) 1, mers.get(a));
 			// if (errorRatio(tmp) < (1.0 / 2.0)){}
 			// break;
 		}
@@ -278,11 +260,11 @@ public class DataSet {
 		double e = errorRatio(h);
 		beta = e / (1 - e);
 		for (int i = 0; i < M; i++) {
-			// teachers.get(i).getWeight()// これではweightに差S割れない <= 触れます
-			// スレッドセーフ、カプセル化を破ります
-			// ここ、文法的ミスを抱えている可能性があります。(JengaCode)上二行をコメントアウトしました。
-			// teachers.set(
-			// i,
+			// ここ、文法的ミスを抱えている可能性があります。
+			
+//			TODO ここで重み更新の振り分けができているか確認する。
+//			
+			
 			double old_w = mypointlist.get(i).getWeight();
 			mypointlist
 					.get(i)
@@ -365,7 +347,7 @@ public class DataSet {
 	public void adaboost() {
 		System.out.println("adaboost");
 		
-		for (int i = 0; i < PATTERN; i++) {
+		for (int i = 0; i < mers.size(); i++) {
 			if (i % 10 == 0){
 				System.out.println("weakLearn  " + i);
 			}
@@ -385,7 +367,20 @@ public class DataSet {
 		if (classifierlist == null) {
 			System.err.println("classifierlist is not yet created");
 			return null;
-		} else
-			return this.classifierlist.get_intense_classifier(n, memberlist);
+		} else{
+			
+//			FIXME 
+			CisEList res = new CisEList(n);
+			String record = null;
+			for(int i = 0; i < n; i++){
+//				TODO この操作でmemberlistの中身が呼び出し元で削除されたままになるのかわからない
+				record = mers.get(memberlist.pollLastEntry().getValue());
+				res.add(record);
+			}
+			
+			return res;
+//			return this.classifierlist.get_intense_classifier(n, memberlist);
+		}
 	}
+	
 }
