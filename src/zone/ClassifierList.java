@@ -48,14 +48,14 @@ public class ClassifierList extends ArrayList<Classifier> {
 	 * @param n
 	 * @return
 	 */
-	public CisEList get_intense_classifier(double d, ClassifierRanking memberlist) {
-//		TODO ここの実装にソートを追加する。
+	public CisEList get_intense_classifier(double d) {
 //		dより大きい・小さいものを取り出す
-		
 		
 		CisEList res = new CisEList();
 		for (int i = 0; i < size(); i++) {
-			res.add(get(i).get_record());
+			if (get(i).omomikeisu() < d){
+				res.add(get(i).get_record());
+			}
 		}
 
 		return res;

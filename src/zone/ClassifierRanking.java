@@ -10,12 +10,11 @@ import java.util.TreeMap;
 
 /**
  * 重みが重複した場合は不適切な結果が帰ります。（先に挿入されていたものが忘れられてしまう）
- * 
+ * 重みとその序数のマッピング(Stringをvalueにしてもいいかもしれない)
  * @author takashi
  * 
  */
 public class ClassifierRanking extends TreeMap<Double, Integer> {
-//	TODO 重みが大きいとはどういうことか
 	
 	/**
 	 * 

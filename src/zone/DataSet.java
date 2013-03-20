@@ -363,23 +363,28 @@ public class DataSet {
 	 * @param n
 	 * @return
 	 */
-	public CisEList get_intense_classifier(int n, ClassifierRanking memberlist) {
+	public CisEList get_intense_classifier(double d/*, ClassifierRanking memberlist*/) {
 		if (classifierlist == null) {
 			System.err.println("classifierlist is not yet created");
 			return null;
 		} else{
 			
-			CisEList res = new CisEList(n);
-			String record = null;
-			for(int i = 0; i < n; i++){
+//			CisEList res = new CisEList();
+//			String record = null;
+//			for(int i = 0; i < n; i++){
+				
+				
+				// これは修正案
+				
 //				TODO この操作でmemberlistの中身が呼び出し元で削除されたままになるのかわからない
-//				FIXME write_cis_elementの問題はここを修正すればよい。
-				record = mers.get(memberlist.pollLastEntry().getValue());
-				res.add(record);
-			}
+				// memberlistの中をチェック
+//				record = mers.get(memberlist.pollLastEntry().getValue());
+				// nullpointerexception
+//				res.add(record);
+//			}
 			
-			return res;
-//			return this.classifierlist.get_intense_classifier(n, memberlist);
+//			return res;
+			return this.classifierlist.get_intense_classifier(d);
 		}
 	}
 	

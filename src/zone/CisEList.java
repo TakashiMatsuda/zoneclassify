@@ -86,9 +86,7 @@ public class CisEList extends ArrayList<String> {
 			 */
 			Writer out = null;
 			File output = new File("cis_element_list.txt");
-
 			out = new BufferedWriter(new FileWriter(output));
-
 			for (int i = 0; i < size(); i++) {
 				out.write(get(i) + "\n");
 			}

@@ -53,6 +53,8 @@ public class FinalClassifier {
 		double aver = 0;
 		double beta = 0;
 
+		
+		// TODO classifierrankingを廃止しよう
 		classifierranking = new ClassifierRanking();
 		
 		
@@ -61,10 +63,11 @@ public class FinalClassifier {
 //			ちゃんとカプセル化したほうがよい
 			beta = dataset.classifierlist.get(t).omomikeisu();
 
-			// FIXME 重みに重複があった場合、不適切な結果が帰ります。
+			// TODO 重みに重複があった場合、不適切な結果が帰ります。
 			if (classifierranking.containsKey(beta)) {
 				System.err.println("重み係数が重複しました。結果は不適切です。");
 			}
+			// 追加code
 			classifierranking.put(beta, t);
 
 			prob += (-Math.log(beta))
@@ -84,6 +87,7 @@ public class FinalClassifier {
 
 	/**
 	 * cis_elementのリストを返します。
+	 * 廃止メソッド
 	 * 
 	 * @param num
 	 * @return
@@ -103,7 +107,7 @@ public class FinalClassifier {
 //			for(int i = 0; i < num; i++){
 //				dataset.mers.get(classifierranking.)
 //			}
-			 return dataset.get_intense_classifier(num, classifierranking);
+			 return dataset.get_intense_classifier(num/*, classifierranking*/);
 		} else {
 			System.err.println("not yet ranked(@suggest_cis)");
 			return null;

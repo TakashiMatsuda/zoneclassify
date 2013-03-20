@@ -87,8 +87,9 @@ public class Boost {
 		}
 		
 		if (finalclassifier != null) {
-			CisEList ciselementlist = finalclassifier.suggest_cis(CIS_NUM);
-			ciselementlist.write();
+//			CisEList ciselementlist = finalclassifier.suggest_cis(CIS_NUM);
+			dataset.get_intense_classifier(0.05);
+//			ciselementlist.write();
 			// }
 		} else {
 			System.err.println("not yet analysed(@write_error)");
