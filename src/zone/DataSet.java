@@ -22,7 +22,7 @@ public class DataSet {
 	public ArrayList<String> mers;
 
 	/*
-	 * MyPointの数 <- 意味がわからなくなってしまいました。
+	 * MyPointの数
 	 */
 	private int M;
 
@@ -358,7 +358,7 @@ public class DataSet {
 	}
 
 	/**
-	 * ciselementのリストを求められた数だけ上位から取り出します。 完成しています。
+	 * ciselementのリストを求められた数だけ上位から取り出します。　問題発生中。
 	 * 
 	 * @param n
 	 * @return
@@ -369,11 +369,11 @@ public class DataSet {
 			return null;
 		} else{
 			
-//			FIXME 
 			CisEList res = new CisEList(n);
 			String record = null;
 			for(int i = 0; i < n; i++){
 //				TODO この操作でmemberlistの中身が呼び出し元で削除されたままになるのかわからない
+//				FIXME write_cis_elementの問題はここを修正すればよい。
 				record = mers.get(memberlist.pollLastEntry().getValue());
 				res.add(record);
 			}

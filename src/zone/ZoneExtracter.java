@@ -5,8 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 // 構成比で書き換える
-// TODO ZoneExtracterを完成させる、それでこの仕事はおしまい
-// TODO 最短区間長制限アルゴリズムを解く
+
+
 
 /**
  * 最小メチル化領域の抽出を担うクラス

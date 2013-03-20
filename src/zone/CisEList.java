@@ -25,7 +25,7 @@ public class CisEList extends ArrayList<String> {
 	 * 
 	 */
 	public CisEList() {
-		// TODO 自動生成されたコンストラクター・スタブ
+
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class CisEList extends ArrayList<String> {
 	 */
 	public CisEList(int initialCapacity) {
 		super(initialCapacity);
-		// TODO 自動生成されたコンストラクター・スタブ
+
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class CisEList extends ArrayList<String> {
 	 */
 	public CisEList(Collection<? extends String> c) {
 		super(c);
-		// TODO 自動生成されたコンストラクター・スタブ
+
 	}
 
 	/**

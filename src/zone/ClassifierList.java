@@ -23,7 +23,7 @@ public class ClassifierList extends ArrayList<Classifier> {
 	 * 
 	 */
 	public ClassifierList() {
-		// TODO 自動生成されたコンストラクター・スタブ
+
 	}
 
 	/**

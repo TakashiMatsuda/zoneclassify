@@ -78,10 +78,9 @@ public class Boost {
 		// cis-elementの塩基配列を返す。
 		// (出力する)
 		
-//		FIXME 根本設計の変更　methyl_predictionを全merに対して用いて正解率リストをだす。
+//		TODO ? 根本設計の変更　methyl_predictionを全merに対して用いて正解率リストをだす。
 //		正解率に大きく影響するものがcis_element.
-//		すでに分類器酒豪の中にその情報が計算済みで格納されていると思われる。
-//		TODO ここから
+//		すでに分類器集合の中にその情報が計算済みで格納されていると思われる。
 		
 		for(String record : mers){
 			
