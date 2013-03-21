@@ -26,11 +26,7 @@ public class BoostTest {
 		Boost exa = Boost.run();
 		long t2 = System.nanoTime();
 		System.out.println("ATAT  : " + exa.methyl_prediction("ATAT"));
-		exa.write_cis_element();
-//		全部順番に出ている
-//		結果を反映したものなのか確認する
-//		標準の期待値の計算がおかしくなっているのか。
-		
+		exa.write_cis_element();		
 	}
 	
 	

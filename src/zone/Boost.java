@@ -76,7 +76,7 @@ public class Boost {
 		// if (sign_analysed) {
 		if (finalclassifier != null) {
 //			CisEList ciselementlist = finalclassifier.suggest_cis(CIS_NUM);
-			CisEList ciselementlist = dataset.get_intense_classifier(1);
+			CisEList ciselementlist = dataset.get_intense_classifier(0.3);
 			ciselementlist.write();
 		} else {
 			System.err.println("not yet analysed(@write_error)");
