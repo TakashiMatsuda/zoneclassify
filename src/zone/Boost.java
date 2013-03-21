@@ -74,23 +74,10 @@ public class Boost {
 	 */
 	public void write_cis_element() {
 		// if (sign_analysed) {
-		// cis-elementの場所を返す。
-		// cis-elementの塩基配列を返す。
-		// (出力する)
-		
-//		TODO ? 根本設計の変更　methyl_predictionを全merに対して用いて正解率リストをだす。
-//		正解率に大きく影響するものがcis_element.
-//		すでに分類器集合の中にその情報が計算済みで格納されていると思われる。
-		
-		for(String record : mers){
-			
-		}
-		
 		if (finalclassifier != null) {
 //			CisEList ciselementlist = finalclassifier.suggest_cis(CIS_NUM);
-			dataset.get_intense_classifier(0.05);
-//			ciselementlist.write();
-			// }
+			CisEList ciselementlist = dataset.get_intense_classifier(1);
+			ciselementlist.write();
 		} else {
 			System.err.println("not yet analysed(@write_error)");
 		}

@@ -23,7 +23,7 @@ public class Classifier {
 //		そもそも何を想定していたのか、調べたい
 //		startは何を表しているのか。
 		
-		if (a[start] == 1)// FIXME outofbounds
+		if (a[start] == 1)// outofboundsエラーの跡
 			return target;
 		else
 			return (byte) ((target - 1) * (-1));

@@ -52,9 +52,6 @@ public class FinalClassifier {
 		double prob = 0;
 		double aver = 0;
 		double beta = 0;
-
-		
-		// TODO classifierrankingを廃止しよう
 		classifierranking = new ClassifierRanking();
 		
 		

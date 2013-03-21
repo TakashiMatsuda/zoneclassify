@@ -24,7 +24,7 @@ public class DataSet {
 	/*
 	 * MyPointの数
 	 */
-	private int M;
+//	private int M;
 
 	private static int PATTERN = (int) Math.pow(4, 2) + (int) Math.pow(4, 3)
 			+ (int) Math.pow(4, 4) + (int) Math.pow(4, 5);
@@ -167,8 +167,9 @@ public class DataSet {
 	 */
 	public byte judgeEXP(String factor, String sequence) {		
 		int l = factor.length();
-		double ne = ((sequence.length() - l) * (1.0 / Math.pow(4.0, (double) l)))
-				* sequence.length();
+		
+		// TODO neが正しいか確認する。
+		double ne = (sequence.length() - l) * (1.0 / Math.pow(4.0, (double) l));
 		/*
 		 * factorがsequenceに含まれる回数
 		 */
@@ -208,7 +209,8 @@ public class DataSet {
 		int sum = 0;
 		int q = x.start;
 		byte p = x.target;
-		for (int i = 0; i < M; i++) {
+		// FIXME Mが初期化されていない。
+		for (int i = 0; i < mypointlist.size(); i++) {
 			if (mypointlist.get(i).getColumn()[q] == 1) {
 				sum++;
 				if ((mypointlist.get(i)).getTarget() == p)
@@ -226,6 +228,8 @@ public class DataSet {
 	 * エラー率が平均よりは低いclassifierを作成し、boxesに格納したのち、 同時にweightを更新する。 完成しています<- 本当？
 	 */
 	private void weakLearn(int a) {
+		
+		
 		// learning set : LS
 		// 作り方、歪んでいます。分類器が、ある列が1のときにどうなるか、というものしかない
 		// その効果について考察する
@@ -234,16 +238,11 @@ public class DataSet {
 		
 		tmp = new Classifier(a, (byte) 0, mers.get(a));
 		if (errorRatio(tmp) < (1.0 / 2.0))
-		// break;
 		{
 		} else {
-			
-			// なんか効率悪そう。。。
 			// 3回同じ動作をしている。
 			// 不必要なオブジェクト作成操作が存在する。
 			tmp = new Classifier(a, (byte) 1, mers.get(a));
-			// if (errorRatio(tmp) < (1.0 / 2.0)){}
-			// break;
 		}
 		// LS++;
 		// }
@@ -254,17 +253,16 @@ public class DataSet {
 
 	/**
 	 * AdaBoostのアルゴリズムにしたがってweightを更新 完成しています
+	 * 新しく作成したclassifierから誘導される重み更新を行います
 	 */
 	private void reviseWeight(Classifier h) {
 		double beta;
 		double e = errorRatio(h);
 		beta = e / (1 - e);
-		for (int i = 0; i < M; i++) {
+		for (int i = 0; i < mypointlist.size(); i++) {
 			// ここ、文法的ミスを抱えている可能性があります。
 			
-//			TODO ここで重み更新の振り分けができているか確認する。
-//			
-			
+//			TODO 期待値計算が間違っているのではないか。
 			double old_w = mypointlist.get(i).getWeight();
 			mypointlist
 					.get(i)
